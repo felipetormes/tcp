@@ -1,11 +1,11 @@
-package data;
+package main.data;
 
 import java.util.List;
 
-import business.domain.Conference;
-import business.domain.Paper;
-import business.domain.Researcher;
-import business.domain.Review;
+import main.business.domain.Conference;
+import main.business.domain.Paper;
+import main.business.domain.Researcher;
+import main.business.domain.Review;
 
 public class Database {
 	private static List<Researcher> researchers;

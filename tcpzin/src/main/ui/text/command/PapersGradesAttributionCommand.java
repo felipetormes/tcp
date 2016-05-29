@@ -1,4 +1,4 @@
-package ui.text.command;
+package main.ui.text.command;
 
 public class PapersGradesAttributionCommand {
 

@@ -1,6 +1,6 @@
-package business.impl;
+package main.business.impl;
 
-import business.PapersManagementService;
+import main.business.PapersManagementService;
 
 public class PapersManagementServiceImpl implements PapersManagementService {
 

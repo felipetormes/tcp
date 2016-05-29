@@ -1,4 +1,4 @@
-package business.domain;
+package main.business.domain;
 
 public class ReviewerRole {
 
