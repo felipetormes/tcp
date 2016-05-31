@@ -11,7 +11,7 @@ public class PapersSelectionCommand {
 	private PapersManagementService papersManagementService;
 
 	public void PapersSelectionCommand(PapersManagementService papersManagementService) {
-
+		this.papersManagementService = papersManagementService;
 	}
 
 	private Conference readConference() {

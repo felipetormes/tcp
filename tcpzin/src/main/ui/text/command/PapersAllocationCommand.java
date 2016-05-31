@@ -8,7 +8,7 @@ public class PapersAllocationCommand {
 	private PapersManagementService papersManagementService;
 
 	public void PapersAllocationCommand(PapersManagementService papersManagementService) {
-
+		this.papersManagementService = papersManagementService;
 	}
 
 	private Conference readConference() {

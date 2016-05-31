@@ -12,8 +12,8 @@ public class ConferenceTextInterface extends ConferenceUI {
 		sb.append(UIUtils.getText("message.options"))
 				.append(":\n");
 		sb.append(UIUtils.getText("message.options.alocacao")).append("\n");
-		sb.append(UIUtils.getText("message.options.atribuicao")).append(":\n");
-		sb.append(UIUtils.getText("message.options.selecao")).append(":\n");
+		sb.append(UIUtils.getText("message.options.atribuicao")).append("\n");
+		sb.append(UIUtils.getText("message.options.selecao")).append("\n");
 		sb.append(UIUtils.getText("message.choose.option")).append(": ");
 
 		return sb.toString();
