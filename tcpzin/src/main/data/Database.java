@@ -13,6 +13,16 @@ public class Database {
 	private static List<Paper> papers;
 	private static List<Review> reviews;
 	
+	public Database(boolean initData) {
+		if (initData) {
+			initData();
+		}
+	}
+	
+	public Database() {
+		this(true);
+	}
+	
 	public static void initData() {
 		researchers = null;
 		conferences = null;
