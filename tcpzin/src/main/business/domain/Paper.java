@@ -10,7 +10,7 @@ public class Paper {
 	private Topic researchTopic;
 	private List<Review> reviews;
 	
-	private static int last_id;
+	private static int last_id = 0;
 	
 	public Paper (String title, Researcher author, Topic researchTopic) {
 		this.title = title;

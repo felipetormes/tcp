@@ -8,7 +8,7 @@ public class Researcher {
 	private University affiliation;
 	private List<Topic> researchTopics;
 	
-	private static int last_id;
+	private static int last_id = 0;
 	
 	public Researcher(String name, University affiliation, List<Topic> researchTopics) {
 		this.name = name;
