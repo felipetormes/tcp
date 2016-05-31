@@ -1,6 +1,7 @@
 package main.business.impl;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import main.business.PapersManagementService;
 import main.business.domain.Conference;
