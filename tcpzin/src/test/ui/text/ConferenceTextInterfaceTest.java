@@ -1,4 +1,4 @@
-package test.ui;
+package test.ui.text;
 
 import static org.junit.Assert.*;
 
@@ -6,13 +6,10 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sun.scenario.Settings;
-
-import main.ui.ConferenceUI;
 import main.ui.text.ConferenceTextInterface;
 
 
-	public class ConferenceUITest {
+	public class ConferenceTextInterfaceTest {
 		
 		ConferenceTextInterface conferenceTextInterface;
 
