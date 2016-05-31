@@ -13,7 +13,7 @@ public abstract class ConferenceUI {
 	private ConferenceUICommand conferenceUICommand;
 
 	public void showUI() {
-
+		
 	}
 
 	public void addCommand(String key, ConferenceUICommand command) {

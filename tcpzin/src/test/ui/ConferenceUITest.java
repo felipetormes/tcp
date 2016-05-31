@@ -14,19 +14,20 @@ import main.ui.text.ConferenceTextInterface;
 
 	public class ConferenceUITest {
 		
-		ConferenceUI conferenceUI;
+		ConferenceTextInterface conferenceTextInterface;
 
 		/**
 		 * @throws java.lang.Exception
 		 */
 		@Before
 		public void setUp() throws Exception {
-			conferenceUI = new ConferenceTextInterface();
+			conferenceTextInterface = new ConferenceTextInterface();
 		}
 		
 		
 		@Test
-		public void addCommand() {
+		public void TestMenu() {
+			System.out.println(conferenceTextInterface.showMenu());
 			
 		}
 	}
