@@ -9,14 +9,13 @@ public class Paper {
 	private Conference conference;
 	private Topic researchTopic;
 	private List<Review> reviews;
-	private int last_id;
-	private double averageGrade;
-	private double allGrade;
 	
-	public Paper (String title, Researcher author, int id, Topic researchTopic) {
+	private static int last_id;
+	
+	public Paper (String title, Researcher author, Topic researchTopic) {
 		this.title = title;
 		this.author = author;
-		this.id = id;
+		this.id = last_id++;
 		this.researchTopic = researchTopic;
 	}
 	
@@ -55,10 +54,12 @@ public class Paper {
 	
 	public double getAverageGrade() {
         /*
+        int allGrade = 0;
+        
 		for(Review review : reviews){
         	allGrade += review.getGrade();
         }
-        averageGrade = allGrade / reviews.size();
+        return allGrade / reviews.size();
 		*/
 		return -1;
 	}
