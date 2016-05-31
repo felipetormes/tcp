@@ -6,7 +6,7 @@ import main.business.domain.Paper;
 
 import java.util.Map;
 
-public class PapersSelectionCommand {
+public class PapersSelectionCommand implements ConferenceUICommand{
 
 	private PapersManagementService papersManagementService;
 
@@ -14,6 +14,10 @@ public class PapersSelectionCommand {
 		this.papersManagementService = papersManagementService;
 	}
 
+	public void execute(){
+		
+	}
+	
 	private Conference readConference() {
 		return null;
 	}
