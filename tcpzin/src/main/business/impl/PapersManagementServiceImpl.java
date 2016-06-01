@@ -1,12 +1,13 @@
 package main.business.impl;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import main.business.PapersManagementService;
 import main.business.domain.Conference;
 import main.business.domain.Paper;
 import main.business.domain.Researcher;
+import main.business.domain.Review;
 import main.data.Database;
 
 public class PapersManagementServiceImpl  implements PapersManagementService {
@@ -15,14 +16,15 @@ public class PapersManagementServiceImpl  implements PapersManagementService {
 
 
 	public PapersManagementServiceImpl(Database database) {
-
+		this.database = database;
 	}
 
-	private ArrayList<Researcher> getCommitteeMembersCandidates(Conference conference) {
-		return null;
+	private List<Researcher> getCommitteeMembersCandidates(Conference conference) {
+		return conference.getCommitteeMembers();
 	}
 
-	private ArrayList<Researcher> getReviewersFromCandidates(ArrayList<Researcher> candidates) {
+	private List<Researcher> getReviewersFromCandidates(List<Researcher> candidates) {
+		
 		return null;
 	}
 
@@ -39,7 +41,9 @@ public class PapersManagementServiceImpl  implements PapersManagementService {
 	 * @see PapersManagementService#setGradeToPaper(Paper, Reviewer, Double)
 	 */
 	public void setGradeToPaper(Paper paper, Researcher reviewer, Double grade) {
-
+		//TODO Revisar se é assim mesmo
+		Review review = new Review(paper,reviewer,grade);	
+		paper.addReview(review);
 	}
 
 
@@ -54,16 +58,16 @@ public class PapersManagementServiceImpl  implements PapersManagementService {
 	/**
 	 * @see PapersManagementService#GetAllConferences()
 	 */
-	public ArrayList<Conference> GetAllConferences() {
-		return null;
+	public List<Conference> GetAllConferences() {
+		return Database.getConferences();
 	}
 
 
 	/**
 	 * @see PapersManagementService#GetAllPapers()
 	 */
-	public ArrayList<Paper> GetAllPapers() {
-		return null;
+	public List<Paper> GetAllPapers() {
+		return Database.getPapers();
 	}
 
 }

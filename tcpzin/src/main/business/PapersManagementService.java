@@ -1,6 +1,6 @@
 package main.business;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import main.business.domain.Conference;
@@ -15,8 +15,8 @@ public interface PapersManagementService {
 
 	public abstract Map<Paper,Boolean> selectPapersByAverage(Conference conference);
 
-	public abstract ArrayList<Conference> GetAllConferences();
+	public abstract List<Conference> GetAllConferences();
 
-	public abstract ArrayList<Paper> GetAllPapers();
+	public abstract List<Paper> GetAllPapers();
 
 }
