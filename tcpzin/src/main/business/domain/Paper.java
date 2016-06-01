@@ -2,7 +2,7 @@ package main.business.domain;
 
 import java.util.List;
 
-public class Paper {
+public class Paper implements Comparable<Paper>{
 	private int id;
 	private String title;
 	private Researcher author;
@@ -62,5 +62,19 @@ public class Paper {
         return allGrade / reviews.size();
 		*/
 		return -1;
+	}
+
+	@Override
+	public int compareTo(Paper other) {
+			if (this.getId() > other.getId()){
+				return 1;
+			}
+			else if (this.getId() < other.getId()){
+				return -1;
+			}
+			else {
+				return 0;
+			}
+
 	}
 }
