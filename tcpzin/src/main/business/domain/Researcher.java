@@ -2,7 +2,7 @@ package main.business.domain;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Researcher {
+public class Researcher implements Comparable<Researcher>{
 	private int id;
 	private String name;
 	private University affiliation;
@@ -35,5 +35,18 @@ public class Researcher {
 	
 	public List<Topic> getResearchTopics() {
 		return researchTopics;
+	}
+
+	@Override
+	public int compareTo(Researcher other) {
+		if (this.getId() > other.getId()){
+			return 1;
+		}
+		else if (this.getId() < other.getId()){
+			return -1;
+		}
+		else {
+			return 0;
+		}
 	}
 }
