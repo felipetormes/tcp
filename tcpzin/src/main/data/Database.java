@@ -43,7 +43,7 @@ public class Database {
 	private static void initData() {
 		try {
 			researchers = initResearchers();
-			conferences = null;
+			conferences = initConferences();
 			papers = null;
 			reviews = null;
 		} catch (InvalidNameException e) {
@@ -69,6 +69,28 @@ public class Database {
 		}
 		
 		return researchers;
+	}
+	
+	private static List<Conference> initConferences() {
+		List<Conference> conferences = new ArrayList<Conference>();
+		
+		List<String[]> csv_lines = readResourceCSV(CONFERENCES_FILE);
+		for (String[] fields : csv_lines) {
+			String initials = fields[0];
+			
+			Conference conference = new Conference(initials);
+			
+			int i = 1;
+			while (i < fields.length) {
+				int id = Integer.parseInt(fields[i]);
+				conference.addCommitteeMember(getResearcherById(id));
+				i++;
+			}
+			
+			conferences.add(conference);
+		}
+		
+		return conferences;
 	}
 
 	public static List<Researcher> getResearchers() {
