@@ -45,4 +45,16 @@ public class Conference {
 	public List<Researcher> getCommitteeMembers() {
 		return committeeMembers;
 	}
+	
+	public String toString() {
+		String output =
+				"initials: " + getInitials() +
+				", committee members ids:";
+		
+		for (Researcher researcher : getCommitteeMembers()) {
+			output += researcher.getId() + "/";
+		}
+		
+		return output;
+	}
 }
