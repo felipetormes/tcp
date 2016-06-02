@@ -12,22 +12,19 @@ import main.data.Database;
 
 
 
-	public class DatabaseTest {
-		
+public class DatabaseTest {
 		Database database;
-
+		
+		public static void main(String[] args) {
+			Database database = new Database();
+		}
+		
 		/**
 		 * @throws java.lang.Exception
 		 */
 		@Before
 		public void setUp() throws Exception {
 			database = new Database();
-		}
-		
-		
-		@Test
-		public void TestInitResercherData() {
-			System.out.println(database.getResearchers());
 		}
 	}
 
