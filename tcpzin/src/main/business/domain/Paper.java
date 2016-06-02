@@ -76,4 +76,17 @@ public class Paper implements Comparable<Paper>{
 			}
 
 	}
+	
+	public boolean equals(Object obj) {
+		if (obj instanceof Paper) {
+			Paper other = (Paper) obj;
+			return this.getId() == other.getId();
+		} else {
+			return false;
+		}
+	}
+	
+	public int hashCode() {
+		return this.getId();
+	}
 }
