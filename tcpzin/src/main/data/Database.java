@@ -143,4 +143,19 @@ public class Database {
 		
 		return lines;
 	}
+	
+	public String toString() {
+		String output = "\nRESEARCHERS\n"; 
+		for (Researcher researcher : researchers) {
+			output += researcher + "\n";
+		}
+		
+		output += "\nCONFERENCES:\n";
+		
+		for (Conference conference : conferences) {
+			output += conference + "\n";
+		}
+		
+		return output;
+	}
 }
