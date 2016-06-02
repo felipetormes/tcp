@@ -1,4 +1,5 @@
 package main.ui.text.command;
+import java.util.List;
 import java.util.Map;
 
 import main.business.PapersManagementService;
@@ -27,7 +28,24 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand{
 	}
 
 	private Paper readPaper() {
-		return null;
+		Paper chosenPaper = null;
+		List<Paper> allPapers = papersManagementService.GetAllPapers();
+		System.out.println(UIUtils.getText("message.todosPapers"));
+		for (Paper paper : allPapers ){
+		System.out.println(UIUtils.getText("message.paperId") + ": "+  paper.getId() + UIUtils.getText("message.paperTitle") + ": "+  paper.getTitle());
+		}
+		int idPaper = UIUtils.readInteger("message.insiraIdPaper");
+		for (Paper paper : allPapers ){
+			boolean isChosenPaper = paper.getId() == idPaper;
+			if(isChosenPaper)
+			{
+				chosenPaper = paper;
+				break;
+			}
+		}
+		
+		
+		return chosenPaper;
 	
 	}
 
