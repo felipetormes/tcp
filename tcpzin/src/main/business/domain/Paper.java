@@ -53,15 +53,14 @@ public class Paper implements Comparable<Paper>{
 	}
 	
 	public double getAverageGrade() {
-        /*
+  
         int allGrade = 0;
         
 		for(Review review : reviews){
         	allGrade += review.getGrade();
         }
         return allGrade / reviews.size();
-		*/
-		return -1;
+        
 	}
 
 	@Override
