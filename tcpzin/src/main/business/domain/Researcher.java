@@ -8,13 +8,20 @@ public class Researcher implements Comparable<Researcher>{
 	private University affiliation;
 	private List<Topic> researchTopics;
 	private Role role;
-	private static int last_id = 0;
+	private static int lastId = 0;
 	
-	public Researcher(String name, University affiliation, List<Topic> researchTopics) {
+	public Researcher(String name, University affiliation, List<Topic> researchTopics, int id) {
 		this.name = name;
 		this.affiliation = affiliation;
 		this.researchTopics = researchTopics;
-		this.id = last_id++;
+		this.id = id;
+		
+		/* last id must always be the largest id */
+		lastId = (id > lastId)? id : lastId;
+	}
+	
+	public Researcher(String name, University affiliation, List<Topic> researchTopics) {
+		this(name, affiliation, researchTopics, lastId++);
 	}
 	
 	public Researcher(String name, University affiliation) {
@@ -66,5 +73,19 @@ public class Researcher implements Comparable<Researcher>{
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+	
+	public String toString() {
+		String output =
+				"nome: " + getName() +
+				", id: " + String.valueOf(getId()) +
+				", affiliation: " + getAffiliation() +
+				", topics: ";
+		
+		for (Topic topic : getResearchTopics()) {
+			output += topic + "-";
+		}
+		
+		return output;
 	}
 }
