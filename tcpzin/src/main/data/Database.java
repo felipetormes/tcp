@@ -34,7 +34,7 @@ public class Database {
 		this(true);
 	}
 
-	public static void initData() {
+	private static void initData() {
 		List<String[]> lines = readResourceCSV(RESEARCHERS_FILE);
 		for (String[] line : lines) {
 			for (String field : line) {
