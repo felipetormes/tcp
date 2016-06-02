@@ -20,9 +20,15 @@ public class Researcher implements Comparable<Researcher>{
 	public Researcher(String name, University affiliation) {
 		this(name, affiliation, new ArrayList<Topic>());
 	}
+	public void addTopic(Topic topic){
+		researchTopics.add(topic);
+	}
 	
 	public int getId() {
 		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public String getName() {
