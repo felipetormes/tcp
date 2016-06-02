@@ -1,5 +1,6 @@
 package main.business.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Paper implements Comparable<Paper>{
@@ -10,13 +11,22 @@ public class Paper implements Comparable<Paper>{
 	private Topic researchTopic;
 	private List<Review> reviews;
 	
-	private static int last_id = 0;
+	private static int lastId = 0;
 	
-	public Paper (String title, Researcher author, Topic researchTopic) {
+	public Paper(int id, String title, Researcher author, Topic researchTopic, Conference conference, List<Review> reviews) {
 		this.title = title;
 		this.author = author;
-		this.id = last_id++;
 		this.researchTopic = researchTopic;
+		this.conference = conference;
+		this.reviews = reviews;
+		this.id = id;
+		
+		/* last id must always be the largest id */
+		lastId = (id > lastId)? id : lastId;
+	}
+	
+	public Paper(String title, Researcher author, Topic researchTopic) {
+		this(lastId++, title, author, researchTopic, null, new ArrayList<Review>());
 	}
 	
 	public int getId() {
