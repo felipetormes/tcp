@@ -14,6 +14,12 @@ import main.business.domain.Paper;
 import main.business.domain.Researcher;
 import main.business.domain.Review;
 
+/* to build researchers: */
+import main.business.domain.Topic;
+import main.business.domain.University;
+
+import main.exceptions.InvalidNameException;
+
 public class Database {
 	private static List<Researcher> researchers;
 	private static List<Conference> conferences;
@@ -35,16 +41,34 @@ public class Database {
 	}
 
 	private static void initData() {
-		List<String[]> lines = readResourceCSV(RESEARCHERS_FILE);
-		for (String[] line : lines) {
-			for (String field : line) {
-				System.out.print(field + ',');
-			}
-			System.out.println();
+		try {
+			researchers = initResearchers();
+			conferences = null;
+			papers = null;
+			reviews = null;
+		} catch (InvalidNameException e) {
+			e.printStackTrace();
 		}
-		conferences = null;
-		papers = null;
-		reviews = null;
+	}
+	
+	private static List<Researcher> initResearchers() throws InvalidNameException {
+		List<Researcher> researchers = new ArrayList<Researcher>();
+		
+		List<String[]> csv_lines = readResourceCSV(RESEARCHERS_FILE);
+		for (String[] fields : csv_lines) {
+			int id = Integer.parseInt(fields[0]);
+			String name = fields[1];
+			University affiliation = new University(fields[2]);
+			List<Topic> topics = new ArrayList<Topic>();
+			int i = 3;
+			while (i < fields.length) {
+				topics.add(new Topic(fields[i++]));
+			}
+			
+			researchers.add(new Researcher(name, affiliation, topics, id));
+		}
+		
+		return researchers;
 	}
 
 	public static List<Researcher> getResearchers() {
