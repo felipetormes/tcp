@@ -1,5 +1,6 @@
 package main.business.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class PapersManagementServiceImpl  implements PapersManagementService {
 	 * @see PapersManagementService#setGradeToPaper(Paper, Reviewer, Double)
 	 */
 	public void setGradeToPaper(Paper paper, Researcher reviewer, Double grade) {
-		//TODO Revisar se é assim mesmo
+		//TODO Revisar se ï¿½ assim mesmo
 		Review review = new Review(paper,reviewer,grade);	
 		paper.addReview(review);
 	}
@@ -51,7 +52,18 @@ public class PapersManagementServiceImpl  implements PapersManagementService {
 	 * @see PapersManagementService#selectPapersByAverage(Conference)
 	 */
 	public Map<Paper,Boolean> selectPapersByAverage(Conference conference) {
-		return null;
+		Map<Paper, Boolean> accepted = new HashMap<Paper, Boolean>();
+
+		if (!conference.hasEmptyGrade()) {
+			List<Paper> papers = conference.getPapers();
+			
+			for (Paper paper : papers) {
+				double grade = paper.getAverageGrade();
+				accepted.put(paper, grade >= 0);
+			}
+		}
+
+		return accepted;
 	}
 
 
