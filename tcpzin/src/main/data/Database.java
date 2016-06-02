@@ -74,6 +74,16 @@ public class Database {
 	public static List<Researcher> getResearchers() {
 		return researchers;
 	}
+	
+	public static Researcher getResearcherById(int id) {
+		for (Researcher researcher : researchers) {
+			if (researcher.getId() == id) {
+				return researcher;
+			}
+		}
+		
+		return null;
+	}
 
 	public static List<Conference> getConferences() {
 		return conferences;
