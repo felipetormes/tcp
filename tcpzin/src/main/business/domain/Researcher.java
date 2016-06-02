@@ -83,7 +83,7 @@ public class Researcher implements Comparable<Researcher>{
 				", topics: ";
 		
 		for (Topic topic : getResearchTopics()) {
-			output += topic + "-";
+			output += topic + "/";
 		}
 		
 		return output;
