@@ -5,6 +5,7 @@ import java.util.Map;
 import main.business.PapersManagementService;
 import main.business.domain.Paper;
 import main.business.domain.Researcher;
+import main.business.domain.Review;
 import main.business.impl.PapersManagementServiceImpl;
 import main.ui.text.UIUtils;
 
@@ -49,19 +50,23 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand{
 	
 	}
 
-	private Researcher readReviewer() {
-	/*	Researcher chosenReviewer = null;
-		List<Researcher> allReviwers = papersManagementService.;
-		System.out.println(UIUtils.getText("message.todosPapers"));
+	private Researcher readReviewer(Paper paper) {
+		List<Researcher> allReviewers = null;
+		Researcher chosenReviewer = null;
+		List<Review> allPapersReviews = paper.getReviews();
+		for (Review review : allPapersReviews){
+			allReviewers.add(review.getReviewer());			
+		}
+		System.out.println(UIUtils.getText("message.todosReviewers"));
 	
 		
-		for (Paper paper : allPapers ){
-		System.out.println(UIUtils.getText("message.paperId") + ": "+  paper.getId() + UIUtils.getText("message.paperTitle") + ": "+  paper.getTitle());
+		for (Researcher reviewer : allReviewers ){
+		System.out.println(UIUtils.getText("message.reviewerId") + ": "+  reviewer.getId() + UIUtils.getText("message.reviewerName") + ": "+  reviewer.getName());
 		}
-		int idPaper = UIUtils.readInteger("message.insiraIdPaper");
-		for (Paper paper : allPapers ){
-			boolean isChosenPaper = paper.getId() == idPaper;
-			if(isChosenPaper)
+		int idReviewer = UIUtils.readInteger("message.insiraIdRevisor");
+		for (Researcher reviewer : allReviewers ){
+			boolean isChosenReviewer = reviewer.getId() == idReviewer;
+			if(isChosenReviewer)
 			{
 				chosenReviewer = reviewer;
 				break;
@@ -69,7 +74,7 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand{
 		}
 		
 		
-		*/
+		
 		return null;
 	}
 
