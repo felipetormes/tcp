@@ -5,6 +5,7 @@ import main.business.PapersManagementService;
 import main.business.domain.Paper;
 import main.business.domain.Researcher;
 import main.business.impl.PapersManagementServiceImpl;
+import main.ui.text.UIUtils;
 
 public class PapersGradesAttributionCommand implements ConferenceUICommand{
 
@@ -35,7 +36,7 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand{
 	}
 
 	private double readGrade() {
-		return 0;
+		return UIUtils.readDouble("message.insiranota");
 	}
 
 }

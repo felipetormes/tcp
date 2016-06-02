@@ -11,13 +11,13 @@ public class UIUtils {
 
 	public static final UIUtils INSTANCE = new UIUtils();
 	public static final String PROPERTY_RESOURCE_BUNDLE = "main.resources.globalMessages";
-	private final BufferedReader reader;
+	private final static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));;
 	private static ResourceBundle bundle;
 	
 	
 	public UIUtils() {
 		UIUtils.bundle = ResourceBundle.getBundle(PROPERTY_RESOURCE_BUNDLE);
-		this.reader = new BufferedReader(new InputStreamReader(System.in));
+	
 	}
 	public static String getText(String key) {
 		
@@ -32,7 +32,7 @@ public class UIUtils {
 		return text;
 	}
 	
-	public Double readDouble(String field) {
+	public static Double readDouble(String field) {
 		Double value = null;
 		while (value == null) {
 			try {
@@ -49,7 +49,7 @@ public class UIUtils {
 		return value;
 	}
 
-	public Integer readInteger(String field) {
+	public static Integer readInteger(String field) {
 		Integer value = null;
 		while (value == null) {
 			try {
@@ -68,7 +68,7 @@ public class UIUtils {
 	}
 
 	
-	public String readString(String field) {
+	public  static String readString(String field) {
 		String value = null;
 		while (value == null) {
 			try {
