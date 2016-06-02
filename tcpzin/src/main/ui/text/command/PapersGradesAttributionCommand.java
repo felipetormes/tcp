@@ -50,6 +50,26 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand{
 	}
 
 	private Researcher readReviewer() {
+	/*	Researcher chosenReviewer = null;
+		List<Researcher> allReviwers = papersManagementService.;
+		System.out.println(UIUtils.getText("message.todosPapers"));
+	
+		
+		for (Paper paper : allPapers ){
+		System.out.println(UIUtils.getText("message.paperId") + ": "+  paper.getId() + UIUtils.getText("message.paperTitle") + ": "+  paper.getTitle());
+		}
+		int idPaper = UIUtils.readInteger("message.insiraIdPaper");
+		for (Paper paper : allPapers ){
+			boolean isChosenPaper = paper.getId() == idPaper;
+			if(isChosenPaper)
+			{
+				chosenReviewer = reviewer;
+				break;
+			}
+		}
+		
+		
+		*/
 		return null;
 	}
 

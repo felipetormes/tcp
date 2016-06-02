@@ -25,8 +25,7 @@ public class PapersManagementServiceImpl  implements PapersManagementService {
 	}
 
 	private List<Researcher> getReviewersFromCandidates(List<Researcher> candidates) {
-		
-		return null;
+		return candidates;
 	}
 
 
