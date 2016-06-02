@@ -88,4 +88,17 @@ public class Researcher implements Comparable<Researcher>{
 		
 		return output;
 	}
+	
+	public boolean equals(Object obj) {
+		if (obj instanceof Researcher) {
+			Researcher other = (Researcher) obj;
+			return this.getId() == other.getId();
+		} else {
+			return false;
+		}
+	}
+	
+	public int hashCode() {
+		return this.getId();
+	}
 }
