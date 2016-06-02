@@ -36,7 +36,7 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand{
 	}
 
 	private double readGrade() {
-		return UIUtils.readDouble("message.insiranota");
+		return UIUtils.readDouble("message.insiraNota");
 	}
 
 }
