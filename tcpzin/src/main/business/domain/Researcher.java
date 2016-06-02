@@ -7,7 +7,7 @@ public class Researcher implements Comparable<Researcher>{
 	private String name;
 	private University affiliation;
 	private List<Topic> researchTopics;
-	
+	private Role role;
 	private static int last_id = 0;
 	
 	public Researcher(String name, University affiliation, List<Topic> researchTopics) {
@@ -42,6 +42,10 @@ public class Researcher implements Comparable<Researcher>{
 	public List<Topic> getResearchTopics() {
 		return researchTopics;
 	}
+	
+	public void addRole (Role role) {
+		this.setRole(role);
+	}
 
 	@Override
 	public int compareTo(Researcher other) {
@@ -54,5 +58,13 @@ public class Researcher implements Comparable<Researcher>{
 		else {
 			return 0;
 		}
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 }
