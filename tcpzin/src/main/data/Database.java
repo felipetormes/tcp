@@ -1,25 +1,28 @@
 package main.data;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.InputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import main.business.domain.Conference;
 import main.business.domain.Paper;
 import main.business.domain.Researcher;
 import main.business.domain.Review;
-import main.business.domain.Topic;
-import main.business.domain.University;
 
 public class Database {
 	private static List<Researcher> researchers;
 	private static List<Conference> conferences;
 	private static List<Paper> papers;
 	private static List<Review> reviews;
-	private static String INIT_FILE_RESEARCHERS = "../resources/dados_researchers";
+	private static String RESEARCHERS_FILE = "pesquisadores.csv";
+	private static String CONFERENCES_FILE = "conferencias.csv";
+	private static String ARTICLES_FILE = "artigos.csv";
+	private static String ATTRIBUTIONS_FILE = "atribuicoes.csv";
 
 	public Database(boolean initData) {
 		if (initData) {
@@ -32,7 +35,13 @@ public class Database {
 	}
 
 	public static void initData() {
-		parsingCSVResearchers();
+		List<String[]> lines = readResourceCSV(RESEARCHERS_FILE);
+		for (String[] line : lines) {
+			for (String field : line) {
+				System.out.print(field + ',');
+			}
+			System.out.println();
+		}
 		conferences = null;
 		papers = null;
 		reviews = null;
@@ -54,34 +63,28 @@ public class Database {
 		return reviews;
 	}
 
-	private static void parsingCSVResearchers() {
-		String line;
-		try {
-			ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-			InputStream is = classloader.getResourceAsStream(INIT_FILE_RESEARCHERS);
-			 BufferedReader buffer = new BufferedReader(new InputStreamReader(is));
-			while((line = buffer.readLine()) != null) {
-				StringTokenizer stringToken = new StringTokenizer(line, ",");
+	private static List<String[]> readResourceCSV(String filename) {
+		List<String[]> lines = new ArrayList<String[]>();
 
-				while(stringToken.hasMoreElements()) {
-					int id = Integer.parseInt(stringToken.nextToken());
-					String name = 	stringToken.nextToken();
-					String affiliationName = stringToken.nextToken();
-					University affiliation = new University(affiliationName);
-					Researcher researcher = new Researcher(name, affiliation);
-					researcher.setId(id);
-					String researchTopics = stringToken.nextToken();
-					//Remove '[' e ']' da String
-					researchTopics = researchTopics.substring(1, researchTopics.length()-1);
-					StringTokenizer stringTokenTopics = new StringTokenizer(researchTopics, ",");
-					while(stringTokenTopics.hasMoreElements()) {		
-						researcher.addTopic(new Topic(stringToken.nextToken()));
-					}
-					researchers.add(researcher);
-				}
+		try {
+			File fin = new File(System.getProperty("user.dir") + "/src/main/resources/" + filename);
+			FileInputStream fis;
+			fis = new FileInputStream(fin);
+			BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+			
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				String[] fields = line.split(",", -1); /* -1 to not ignore empty fields */
+				lines.add(fields);
 			}
-		} catch (Exception e) {
-		
+			
+			br.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		
+		return lines;
 	}
 }
