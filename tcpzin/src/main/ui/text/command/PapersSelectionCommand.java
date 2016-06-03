@@ -9,6 +9,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.lang.Comparable;
+import java.util.Comparator;
+
 
 public class PapersSelectionCommand implements ConferenceUICommand{
 
@@ -40,7 +43,7 @@ public class PapersSelectionCommand implements ConferenceUICommand{
 			boolean isRejected = (listsMap.get(paper) == false);
 			if(isRejected){
 				rejectedList.add(paper);
-				//TODO SORT OF LIST	
+				Collections.sort(allPapers);
 			}else{
 				acceptedList.add(paper);
 				//TODO SORT OF LIST
