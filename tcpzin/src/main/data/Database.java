@@ -44,7 +44,7 @@ public class Database {
 		try {
 			researchers = initResearchers();
 			conferences = initConferences();
-			papers = null;
+			papers = initArticles();
 			reviews = null;
 		} catch (InvalidNameException e) {
 			e.printStackTrace();
@@ -92,6 +92,31 @@ public class Database {
 		
 		return conferences;
 	}
+	
+	private static List<Paper> initArticles() throws InvalidNameException {
+		List<Paper> papers = new ArrayList<Paper>();
+		
+		List<String[]> csv_lines = readResourceCSV(ARTICLES_FILE);
+		for (String[] fields : csv_lines) {
+			Researcher authorPaper = null;
+			int id = Integer.parseInt(fields[0]);
+			String title = fields[1];
+			int authorId = Integer.parseInt(fields[2]);
+			List<Researcher> allResearchers = Database.researchers;
+			for (Researcher author : allResearchers) {
+				if (author.getId() == authorId) {
+					authorPaper = author;
+			}
+		}
+			Conference initialsConferences = new Conference(fields[3]);
+			String topicName = fields[4];
+			Paper paper = new Paper(id, title, authorPaper, new Topic(topicName), initialsConferences, null);
+			papers.add(paper);
+		}
+		
+		return papers;
+	}
+	
 
 	public static List<Researcher> getResearchers() {
 		return researchers;
@@ -154,6 +179,12 @@ public class Database {
 		
 		for (Conference conference : conferences) {
 			output += conference + "\n";
+		}
+		
+		output += "\nPAPERS:\n";
+		
+		for (Paper paper : papers) {
+			output += paper + "\n";
 		}
 		
 		return output;
