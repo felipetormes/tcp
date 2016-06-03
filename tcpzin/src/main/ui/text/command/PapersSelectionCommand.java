@@ -35,26 +35,31 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 		// List<Conference> allConferences = null;
 		Conference chosenConference = null;
 
-		List<Conference> allConferences = papersManagementService.getAllConferences();
-		
+		List<Conference> allConferences = papersManagementService
+				.getAllConferences();
+
 		System.out.println(allConferences);
-		
-		//System.out.println(UIUtils.getText("message.todosReviewers"));
 
-		
-		 for (Conference conference : allConferences ){
-		 System.out.println(UIUtils.getText("message.conferenceInitials") + ": "+
-		 conference.getInitials() + UIUtils.getText("message.conferenceMembers") + ": "+
-		 conference.getCommitteeMembers()); } 
-		 String initialsConference = UIUtils.readString("message.insiraIdRevisor"); for (Researcher
-		 reviewer : allReviewers ){ boolean isChosenReviewer =
-		 reviewer.getId() == idReviewer; if(isChosenReviewer) { chosenReviewer= reviewer; break; } }
-		 
-		 } else {
-		 System.out.println(UIUtils.getText("message.naoTemReviewers")); }
-		 
+		// System.out.println(UIUtils.getText("message.todosReviewers"));
 
-		return null;
+		for (Conference conference : allConferences) {
+			System.out.println(UIUtils.getText("message.conferenceInitials")
+					+ ": " + conference.getInitials()
+					+ UIUtils.getText("message.conferenceMembers") + ": "
+					+ conference.getCommitteeMembers() + " ");
+		}
+		String initialsConference = UIUtils
+				.readString("message.insertConference");
+		for (Conference conference : allConferences) {
+			boolean isChosenConference = (conference.getInitials() == initialsConference);
+			if (isChosenConference) {
+				chosenConference = conference;
+				break;
+			} else {
+				System.out.println(UIUtils.getText("message.noConferences"));
+			}
+		}
+		return chosenConference;
 	}
 
 	private void showGradeMissingAlert() {
