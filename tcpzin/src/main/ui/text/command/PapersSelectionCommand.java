@@ -36,8 +36,10 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 		Conference chosenConference = null;
 
 		List<Conference> allConferences = papersManagementService.getAllConferences();
-
-		System.out.println(UIUtils.getText("message.todosReviewers"));
+		
+		System.out.println(allConferences);
+		
+		//System.out.println(UIUtils.getText("message.todosReviewers"));
 
 		/*
 		 * for (Researcher reviewer : allReviewers ){
