@@ -67,9 +67,9 @@ public class PapersManagementServiceImpl  implements PapersManagementService {
 
 
 	/**
-	 * @see PapersManagementService#GetAllConferences()
+	 * @see PapersManagementService#getAllConferences()
 	 */
-	public List<Conference> GetAllConferences() {
+	public List<Conference> getAllConferences() {
 		return Database.getConferences();
 	}
 

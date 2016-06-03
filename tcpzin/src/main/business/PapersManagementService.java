@@ -15,7 +15,7 @@ public interface PapersManagementService {
 
 	public abstract Map<Paper,Boolean> selectPapersByAverage(Conference conference);
 
-	public abstract List<Conference> GetAllConferences();
+	public abstract List<Conference> getAllConferences();
 
 	public abstract List<Paper> GetAllPapers();
 
