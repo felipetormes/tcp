@@ -87,6 +87,17 @@ public class Paper implements Comparable<Paper>{
 
 	}
 	
+	public String toString() {
+		String output =
+				"id: " + String.valueOf(getId()) +
+				", titulo: " + getTitle() +
+				", autor: " + getAuthor().getId() +
+				", conferencias: " + getConference().getInitials() + 
+				", topicos de pesquisa: " + getResearchTopic();
+				
+	return output;
+	}
+	
 	public boolean equals(Object obj) {
 		if (obj instanceof Paper) {
 			Paper other = (Paper) obj;
