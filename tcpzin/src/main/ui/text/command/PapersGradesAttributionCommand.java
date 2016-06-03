@@ -19,7 +19,10 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand{
 	
 
 	public void execute(){
-		
+		Paper paper = readPaper();
+		Researcher reviewer = readReviewer(paper);
+		double grade = readGrade();
+		papersManagementService.setGradeToPaper(paper, reviewer, grade);
 	}
 	
 
