@@ -41,19 +41,18 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 		
 		//System.out.println(UIUtils.getText("message.todosReviewers"));
 
-		/*
-		 * for (Researcher reviewer : allReviewers ){
-		 * System.out.println(UIUtils.getText("message.reviewerId") + ": "+
-		 * reviewer.getId() + UIUtils.getText("message.reviewerName") + ": "+
-		 * reviewer.getName()); } int idReviewer =
-		 * UIUtils.readInteger("message.insiraIdRevisor"); for (Researcher
-		 * reviewer : allReviewers ){ boolean isChosenReviewer =
-		 * reviewer.getId() == idReviewer; if(isChosenReviewer) { chosenReviewer
-		 * = reviewer; break; } }
-		 * 
-		 * } else {
-		 * System.out.println(UIUtils.getText("message.naoTemReviewers")); }
-		 */
+		
+		 for (Conference conference : allConferences ){
+		 System.out.println(UIUtils.getText("message.conferenceInitials") + ": "+
+		 conference.getInitials() + UIUtils.getText("message.conferenceMembers") + ": "+
+		 conference.getCommitteeMembers()); } 
+		 String initialsConference = UIUtils.readString("message.insiraIdRevisor"); for (Researcher
+		 reviewer : allReviewers ){ boolean isChosenReviewer =
+		 reviewer.getId() == idReviewer; if(isChosenReviewer) { chosenReviewer= reviewer; break; } }
+		 
+		 } else {
+		 System.out.println(UIUtils.getText("message.naoTemReviewers")); }
+		 
 
 		return null;
 	}
