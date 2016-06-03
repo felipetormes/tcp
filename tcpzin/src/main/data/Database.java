@@ -145,7 +145,6 @@ public class Database {
 			} catch (NumberFormatException e) {
 				grade = NO_GRADE;
 			}
-			System.out.println(grade);
 			Review review = new Review(articleId, researcherPaper, grade);
 			reviews.add(review);
 			
