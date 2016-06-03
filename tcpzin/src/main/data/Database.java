@@ -111,7 +111,7 @@ public class Database {
 		}
 			Conference initialsConferences = new Conference(fields[3]);
 			String topicName = fields[4];
-			Paper paper = new Paper(id, title, authorPaper, new Topic(topicName), initialsConferences, null);
+			Paper paper = new Paper(id, title, authorPaper, new Topic(topicName), initialsConferences, new ArrayList<Review>());
 			papers.add(paper);
 		}
 		
@@ -124,13 +124,13 @@ public class Database {
 		List<String[]> csv_lines = readResourceCSV(ATTRIBUTIONS_FILE);
 		for (String[] fields : csv_lines) {
 			Researcher researcherPaper = null;
-			Paper articleId = null;
+			Paper paperOfReview = null;
 			int paperId = Integer.parseInt(fields[0]);
 			int reviewerId = Integer.parseInt(fields[1]);
 			List<Paper> allPapers = Database.papers;
 			for (Paper paper : allPapers) {
 				if (paper.getId() == paperId) {
-					articleId = paper;
+					paperOfReview = paper;
 				}
 			}
 			List<Researcher> allResearchers = Database.researchers;
@@ -145,8 +145,10 @@ public class Database {
 			} catch (NumberFormatException e) {
 				grade = NO_GRADE;
 			}
-			Review review = new Review(articleId, researcherPaper, grade);
+			Review review = new Review(paperOfReview, researcherPaper, grade);
+			paperOfReview.addReview(review);
 			reviews.add(review);
+			
 			
 		}
 		

@@ -54,7 +54,7 @@ public class Paper implements Comparable<Paper>{
 	}
 	
 	public void addReview(Review review) {
-		reviews.add(review);            // Add review in reviews list
+		this.reviews.add(review);            // Add review in reviews list
 
 	}
 	
