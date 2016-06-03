@@ -6,6 +6,7 @@ import main.business.domain.Paper;
 import main.business.domain.Researcher;
 import main.business.domain.Review;
 import main.business.impl.PapersManagementServiceImpl;
+import main.exceptions.BusinessDomainException;
 import main.ui.text.UIUtils;
 
 import java.util.Collections;
@@ -16,7 +17,7 @@ import java.lang.Comparable;
 import java.util.Comparator;
 
 public class PapersSelectionCommand implements ConferenceUICommand {
-
+	private boolean isChosenConference = false;
 	private PapersManagementService papersManagementService;
 
 	public PapersSelectionCommand(
@@ -32,32 +33,34 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 	}
 
 	private Conference readConference() {
-		// List<Conference> allConferences = null;
+
 		Conference chosenConference = null;
+		try {
+			chosenConference = null;
 
-		List<Conference> allConferences = papersManagementService
-				.getAllConferences();
+			List<Conference> allConferences = papersManagementService.getAllConferences();
 
-		System.out.println(allConferences);
 
-		// System.out.println(UIUtils.getText("message.todosReviewers"));
-
-		for (Conference conference : allConferences) {
-			System.out.println(UIUtils.getText("message.conferenceInitials")
-					+ ": " + conference.getInitials()
-					+ UIUtils.getText("message.conferenceMembers") + ": "
-					+ conference.getCommitteeMembers() + " ");
-		}
-		String initialsConference = UIUtils
-				.readString("message.insertConference");
-		for (Conference conference : allConferences) {
-			boolean isChosenConference = (conference.getInitials() == initialsConference);
-			if (isChosenConference) {
-				chosenConference = conference;
-				break;
-			} else {
-				System.out.println(UIUtils.getText("message.noConferences"));
+			for (Conference conference : allConferences) {
+				System.out.println(UIUtils.getText("message.conferenceInitials")
+						           + ": " + conference.getInitials()  + " "
+						           + UIUtils.getText("message.conferenceMembers") + ": "
+						           + conference.getCommitteeMembers());
 			}
+			String initialsConference = UIUtils.readString("message.insertConference");
+			for (Conference conference : allConferences) {
+				boolean isChosenConference = (conference.getInitials().contentEquals(initialsConference));
+				if (isChosenConference) {
+					chosenConference = conference;
+					break;
+				}
+			}
+			if (chosenConference == null) {
+				throw new BusinessDomainException(UIUtils.getText("exception.noConferences"));
+			}
+		} catch (BusinessDomainException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
 		}
 		return chosenConference;
 	}
