@@ -2,6 +2,7 @@ package main.ui.text;
 
 
 import main.business.PapersManagementService;
+import main.exceptions.InvalidInputException;
 import main.ui.ConferenceUI;
 import main.ui.text.command.ConferenceUICommand;
 import main.ui.text.command.PapersAllocationCommand;
@@ -33,20 +34,26 @@ public class ConferenceTextInterface extends ConferenceUI {
 	public void showUI() {
 		System.out.println(showMenu());
 		option = UIUtils.readString(UIUtils.getText("message.choose.option"));
-		if(option.contentEquals("A")){
-			conferenceUIcommand = new PapersAllocationCommand(papersManagementService);
-			conferenceUIcommand.execute();
-		}else{
-			if(option.contentEquals("T")){
-				conferenceUIcommand = new PapersGradesAttributionCommand(papersManagementService);
+		try {
+			if(option.contentEquals("A")){
+				conferenceUIcommand = new PapersAllocationCommand(papersManagementService);
 				conferenceUIcommand.execute();
 			}else{
-				if(option.contentEquals("S")){
-					conferenceUIcommand = new PapersSelectionCommand(papersManagementService);
+				if(option.contentEquals("T")){
+					conferenceUIcommand = new PapersGradesAttributionCommand(papersManagementService);
 					conferenceUIcommand.execute();
+				}else{
+					if(option.contentEquals("S")){
+						conferenceUIcommand = new PapersSelectionCommand(papersManagementService);
+						conferenceUIcommand.execute();
+					}else{
+						throw new InvalidInputException(UIUtils.getText("exception.formato.string"));
+					}
 				}
+				
 			}
-			
+		} catch (InvalidInputException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
