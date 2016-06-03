@@ -29,6 +29,7 @@ public class Database {
 	private static String CONFERENCES_FILE = "conferencias.csv";
 	private static String ARTICLES_FILE = "artigos.csv";
 	private static String ATTRIBUTIONS_FILE = "atribuicoes.csv";
+	private static double NO_GRADE = -10;
 
 	public Database(boolean initData) {
 		if (initData) {
@@ -45,7 +46,7 @@ public class Database {
 			researchers = initResearchers();
 			conferences = initConferences();
 			papers = initArticles();
-			reviews = null;
+			reviews = initAttributions();
 		} catch (InvalidNameException e) {
 			e.printStackTrace();
 		}
@@ -117,6 +118,42 @@ public class Database {
 		return papers;
 	}
 	
+	private static List<Review> initAttributions() {
+		List<Review> reviews = new ArrayList<Review>();
+		
+		List<String[]> csv_lines = readResourceCSV(ATTRIBUTIONS_FILE);
+		for (String[] fields : csv_lines) {
+			Researcher researcherPaper = null;
+			Paper articleId = null;
+			int paperId = Integer.parseInt(fields[0]);
+			int reviewerId = Integer.parseInt(fields[1]);
+			List<Paper> allPapers = Database.papers;
+			for (Paper paper : allPapers) {
+				if (paper.getId() == paperId) {
+					articleId = paper;
+				}
+			}
+			List<Researcher> allResearchers = Database.researchers;
+			for (Researcher researcher : allResearchers) {
+				if (researcher.getId() == reviewerId) {
+					researcherPaper = researcher;
+				}
+			}
+			double grade = 0;
+			try {
+				grade = Double.parseDouble(fields[2]);
+			} catch (NumberFormatException e) {
+				grade = NO_GRADE;
+			}
+			System.out.println(grade);
+			Review review = new Review(articleId, researcherPaper, grade);
+			reviews.add(review);
+			
+		}
+		
+		return reviews;
+	}
+	
 
 	public static List<Researcher> getResearchers() {
 		return researchers;
@@ -185,6 +222,12 @@ public class Database {
 		
 		for (Paper paper : papers) {
 			output += paper + "\n";
+		}
+		
+		output += "\nATTRIBUTIONS:\n";
+		
+		for (Review review : reviews) {
+			output += review + "\n";
 		}
 		
 		return output;

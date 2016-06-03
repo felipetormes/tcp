@@ -45,4 +45,14 @@ public class Review {
 	public boolean isPendingGrade() {
 		return isPending;
 	}
+	
+	@Override
+	public String toString() {
+		String output =
+				"artigo: " + getPaper().getId() +
+				", revisor: " + getReviewer().getId() +
+				", nota: " + getGrade();
+				
+	return output;
+	}
 }
