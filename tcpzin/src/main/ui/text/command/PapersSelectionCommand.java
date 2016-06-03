@@ -22,7 +22,9 @@ public class PapersSelectionCommand implements ConferenceUICommand{
 	}
 
 	public void execute(){
-
+		Conference conference = readConference();
+		Map<Paper, Boolean> papersMap = papersManagementService.selectPapersByAverage(conference);
+		showAccRejLists(papersMap);
 	}
 
 	private Conference readConference() {
