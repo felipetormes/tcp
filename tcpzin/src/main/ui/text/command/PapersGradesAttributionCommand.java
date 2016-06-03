@@ -13,10 +13,10 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand{
 
 	private PapersManagementService papersManagementService;
 
-	private PapersGradesAttributionCommand(PapersManagementService papersManagementService){
+	public PapersGradesAttributionCommand(PapersManagementService papersManagementService){
 		this.papersManagementService = papersManagementService;
 	}
-	
+	 
 
 	public void execute(){
 		Paper paper = readPaper();
@@ -30,8 +30,10 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand{
 	private Paper readPaper() {
 		Paper chosenPaper = null;
 		List<Paper> allPapers = papersManagementService.GetAllPapers();
-		System.out.println(UIUtils.getText("message.todosPapers"));
-		for (Paper paper : allPapers ){
+		
+		if(allPapers!=null){
+			System.out.println(UIUtils.getText("message.todosPapers"));
+			for (Paper paper : allPapers ){
 		System.out.println(UIUtils.getText("message.paperId") + ": "+  paper.getId() + UIUtils.getText("message.paperTitle") + ": "+  paper.getTitle());
 		}
 		int idPaper = UIUtils.readInteger("message.insiraIdPaper");
@@ -43,7 +45,9 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand{
 				break;
 			}
 		}
-		
+	}else {
+		System.out.println(UIUtils.getText("message.naoTemPapers"));
+	}
 		
 		return chosenPaper;
 	
@@ -53,6 +57,7 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand{
 		List<Researcher> allReviewers = null;
 		Researcher chosenReviewer = null;
 		List<Review> allPapersReviews = paper.getReviews();
+		if(allPapersReviews != null){
 		for (Review review : allPapersReviews){
 			allReviewers.add(review.getReviewer());			
 		}
@@ -72,7 +77,10 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand{
 			}
 		}
 		
-		
+		}
+		else {
+			System.out.println(UIUtils.getText("message.naoTemReviewers"));
+		}
 		
 		return null;
 	}
