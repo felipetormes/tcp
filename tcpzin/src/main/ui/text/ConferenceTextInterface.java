@@ -14,7 +14,7 @@ public class ConferenceTextInterface extends ConferenceUI {
 	private String option;
 	private ConferenceUICommand conferenceUIcommand;
 	private PapersManagementService papersManagementService;
-	ConferenceTextInterface(PapersManagementService papersManagementService){
+	public ConferenceTextInterface(PapersManagementService papersManagementService){
 		this.papersManagementService = papersManagementService;
 	}
 	public String showMenu() {
@@ -32,7 +32,7 @@ public class ConferenceTextInterface extends ConferenceUI {
 
 	public void showUI() {
 		System.out.println(showMenu());
-		option = UIUtils.readString(UIUtils.getText("message.choose.option") + ": ");
+		option = UIUtils.readString(UIUtils.getText("message.choose.option"));
 		if(option.contentEquals("A")){
 			conferenceUIcommand = new PapersAllocationCommand(papersManagementService);
 			conferenceUIcommand.execute();
