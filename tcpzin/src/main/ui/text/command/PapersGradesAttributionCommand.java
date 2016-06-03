@@ -22,11 +22,7 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand{
 		
 	}
 	
-	
-	
-	private void showAccRejLists(Map<Paper,Boolean> listsMap) {
-		
-	}
+
 
 	private Paper readPaper() {
 		Paper chosenPaper = null;
