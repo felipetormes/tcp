@@ -7,7 +7,7 @@ public class PapersAllocationCommand implements ConferenceUICommand{
 
 	private PapersManagementService papersManagementService;
 
-	public void PapersAllocationCommand(PapersManagementService papersManagementService) {
+	public PapersAllocationCommand(PapersManagementService papersManagementService) {
 		this.papersManagementService = papersManagementService;
 	}
 	

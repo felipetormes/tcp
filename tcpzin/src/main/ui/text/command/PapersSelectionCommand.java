@@ -17,7 +17,7 @@ public class PapersSelectionCommand implements ConferenceUICommand{
 
 	private PapersManagementService papersManagementService;
 
-	public void PapersSelectionCommand(PapersManagementService papersManagementService) {
+	public PapersSelectionCommand(PapersManagementService papersManagementService) {
 		this.papersManagementService = papersManagementService;
 	}
 
