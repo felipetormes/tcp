@@ -87,6 +87,7 @@ public class Paper implements Comparable<Paper>{
 
 	}
 	
+	@Override
 	public String toString() {
 		String output =
 				"id: " + String.valueOf(getId()) +

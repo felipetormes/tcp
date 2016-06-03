@@ -116,6 +116,7 @@ public class Database {
 		
 		return papers;
 	}
+	
 
 	public static List<Researcher> getResearchers() {
 		return researchers;
