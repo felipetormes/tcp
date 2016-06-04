@@ -7,7 +7,7 @@ public class Review {
 	private double grade;
 	
 	public Review(Paper paper, Researcher reviewer, double grade){
-		this.paper = paper;
+		this.setPaper(paper);
 		this.reviewer = reviewer;
 		this.setGrade(grade);
 		this.isPending = false;
@@ -19,6 +19,7 @@ public class Review {
 	}
 	
 	public void setPaper (Paper paper) {
+		paper.addReview(this);
 		this.paper = paper;
 	}
 	
