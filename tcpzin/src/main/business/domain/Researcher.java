@@ -1,13 +1,15 @@
 package main.business.domain;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Researcher implements Comparable<Researcher>{
 	private int id;
 	private String name;
 	private University affiliation;
 	private List<Topic> researchTopics;
-	private Role role;
+	private Map<Conference, Role> roles;
 	private static int lastId = 0;
 	
 	public Researcher(String name, University affiliation, List<Topic> researchTopics, int id) {
@@ -15,7 +17,8 @@ public class Researcher implements Comparable<Researcher>{
 		this.affiliation = affiliation;
 		this.researchTopics = researchTopics;
 		this.id = id;
-		
+		this.roles = new HashMap<Conference, Role>();
+
 		/* last id must always be the largest id */
 		lastId = (id > lastId)? id : lastId;
 	}
@@ -49,10 +52,6 @@ public class Researcher implements Comparable<Researcher>{
 	public List<Topic> getResearchTopics() {
 		return researchTopics;
 	}
-	
-	public void addRole (Role role) {
-		this.setRole(role);
-	}
 
 	@Override
 	public int compareTo(Researcher other) {
@@ -67,12 +66,16 @@ public class Researcher implements Comparable<Researcher>{
 		}
 	}
 
-	public Role getRole() {
-		return role;
+	public Map<Conference, Role> getRoles() {
+		return roles;
+	}
+	
+	public Role getRole(Conference conference) {
+		return roles.get(conference);
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void addRole(Conference conference, Role role) {
+		roles.put(conference, role);
 	}
 	
 	public String toString() {
