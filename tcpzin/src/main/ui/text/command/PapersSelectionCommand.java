@@ -8,11 +8,9 @@ import java.util.Map;
 import main.business.PapersManagementService;
 import main.business.domain.Conference;
 import main.business.domain.Paper;
-import main.exceptions.BusinessDomainException;
 import main.ui.text.UIUtils;
 
 public class PapersSelectionCommand implements ConferenceUICommand {
-	private boolean isChosenConference = false;
 	private PapersManagementService papersManagementService;
 
 	public PapersSelectionCommand(PapersManagementService papersManagementService) {
@@ -51,7 +49,6 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 	}
 
 	private void showAccRejLists(Map<Paper, Boolean> listsMap) {
-		List<Paper> allPapers = papersManagementService.getAllPapers();
 		List<Paper> rejectedList = new ArrayList<Paper>();
 		List<Paper> acceptedList = new ArrayList<Paper>();
 
