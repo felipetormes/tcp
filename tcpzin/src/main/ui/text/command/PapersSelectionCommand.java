@@ -52,20 +52,14 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 		List<Paper> acceptedList = new ArrayList<Paper>();
 
 		for (Map.Entry<Paper, Boolean> entry : listsMap.entrySet()) {
-			System.out.println(entry.getKey());
-			System.out.println(entry.getValue());
-		}
-		
-		for (Paper paper : allPapers) {
-			if (listsMap.get(paper) == null) {
-				System.out.println(paper);
+			Paper paper = entry.getKey();
+			Boolean accepted = entry.getValue();
+			
+			if (accepted) {
+				acceptedList.add(paper);
+			} else {
+				rejectedList.add(paper);
 			}
-
-//			if (isRejected) {
-//				rejectedList.add(paper);
-//			} else {
-//				acceptedList.add(paper);
-//			}
 		}
 
 		Collections.sort(rejectedList, Paper.descendingGradeComparator);
@@ -73,18 +67,12 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 
 		System.out.println(UIUtils.getText("message.artigosRejeitados"));
 		for (Paper rejPaper : rejectedList) {
-			System.out.println(UIUtils.getText("message.message.paperId")
-					+ ": " + rejPaper.getId()
-					+ UIUtils.getText("message.message.paperTitle") + ": "
-					+ rejPaper.getTitle());
+			System.out.println(rejPaper);
 
 		}
 		System.out.println(UIUtils.getText("message.artigosAceitos"));
 		for (Paper accPaper : acceptedList) {
-			System.out.println(UIUtils.getText("message.message.paperId")
-					+ ": " + accPaper.getId()
-					+ UIUtils.getText("message.message.paperTitle") + ": "
-					+ accPaper.getTitle());
+			System.out.println(accPaper);
 
 		}
 
