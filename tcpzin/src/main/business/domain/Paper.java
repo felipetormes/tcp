@@ -118,8 +118,8 @@ public class Paper implements Comparable<Paper>{
 		String output =
 				"id: " + String.valueOf(getId()) +
 				", titulo: " + getTitle() +
-				", autor: " + getAuthor().getId() +
-				", conferencias: " + getConference().getInitials() + 
+				", autor: " + getAuthor().getName() +
+				", conferencia: " + getConference().getInitials() + 
 				", topicos de pesquisa: " + getResearchTopic();
 				
 		return output;
