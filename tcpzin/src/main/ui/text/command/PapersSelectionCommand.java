@@ -1,27 +1,21 @@
 package main.ui.text.command;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 import main.business.PapersManagementService;
 import main.business.domain.Conference;
 import main.business.domain.Paper;
-import main.business.domain.Researcher;
-import main.business.domain.Review;
-import main.business.impl.PapersManagementServiceImpl;
 import main.exceptions.BusinessDomainException;
 import main.ui.text.UIUtils;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.lang.Comparable;
-import java.util.Comparator;
 
 public class PapersSelectionCommand implements ConferenceUICommand {
 	private boolean isChosenConference = false;
 	private PapersManagementService papersManagementService;
 
-	public PapersSelectionCommand(
-			PapersManagementService papersManagementService) {
+	public PapersSelectionCommand(PapersManagementService papersManagementService) {
 		this.papersManagementService = papersManagementService;
 	}
 
@@ -71,19 +65,21 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 
 	private void showAccRejLists(Map<Paper, Boolean> listsMap) {
 		List<Paper> allPapers = papersManagementService.GetAllPapers();
-		List<Paper> rejectedList = null;
-		List<Paper> acceptedList = null;
+		List<Paper> rejectedList = new ArrayList<Paper>();
+		List<Paper> acceptedList = new ArrayList<Paper>();
 
 		for (Paper paper : allPapers) {
 			boolean isRejected = (listsMap.get(paper) == false);
 			if (isRejected) {
 				rejectedList.add(paper);
-				Collections.sort(allPapers);
 			} else {
 				acceptedList.add(paper);
-				// TODO SORT OF LIST
 			}
 		}
+		
+		Collections.sort(rejectedList, Paper.descendingGradeComparator);
+		Collections.sort(acceptedList, Paper.ascendingGradeComparator);
+		
 		System.out.println(UIUtils.getText("message.artigosRejeitados"));
 		for (Paper rejPaper : rejectedList) {
 			System.out.println(UIUtils.getText("message.message.paperId")
