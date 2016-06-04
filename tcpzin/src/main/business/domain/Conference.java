@@ -61,4 +61,8 @@ public class Conference {
 		
 		return output;
 	}
+	
+	public int hashCode() {
+		return initials.hashCode();
+	}
 }
