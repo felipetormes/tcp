@@ -21,8 +21,7 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 
 	public void execute() {
 		Conference conference = readConference();
-		Map<Paper, Boolean> papersMap = papersManagementService
-				.selectPapersByAverage(conference);
+		Map<Paper, Boolean> papersMap = papersManagementService.selectPapersByAverage(conference);
 		showAccRejLists(papersMap);
 	}
 
@@ -47,18 +46,26 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 
 	}
 
-	private void showAccRejLists(Map<Paper, Boolean> listsMap) {
+	private void showAccRejLists(Map<Paper, Boolean> listsMap) {	
 		List<Paper> allPapers = papersManagementService.getAllPapers();
 		List<Paper> rejectedList = new ArrayList<Paper>();
 		List<Paper> acceptedList = new ArrayList<Paper>();
 
+		for (Map.Entry<Paper, Boolean> entry : listsMap.entrySet()) {
+			System.out.println(entry.getKey());
+			System.out.println(entry.getValue());
+		}
+		
 		for (Paper paper : allPapers) {
-			boolean isRejected = (listsMap.get(paper) == false);
-			if (isRejected) {
-				rejectedList.add(paper);
-			} else {
-				acceptedList.add(paper);
+			if (listsMap.get(paper) == null) {
+				System.out.println(paper);
 			}
+
+//			if (isRejected) {
+//				rejectedList.add(paper);
+//			} else {
+//				acceptedList.add(paper);
+//			}
 		}
 
 		Collections.sort(rejectedList, Paper.descendingGradeComparator);
