@@ -28,14 +28,18 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 
 	private Conference readConference() {
 		List<Conference> allConferences = papersManagementService.getAllConferences();
-		
-		for (int i = 0; i < allConferences.size(); i++) {
+		int numConferences = allConferences.size();
+
+		for (int i = 0; i < numConferences; i++) {
 			String option = String.valueOf(i + 1) + ". " + allConferences.get(i);
 			System.out.println(option);
 		}
-		
-		int chosen = UIUtils.readInteger("message.choose.option");
-		
+
+		int chosen = -1;
+		do {
+			chosen = UIUtils.readInteger("message.choose.option") - 1;
+		} while (chosen < 0 || chosen > numConferences);
+
 		return allConferences.get(chosen);
 	}
 
@@ -56,10 +60,10 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 				acceptedList.add(paper);
 			}
 		}
-		
+
 		Collections.sort(rejectedList, Paper.descendingGradeComparator);
 		Collections.sort(acceptedList, Paper.ascendingGradeComparator);
-		
+
 		System.out.println(UIUtils.getText("message.artigosRejeitados"));
 		for (Paper rejPaper : rejectedList) {
 			System.out.println(UIUtils.getText("message.message.paperId")
