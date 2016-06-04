@@ -31,6 +31,9 @@ public class Database {
 	private static double NO_GRADE = -10;
 
 	public Database(boolean initData) {
+		researchers = new HashMap<Integer, Researcher>();
+		conferences = new HashMap<String, Conference>();
+		papers = new HashMap<Integer, Paper>();
 		if (initData) {
 			initData();
 		}
