@@ -19,10 +19,12 @@ public class Conference {
 		 * members, then some grade is empty.
 		 */
 		for (Paper paper : papers) {
-			if (paper.getReviews().size() < committeeMembers.size()) {
-				return true;
+			List<Review> reviews = paper.getReviews();
+			for (Review review : reviews) {
+				if (review.isPendingGrade()) return true;
 			}
 		}
+		
 		return false;
 	}
 	
