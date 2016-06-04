@@ -40,7 +40,7 @@ public class Paper implements Comparable<Paper>{
 		this.title = title;
 		this.author = author;
 		this.researchTopic = researchTopic;
-		this.conference = conference;
+		this.setConference(conference);
 		this.reviews = reviews;
 		this.id = id;
 		
@@ -65,6 +65,7 @@ public class Paper implements Comparable<Paper>{
 	}
 	
 	public void setConference(Conference conference) {
+		conference.addPaper(this);
 		this.conference = conference;
 	}
 	
