@@ -17,6 +17,6 @@ public interface PapersManagementService {
 
 	public abstract List<Conference> getAllConferences();
 
-	public abstract List<Paper> GetAllPapers();
+	public abstract List<Paper> getAllPapers();
 
 }
