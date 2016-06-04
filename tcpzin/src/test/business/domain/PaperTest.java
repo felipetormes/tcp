@@ -74,4 +74,17 @@ public class PaperTest {
 			assertTrue(paper2id.get(paper) == paper.getId());
 		}
 	}
+	
+	@Test
+	public void testOrdering() {
+		Paper prev = papers.get(0);
+		for (int i = 1; i < papers.size(); i++) {
+			Paper curr = papers.get(i);
+			boolean ordered = (prev.compareTo(curr) > 0 && prev.getId() > curr.getId()) ||
+			                  (prev.compareTo(curr) < 0 && prev.getId() < curr.getId());
+
+			assertTrue(ordered);
+			prev = curr;
+		}
+	}
 }
