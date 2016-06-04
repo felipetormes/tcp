@@ -18,8 +18,11 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 		this.papersManagementService = papersManagementService;
 	}
 
+	/**
+	 * requests a paper, a reviewer and a grade from the user. then it creates
+	 * a review with those data.
+	 */
 	public void execute() {
-
 		try {
 			Paper paper = readPaper();
 			Researcher reviewer = readReviewer(paper);
