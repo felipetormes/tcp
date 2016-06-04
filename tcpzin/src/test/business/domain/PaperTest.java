@@ -25,24 +25,24 @@ public class PaperTest {
 
 		double grade = 0;
 		for (int i = 0; i < 20; i++) {
-		/* everything is null so I don't have to create a researcher,
-		 * topic, and conference for each paper and review. could/should
-		 * be added later for a complete test.
-		 */
+			/* everything is null so I don't have to create a researcher,
+			 * topic, and conference for each paper and review. could/should
+			 * be added later for a complete test.
+			 */
 			grade += (i*10)%7; /* not so random grade */
 			papers.add(i, new Paper(null, null, null));
 			reviews.add(i, new Review(papers.get(i), null, grade));
 		}
-		
+
 		for (Paper paper : papers) {
 			System.out.println(paper.getId());
 		}
 	}
-	
+
 	@Test
 	public void testComparatorAsc() {
 		Collections.sort(papers, Paper.ascendingGradeComparator);
-		
+
 		Double previousGrade = papers.get(0).getAverageGrade();
 		for (int i = 1; i < papers.size(); i++) {
 			Double currentGrade = papers.get(i).getAverageGrade();
@@ -50,11 +50,11 @@ public class PaperTest {
 			previousGrade = currentGrade;
 		}
 	}
-	
+
 	@Test
 	public void testComparatorDes() {
 		Collections.sort(papers, Paper.descendingGradeComparator);
-		
+
 		Double previousGrade = papers.get(0).getAverageGrade();
 		for (int i = 1; i < papers.size(); i++) {
 			Double currentGrade = papers.get(i).getAverageGrade();
@@ -62,14 +62,14 @@ public class PaperTest {
 			previousGrade = currentGrade;
 		}
 	}
-	
+
 	@Test
 	public void testHash() {
 		Map<Paper, Integer> paper2id = new HashMap<Paper, Integer>();
 		for (Paper paper : papers) {
 			paper2id.put(paper, paper.getId());
 		}
-		
+
 		for (Paper paper : papers) {
 			assertTrue(paper2id.get(paper) == paper.getId());
 		}
