@@ -65,7 +65,9 @@ public class Paper implements Comparable<Paper>{
 	}
 	
 	public void setConference(Conference conference) {
-		conference.addPaper(this);
+		if (conference != null) {
+			conference.addPaper(this);
+		}
 		this.conference = conference;
 	}
 	
