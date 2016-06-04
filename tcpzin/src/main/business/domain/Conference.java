@@ -15,9 +15,6 @@ public class Conference {
 	}
 	
 	public boolean hasEmptyGrade() {
-		/* if one paper has less reviews than this conference has committee
-		 * members, then some grade is empty.
-		 */
 		for (Paper paper : papers) {
 			List<Review> reviews = paper.getReviews();
 			for (Review review : reviews) {
