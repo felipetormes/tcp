@@ -7,11 +7,13 @@ public class Conference {
 	private String initials;
 	private List<Paper> papers;
 	private List<Researcher> committeeMembers;
+	private Boolean allocationDone;
 	
 	public Conference(String initials) {
 		this.initials = initials;
 		this.papers = new ArrayList<Paper>();
 		this.committeeMembers = new ArrayList<Researcher>();
+		allocationDone = false;
 	}
 	
 	public boolean hasEmptyGrade() {
@@ -40,6 +42,10 @@ public class Conference {
 	
 	public List<Paper> getPapers() {
 		return papers;
+	}
+	
+	public Boolean allocationDone() {
+		return allocationDone;
 	}
 	
 	public List<Researcher> getCommitteeMembers() {
