@@ -41,7 +41,6 @@ public class PapersManagementServiceImpl  implements PapersManagementService {
 	 * @see PapersManagementService#setGradeToPaper(Paper, Reviewer, Double)
 	 */
 	public void setGradeToPaper(Paper paper, Researcher reviewer, Double grade) {
-		//TODO Revisar se � assim mesmo
 		Review review = new Review(paper,reviewer,grade);
 		paper.addReview(review);
 	}
