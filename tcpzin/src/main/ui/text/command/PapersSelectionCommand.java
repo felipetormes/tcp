@@ -46,7 +46,7 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 
 	}
 
-	private void showAccRejLists(Map<Paper, Boolean> listsMap) {	
+	private void showAccRejLists(Map<Paper, Boolean> listsMap) {
 		List<Paper> allPapers = papersManagementService.getAllPapers();
 		List<Paper> rejectedList = new ArrayList<Paper>();
 		List<Paper> acceptedList = new ArrayList<Paper>();
@@ -54,7 +54,7 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 		for (Map.Entry<Paper, Boolean> entry : listsMap.entrySet()) {
 			Paper paper = entry.getKey();
 			Boolean accepted = entry.getValue();
-			
+
 			if (accepted) {
 				acceptedList.add(paper);
 			} else {

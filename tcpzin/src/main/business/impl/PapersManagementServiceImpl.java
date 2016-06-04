@@ -42,7 +42,7 @@ public class PapersManagementServiceImpl  implements PapersManagementService {
 	 */
 	public void setGradeToPaper(Paper paper, Researcher reviewer, Double grade) {
 		//TODO Revisar se � assim mesmo
-		Review review = new Review(paper,reviewer,grade);	
+		Review review = new Review(paper,reviewer,grade);
 		paper.addReview(review);
 	}
 
@@ -55,7 +55,7 @@ public class PapersManagementServiceImpl  implements PapersManagementService {
 
 		if (!conference.hasEmptyGrade()) {
 			List<Paper> papers = conference.getPapers();
-			
+
 			for (Paper paper : papers) {
 				double grade = paper.getAverageGrade();
 				accepted.put(paper, grade >= 0);
