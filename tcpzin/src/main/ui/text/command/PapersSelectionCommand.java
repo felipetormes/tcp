@@ -27,36 +27,16 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 	}
 
 	private Conference readConference() {
-
-		Conference chosenConference = null;
-		try {
-			chosenConference = null;
-
-			List<Conference> allConferences = papersManagementService.getAllConferences();
-
-
-			for (Conference conference : allConferences) {
-				System.out.println(UIUtils.getText("message.conferenceInitials")
-						           + ": " + conference.getInitials()  + " "
-						           + UIUtils.getText("message.conferenceMembers") + ": "
-						           + conference.getCommitteeMembers());
-			}
-			String initialsConference = UIUtils.readString("message.insertConference");
-			for (Conference conference : allConferences) {
-				boolean isChosenConference = (conference.getInitials().contentEquals(initialsConference));
-				if (isChosenConference) {
-					chosenConference = conference;
-					break;
-				}
-			}
-			if (chosenConference == null) {
-				throw new BusinessDomainException(UIUtils.getText("exception.noConferences"));
-			}
-		} catch (BusinessDomainException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
+		List<Conference> allConferences = papersManagementService.getAllConferences();
+		
+		for (int i = 0; i < allConferences.size(); i++) {
+			String option = String.valueOf(i + 1) + ". " + allConferences.get(i);
+			System.out.println(option);
 		}
-		return chosenConference;
+		
+		int chosen = UIUtils.readInteger("message.choose.option");
+		
+		return allConferences.get(chosen);
 	}
 
 	private void showGradeMissingAlert() {
