@@ -27,10 +27,14 @@ public class Conference {
 	
 	public void addCommitteeMember(Researcher member) {
 		committeeMembers.add(member);
+		Role role = new CommitteeMemberRole();
+		member.addRole(this, role);
 	}
 	
 	public void addPaper(Paper paper) {
 		papers.add(paper);
+		Role role = new ResearcherRole();
+		paper.getAuthor().addRole(this, role);
 	}
 	
 	public String getInitials() {
