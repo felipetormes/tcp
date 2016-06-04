@@ -22,7 +22,11 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 	public void execute() {
 		Conference conference = readConference();
 		Map<Paper, Boolean> papersMap = papersManagementService.selectPapersByAverage(conference);
-		showAccRejLists(papersMap);
+		if (papersMap.isEmpty()) {
+			showGradeMissingAlert();
+		} else {
+			showAccRejLists(papersMap);
+		}
 	}
 
 	private Conference readConference() {
@@ -43,7 +47,7 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 	}
 
 	private void showGradeMissingAlert() {
-
+		System.out.println(UIUtils.getText("alert.pendingRevisions"));
 	}
 
 	private void showAccRejLists(Map<Paper, Boolean> listsMap) {
