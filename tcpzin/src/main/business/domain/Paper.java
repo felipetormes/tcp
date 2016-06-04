@@ -1,6 +1,7 @@
 package main.business.domain;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Paper implements Comparable<Paper>{
@@ -12,6 +13,28 @@ public class Paper implements Comparable<Paper>{
 	private List<Review> reviews;
 	
 	private static int lastId = 0;
+	
+	public static Comparator<Paper> ascendingGradeComparator = new Comparator<Paper>() {
+		public int compare(Paper p, Paper q) {
+			Double diff = p.getAverageGrade() - q.getAverageGrade();
+			if (diff > 0) {
+				return 1;
+			} else {
+				return -1;
+			}
+		}
+	};
+	
+	public static Comparator<Paper> descendingGradeComparator = new Comparator<Paper>() {
+		public int compare(Paper p, Paper q) {
+			Double diff = p.getAverageGrade() - q.getAverageGrade();
+			if (diff < 0) {
+				return 1;
+			} else {
+				return -1;
+			}
+		}
+	};
 	
 	public Paper(int id, String title, Researcher author, Topic researchTopic, Conference conference, List<Review> reviews) {
 		this.title = title;
@@ -96,7 +119,7 @@ public class Paper implements Comparable<Paper>{
 				", conferencias: " + getConference().getInitials() + 
 				", topicos de pesquisa: " + getResearchTopic();
 				
-	return output;
+		return output;
 	}
 	
 	public boolean equals(Object obj) {
