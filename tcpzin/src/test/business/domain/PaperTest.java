@@ -15,11 +15,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class PaperTest {
-	List<Paper> papers = new ArrayList<Paper>();
-	List<Review> reviews= new ArrayList<Review>();
+	List<Paper> papers;
+	List<Review> reviews;
 
 	@Before
 	public void setup() {
+		papers = new ArrayList<Paper>();
+		reviews = new ArrayList<Review>();
+
 		double grade = 0;
 		for (int i = 0; i < 20; i++) {
 		/* everything is null so I don't have to create a researcher,
