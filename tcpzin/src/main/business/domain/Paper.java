@@ -99,6 +99,14 @@ public class Paper implements Comparable<Paper>{
         
 	}
 
+	public boolean hasPendingReviews() {
+		for (Review review : reviews) {
+			if (review.isPendingGrade()) return true;
+		}
+		
+		return false;
+	}
+	
 	@Override
 	public int compareTo(Paper other) {
 			if (this.getId() > other.getId()){

@@ -16,10 +16,7 @@ public class Conference {
 	
 	public boolean hasEmptyGrade() {
 		for (Paper paper : papers) {
-			List<Review> reviews = paper.getReviews();
-			for (Review review : reviews) {
-				if (review.isPendingGrade()) return true;
-			}
+			if (paper.hasPendingReviews()) return true;
 		}
 		
 		return false;
