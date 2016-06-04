@@ -35,7 +35,7 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 
 	private Paper readPaper() throws BusinessDomainException{
 		Paper chosenPaper = null;
-		List<Paper> allPapers = papersManagementService.GetAllPapers();
+		List<Paper> allPapers = papersManagementService.getAllPapers();
 		if (allPapers != null) {
 			System.out.println(UIUtils.getText("message.todosPapers"));
 			for (Paper paper : allPapers) {

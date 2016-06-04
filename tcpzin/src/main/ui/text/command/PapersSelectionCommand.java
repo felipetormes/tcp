@@ -64,7 +64,7 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 	}
 
 	private void showAccRejLists(Map<Paper, Boolean> listsMap) {
-		List<Paper> allPapers = papersManagementService.GetAllPapers();
+		List<Paper> allPapers = papersManagementService.getAllPapers();
 		List<Paper> rejectedList = new ArrayList<Paper>();
 		List<Paper> acceptedList = new ArrayList<Paper>();
 
