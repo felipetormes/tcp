@@ -5,13 +5,12 @@ import java.util.ArrayList;
 public class ReviewerRole extends Role {
 	private List<Review> reviews;
 	
-	public ReviewerRole(Conference conference, List<Review> reviews) {
-		super(conference);
+	public ReviewerRole(List<Review> reviews) {
 		this.reviews = reviews;
 	}
 	
-	public ReviewerRole(Conference conference) {
-		this(conference, new ArrayList<Review>());
+	public ReviewerRole() {
+		this(new ArrayList<Review>());
 	}
 	
 	public void addReview(Review review) {
