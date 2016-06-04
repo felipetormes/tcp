@@ -77,7 +77,7 @@ public class PapersManagementServiceImpl  implements PapersManagementService {
 	/**
 	 * @see PapersManagementService#GetAllPapers()
 	 */
-	public List<Paper> GetAllPapers() {
+	public List<Paper> getAllPapers() {
 		return Database.getPapers();
 	}
 

@@ -49,10 +49,15 @@ public class Conference {
 	public String toString() {
 		String output =
 				"initials: " + getInitials() +
-				", committee members ids:";
+				", committee members ids: ";
 		
 		for (Researcher researcher : getCommitteeMembers()) {
 			output += researcher.getId() + "/";
+		}
+		
+		output += ", papers: ";
+		for (Paper paper : papers) {
+			output += paper.getTitle() + "/";
 		}
 		
 		return output;
