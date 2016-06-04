@@ -20,9 +20,13 @@ public class PaperTest {
 	public void setup() {
 		double grade = 0;
 		for (int i = 0; i < 20; i++) {
-			grade += (i*10)%7;
-			papers.add(new Paper(null, null, null));
-			reviews.add(new Review(papers.get(i), null, grade));
+		/* everything is null so I don't have to create a researcher,
+		 * topic, and conference for each paper and review. could/should
+		 * be added later for a complete test.
+		 */
+			grade += (i*10)%7; /* not so random grade */
+			papers.add(i, new Paper(null, null, null));
+			reviews.add(i, new Review(papers.get(i), null, grade));
 		}
 	}
 	
@@ -30,11 +34,11 @@ public class PaperTest {
 	public void testComparatorAsc() {
 		Collections.sort(papers, Paper.ascendingGradeComparator);
 		
-		Double prev = papers.get(0).getAverageGrade();
+		Double previousGrade = papers.get(0).getAverageGrade();
 		for (int i = 1; i < papers.size(); i++) {
-			Double curr = papers.get(i).getAverageGrade();
-			assertTrue(prev <= curr);
-			prev = curr;
+			Double currentGrade = papers.get(i).getAverageGrade();
+			assertTrue(previousGrade <= currentGrade);
+			previousGrade = currentGrade;
 		}
 	}
 	
@@ -42,11 +46,11 @@ public class PaperTest {
 	public void testComparatorDes() {
 		Collections.sort(papers, Paper.descendingGradeComparator);
 		
-		Double prev = papers.get(0).getAverageGrade();
+		Double previousGrade = papers.get(0).getAverageGrade();
 		for (int i = 1; i < papers.size(); i++) {
-			Double curr = papers.get(i).getAverageGrade();
-			assertTrue(prev >= curr);
-			prev = curr;
+			Double currentGrade = papers.get(i).getAverageGrade();
+			assertTrue(previousGrade >= currentGrade);
+			previousGrade = currentGrade;
 		}
 	}
 }
