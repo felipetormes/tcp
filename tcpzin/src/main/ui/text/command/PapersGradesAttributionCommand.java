@@ -37,7 +37,7 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 		Paper chosenPaper = null;
 		List<Paper> allPapers = papersManagementService.GetAllPapers();
 		if (allPapers != null) {
-			System.out.println(UIUtils.getText("message.todosPapers"));
+			System.out.println(UIUtils.getText("message.todosPapers") + " ");
 			for (Paper paper : allPapers) {
 				System.out.println(UIUtils.getText("message.paperId") + ": "
 						+ paper.getId() + UIUtils.getText("message.paperTitle")
