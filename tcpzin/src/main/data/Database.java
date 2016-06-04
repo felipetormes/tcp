@@ -7,24 +7,23 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import main.business.domain.Conference;
 import main.business.domain.Paper;
 import main.business.domain.Researcher;
 import main.business.domain.Review;
-
-/* to build researchers: */
 import main.business.domain.Topic;
 import main.business.domain.University;
-
 import main.exceptions.InvalidNameException;
+/* to build researchers: */
 
 public class Database {
-	private static List<Researcher> researchers;
-	private static List<Conference> conferences;
-	private static List<Paper> papers;
-	private static List<Review> reviews;
+	private static Map<Integer, Researcher> researchers;
+	private static Map<String, Conference> conferences;
+	private static Map<Integer, Paper> papers;
 	private static String RESEARCHERS_FILE = "pesquisadores.csv";
 	private static String CONFERENCES_FILE = "conferencias.csv";
 	private static String ARTICLES_FILE = "artigos.csv";
@@ -45,19 +44,19 @@ public class Database {
 		try {
 			researchers = initResearchers();
 			conferences = initConferences();
-			papers = initArticles();
-			reviews = initAttributions();
+			papers = initPapers();
+			initAttributions();
 		} catch (InvalidNameException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	private static List<Researcher> initResearchers() throws InvalidNameException {
-		List<Researcher> researchers = new ArrayList<Researcher>();
-		
+
+	private static Map<Integer, Researcher> initResearchers() throws InvalidNameException {
 		List<String[]> csv_lines = readResourceCSV(RESEARCHERS_FILE);
+
+		Map<Integer, Researcher> researchers = new HashMap<Integer, Researcher>();
 		for (String[] fields : csv_lines) {
-			int id = Integer.parseInt(fields[0]);
+			Integer id = Integer.parseInt(fields[0]);
 			String name = fields[1];
 			University affiliation = new University(fields[2]);
 			List<Topic> topics = new ArrayList<Topic>();
@@ -65,121 +64,92 @@ public class Database {
 			while (i < fields.length) {
 				topics.add(new Topic(fields[i++]));
 			}
-			
-			researchers.add(new Researcher(name, affiliation, topics, id));
+
+			researchers.put(id, new Researcher(name, affiliation, topics));
 		}
-		
+
 		return researchers;
 	}
-	
-	private static List<Conference> initConferences() {
-		List<Conference> conferences = new ArrayList<Conference>();
-		
+
+	private static Map<String, Conference> initConferences() {
 		List<String[]> csv_lines = readResourceCSV(CONFERENCES_FILE);
+
+		Map<String, Conference> conferences = new HashMap<String, Conference>();
 		for (String[] fields : csv_lines) {
 			String initials = fields[0];
-			
 			Conference conference = new Conference(initials);
-			
 			int i = 1;
 			while (i < fields.length) {
-				int id = Integer.parseInt(fields[i]);
+				int id = Integer.parseInt(fields[i++]);
 				conference.addCommitteeMember(getResearcherById(id));
-				i++;
 			}
-			
-			conferences.add(conference);
+
+			conferences.put(conference.getInitials(), conference);
 		}
-		
+
 		return conferences;
 	}
-	
-	private static List<Paper> initArticles() throws InvalidNameException {
-		List<Paper> papers = new ArrayList<Paper>();
-		
+
+	private static Map<Integer, Paper> initPapers() throws InvalidNameException {
 		List<String[]> csv_lines = readResourceCSV(ARTICLES_FILE);
+
+		Map<Integer, Paper> papers = new HashMap<Integer, Paper>();
 		for (String[] fields : csv_lines) {
-			Researcher authorPaper = null;
 			int id = Integer.parseInt(fields[0]);
 			String title = fields[1];
 			int authorId = Integer.parseInt(fields[2]);
-			List<Researcher> allResearchers = Database.researchers;
-			for (Researcher author : allResearchers) {
-				if (author.getId() == authorId) {
-					authorPaper = author;
-			}
-		}
-			Conference initialsConferences = new Conference(fields[3]);
+			String conferenceInitials = fields[3];
 			String topicName = fields[4];
-			Paper paper = new Paper(id, title, authorPaper, new Topic(topicName), initialsConferences, new ArrayList<Review>());
-			papers.add(paper);
+
+			Conference conference = getConferenceByInitials(conferenceInitials);
+			Researcher author = getResearcherById(authorId);
+
+			Paper paper = new Paper(id, title, author, new Topic(topicName), conference, new ArrayList<Review>());
+			papers.put(paper.getId(), paper);
 		}
-		
+
 		return papers;
 	}
-	
-	private static List<Review> initAttributions() {
-		List<Review> reviews = new ArrayList<Review>();
-		
+
+	private static void initAttributions() {
 		List<String[]> csv_lines = readResourceCSV(ATTRIBUTIONS_FILE);
 		for (String[] fields : csv_lines) {
-			Researcher researcherPaper = null;
-			Paper paperOfReview = null;
-			int paperId = Integer.parseInt(fields[0]);
-			int reviewerId = Integer.parseInt(fields[1]);
-			List<Paper> allPapers = Database.papers;
-			for (Paper paper : allPapers) {
-				if (paper.getId() == paperId) {
-					paperOfReview = paper;
-				}
+			Integer paperId = Integer.parseInt(fields[0]);
+			Integer reviewerId = Integer.parseInt(fields[1]);
+
+			Paper paper = getPaperById(paperId);
+			Researcher reviewer = getResearcherById(reviewerId);
+
+			if (fields[2].equals("")) {
+				new Review(paper, reviewer); /* automatically associated to paper in constructor */
+			} else {
+				new Review(paper, reviewer, Double.parseDouble(fields[2]));
 			}
-			List<Researcher> allResearchers = Database.researchers;
-			for (Researcher researcher : allResearchers) {
-				if (researcher.getId() == reviewerId) {
-					researcherPaper = researcher;
-				}
-			}
-			double grade = 0;
-			try {
-				grade = Double.parseDouble(fields[2]);
-			} catch (NumberFormatException e) {
-				grade = NO_GRADE;
-			}
-			Review review = new Review(paperOfReview, researcherPaper, grade);
-			paperOfReview.addReview(review);
-			reviews.add(review);
-			
-			
 		}
-		
-		return reviews;
 	}
-	
+
+	public static Researcher getResearcherById(int id) {
+		return researchers.get(id);
+	}
+
+	public static Conference getConferenceByInitials(String initials) {
+		return conferences.get(initials);
+	}
+
+	public static Paper getPaperById(int id) {
+		return papers.get(id);
+	}
 
 	public static List<Researcher> getResearchers() {
-		return researchers;
-	}
-	
-	public static Researcher getResearcherById(int id) {
-		for (Researcher researcher : researchers) {
-			if (researcher.getId() == id) {
-				return researcher;
-			}
-		}
-		
-		return null;
+		return new ArrayList<Researcher>(researchers.values());
 	}
 
 	public static List<Conference> getConferences() {
-		return conferences;
+		return new ArrayList<Conference>(conferences.values());
 	}
 
 	public static List<Paper> getPapers() {
-		return papers;
-	}
-
-	public static List<Review> getReviews() {
-		return reviews;
+		return new ArrayList<Paper>(papers.values());
 	}
 
 	private static List<String[]> readResourceCSV(String filename) {
@@ -190,47 +160,39 @@ public class Database {
 			FileInputStream fis;
 			fis = new FileInputStream(fin);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-			
+
 			String line = null;
 			while ((line = br.readLine()) != null) {
 				String[] fields = line.split(",", -1); /* -1 to not ignore empty fields */
 				lines.add(fields);
 			}
-			
+
 			br.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return lines;
 	}
-	
+
 	public String toString() {
-		String output = "\nRESEARCHERS\n"; 
-		for (Researcher researcher : researchers) {
-			output += researcher + "\n";
+		String output = "\nRESEARCHERS\n";
+		for (Map.Entry<Integer, Researcher> entry : researchers.entrySet()) {
+			output += entry.getValue() + "\n";
 		}
-		
+
 		output += "\nCONFERENCES:\n";
-		
-		for (Conference conference : conferences) {
-			output += conference + "\n";
+		for (Map.Entry<String, Conference> entry : conferences.entrySet()) {
+			output += entry.getValue() + "\n";
 		}
-		
+
 		output += "\nPAPERS:\n";
-		
-		for (Paper paper : papers) {
-			output += paper + "\n";
+		for (Map.Entry<Integer, Paper> entry : papers.entrySet()) {
+			output += entry.getValue() + "\n";
 		}
-		
-		output += "\nATTRIBUTIONS:\n";
-		
-		for (Review review : reviews) {
-			output += review + "\n";
-		}
-		
+
 		return output;
 	}
 }
