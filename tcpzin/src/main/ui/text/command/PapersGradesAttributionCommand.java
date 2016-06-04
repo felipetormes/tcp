@@ -14,8 +14,7 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 
 	private PapersManagementService papersManagementService;
 
-	public PapersGradesAttributionCommand(
-			PapersManagementService papersManagementService) {
+	public PapersGradesAttributionCommand(PapersManagementService papersManagementService) {
 		this.papersManagementService = papersManagementService;
 	}
 
@@ -31,7 +30,7 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 		}
 	}
 
-	private Paper readPaper() throws BusinessDomainException{
+	private Paper readPaper() throws BusinessDomainException {
 		List<Paper> allPapers = papersManagementService.getAllPapers();
 
 		Paper paper = (Paper) UIUtils.chooseFromList(allPapers);
