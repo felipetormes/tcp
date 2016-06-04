@@ -39,7 +39,7 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 	private Conference readConference() {
 		List<Conference> allConferences = papersManagementService.getAllConferences();
 	
-		Conference conference = (Conference) UIUtils.chooseFromList(allConferences);
+		Conference conference = UIUtils.chooseFromList(allConferences);
 		
 		return conference;
 	}

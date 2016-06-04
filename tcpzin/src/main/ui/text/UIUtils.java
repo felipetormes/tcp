@@ -83,7 +83,7 @@ public class UIUtils {
 		return value;
 	}
 
-	public static Object chooseFromList(List<? extends Object> list) {
+	public static <T> T chooseFromList(List<T> list) {
 		int numItems = list.size();
 
 		for (int i = 0; i < numItems; i++) {

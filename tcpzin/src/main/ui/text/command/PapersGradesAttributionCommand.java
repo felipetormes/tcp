@@ -36,7 +36,7 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 	private Paper readPaper() throws BusinessDomainException {
 		List<Paper> allPapers = papersManagementService.getAllPapers();
 
-		Paper paper = (Paper) UIUtils.chooseFromList(allPapers);
+		Paper paper = UIUtils.chooseFromList(allPapers);
 
 		return paper;
 	}
@@ -49,7 +49,7 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 			possibleReviewers.add(review.getReviewer());
 		}
 
-		Researcher reviewer = (Researcher) UIUtils.chooseFromList(possibleReviewers);
+		Researcher reviewer = UIUtils.chooseFromList(possibleReviewers);
 
 		return reviewer;
 	}
