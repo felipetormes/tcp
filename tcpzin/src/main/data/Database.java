@@ -21,141 +21,73 @@ import main.exceptions.InvalidNameException;
 /* to build researchers: */
 
 public class Database {
-	private static Map<Integer, Researcher> researchers;
-	private static Map<String, Conference> conferences;
-	private static Map<Integer, Paper> papers;
-	private static String RESEARCHERS_FILE = "pesquisadores.csv";
-	private static String CONFERENCES_FILE = "conferencias.csv";
-	private static String ARTICLES_FILE = "artigos.csv";
-	private static String ATTRIBUTIONS_FILE = "atribuicoes.csv";
-	private static double NO_GRADE = -10;
+	private Map<Integer, Researcher> researchers;
+	private Map<String, Conference> conferences;
+	private Map<Integer, Paper> papers;
 
-	public Database(boolean initData) {
+	public Database(boolean initData,
+			        String researchersFile,
+			        String conferencesFile,
+			        String articlesFile,
+			        String attributionsFile) {
 		researchers = new HashMap<Integer, Researcher>();
 		conferences = new HashMap<String, Conference>();
 		papers = new HashMap<Integer, Paper>();
 		if (initData) {
-			initData();
+			initData(researchersFile,
+			         researchersFile,
+			         articlesFile,
+			         attributionsFile);
 		}
+	}
+	
+	public Database(boolean initData) {
+		this(initData, "pesquisadores.csv", "conferencias.csv", "artigos.csv", "atribuicoes.csv");
 	}
 
 	public Database() {
 		this(true);
 	}
 
-	private static void initData() {
+	private void initData(String researchersFile,
+	                             String conferencesFile,
+	                             String articlesFile,
+	                             String attributionsFile) {
 		try {
-			researchers = initResearchers();
-			conferences = initConferences();
-			papers = initPapers();
-			initAttributions();
+			researchers = initResearchers(researchersFile);
+			conferences = initConferences(conferencesFile);
+			papers = initPapers(articlesFile);
+			initAttributions(attributionsFile);
 		} catch (InvalidNameException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static Map<Integer, Researcher> initResearchers() throws InvalidNameException {
-		List<String[]> csv_lines = readResourceCSV(RESEARCHERS_FILE);
-
-		Map<Integer, Researcher> researchers = new HashMap<Integer, Researcher>();
-		for (String[] fields : csv_lines) {
-			Integer id = Integer.parseInt(fields[0]);
-			String name = fields[1];
-			University affiliation = new University(fields[2]);
-			List<Topic> topics = new ArrayList<Topic>();
-			int i = 3;
-			while (i < fields.length) {
-				topics.add(new Topic(fields[i++]));
-			}
-
-			researchers.put(id, new Researcher(name, affiliation, topics));
-		}
-
-		return researchers;
-	}
-
-	private static Map<String, Conference> initConferences() {
-		List<String[]> csv_lines = readResourceCSV(CONFERENCES_FILE);
-
-		Map<String, Conference> conferences = new HashMap<String, Conference>();
-		for (String[] fields : csv_lines) {
-			String initials = fields[0];
-			Conference conference = new Conference(initials);
-			int i = 1;
-			while (i < fields.length) {
-				int id = Integer.parseInt(fields[i++]);
-				conference.addCommitteeMember(getResearcherById(id));
-			}
-
-			conferences.put(conference.getInitials(), conference);
-		}
-
-		return conferences;
-	}
-
-	private static Map<Integer, Paper> initPapers() throws InvalidNameException {
-		List<String[]> csv_lines = readResourceCSV(ARTICLES_FILE);
-
-		Map<Integer, Paper> papers = new HashMap<Integer, Paper>();
-		for (String[] fields : csv_lines) {
-			int id = Integer.parseInt(fields[0]);
-			String title = fields[1];
-			int authorId = Integer.parseInt(fields[2]);
-			String conferenceInitials = fields[3];
-			String topicName = fields[4];
-
-			Conference conference = getConferenceByInitials(conferenceInitials);
-			Researcher author = getResearcherById(authorId);
-
-			Paper paper = new Paper(id, title, author, new Topic(topicName), conference, new ArrayList<Review>());
-			papers.put(paper.getId(), paper);
-		}
-
-		return papers;
-	}
-
-	private static void initAttributions() {
-		List<String[]> csv_lines = readResourceCSV(ATTRIBUTIONS_FILE);
-		for (String[] fields : csv_lines) {
-			Integer paperId = Integer.parseInt(fields[0]);
-			Integer reviewerId = Integer.parseInt(fields[1]);
-
-			Paper paper = getPaperById(paperId);
-			Researcher reviewer = getResearcherById(reviewerId);
-
-			if (fields[2].equals("")) {
-				new Review(paper, reviewer); /* automatically associated to paper in constructor */
-			} else {
-				new Review(paper, reviewer, Double.parseDouble(fields[2]));
-			}
-		}
-	}
-
-	public static Researcher getResearcherById(int id) {
+	public Researcher getResearcherById(int id) {
 		return researchers.get(id);
 	}
 
-	public static Conference getConferenceByInitials(String initials) {
+	public Conference getConferenceByInitials(String initials) {
 		return conferences.get(initials);
 	}
 
-	public static Paper getPaperById(int id) {
+	public Paper getPaperById(int id) {
 		return papers.get(id);
 	}
 
-	public static List<Researcher> getResearchers() {
+	public List<Researcher> getResearchers() {
 		return new ArrayList<Researcher>(researchers.values());
 	}
 
-	public static List<Conference> getConferences() {
+	public List<Conference> getConferences() {
 		return new ArrayList<Conference>(conferences.values());
 	}
 
-	public static List<Paper> getPapers() {
+	public List<Paper> getPapers() {
 		return new ArrayList<Paper>(papers.values());
 	}
 
-	private static List<String[]> readResourceCSV(String filename) {
+	private List<String[]> readResourceCSV(String filename) {
 		List<String[]> lines = new ArrayList<String[]>();
 
 		try {
@@ -178,6 +110,83 @@ public class Database {
 		}
 
 		return lines;
+	}
+
+	private Map<Integer, Researcher> initResearchers(String researchersFile) throws InvalidNameException {
+		List<String[]> csv_lines = readResourceCSV(researchersFile);
+
+		Map<Integer, Researcher> researchers = new HashMap<Integer, Researcher>();
+		for (String[] fields : csv_lines) {
+			Integer id = Integer.parseInt(fields[0]);
+			String name = fields[1];
+			University affiliation = new University(fields[2]);
+			List<Topic> topics = new ArrayList<Topic>();
+			int i = 3;
+			while (i < fields.length) {
+				topics.add(new Topic(fields[i++]));
+			}
+
+			researchers.put(id, new Researcher(name, affiliation, topics));
+		}
+
+		return researchers;
+	}
+
+	private Map<String, Conference> initConferences(String conferencesFile) {
+		List<String[]> csv_lines = readResourceCSV(conferencesFile);
+
+		Map<String, Conference> conferences = new HashMap<String, Conference>();
+		for (String[] fields : csv_lines) {
+			String initials = fields[0];
+			Conference conference = new Conference(initials);
+			int i = 1;
+			while (i < fields.length) {
+				int id = Integer.parseInt(fields[i++]);
+				conference.addCommitteeMember(getResearcherById(id));
+			}
+
+			conferences.put(conference.getInitials(), conference);
+		}
+
+		return conferences;
+	}
+
+	private Map<Integer, Paper> initPapers(String articlesFile) throws InvalidNameException {
+		List<String[]> csv_lines = readResourceCSV(articlesFile);
+
+		Map<Integer, Paper> papers = new HashMap<Integer, Paper>();
+		for (String[] fields : csv_lines) {
+			int id = Integer.parseInt(fields[0]);
+			String title = fields[1];
+			int authorId = Integer.parseInt(fields[2]);
+			String conferenceInitials = fields[3];
+			String topicName = fields[4];
+
+			Conference conference = getConferenceByInitials(conferenceInitials);
+			Researcher author = getResearcherById(authorId);
+
+			Paper paper = new Paper(id, title, author, new Topic(topicName), conference, new ArrayList<Review>());
+			papers.put(paper.getId(), paper);
+		}
+
+		return papers;
+	}
+
+	private void initAttributions(String attributionsFile) {
+		List<String[]> csv_lines = readResourceCSV(attributionsFile);
+		for (String[] fields : csv_lines) {
+			Integer paperId = Integer.parseInt(fields[0]);
+			Integer reviewerId = Integer.parseInt(fields[1]);
+
+			Paper paper = getPaperById(paperId);
+			Researcher reviewer = getResearcherById(reviewerId);
+
+			if (fields[2].equals("")) {
+				new Review(paper, reviewer); /* automatically associated to paper in constructor */
+			} else {
+				new Review(paper, reviewer, Double.parseDouble(fields[2]));
+			}
+		}
 	}
 
 	public String toString() {
