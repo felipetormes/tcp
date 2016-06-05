@@ -8,7 +8,7 @@ public class Review {
 	
 	public Review(Paper paper, Researcher reviewer, double grade){
 		this.setPaper(paper);
-		this.reviewer = reviewer;
+		this.setReviewer(reviewer);
 		this.setGrade(grade);
 		this.isPending = false;
 	}
@@ -28,6 +28,8 @@ public class Review {
 	}
 	
 	public void setReviewer (Researcher reviewer) {
+		Role role = new ReviewerRole();
+		reviewer.addRole(this.paper.getConference(), role);
 		this.reviewer = reviewer;
 	}
 	
