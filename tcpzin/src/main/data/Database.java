@@ -35,7 +35,7 @@ public class Database {
 		papers = new HashMap<Integer, Paper>();
 		if (initData) {
 			initData(researchersFile,
-			         researchersFile,
+			         conferencesFile,
 			         articlesFile,
 			         attributionsFile);
 		}
