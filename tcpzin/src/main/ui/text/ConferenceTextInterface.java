@@ -40,8 +40,7 @@ public class ConferenceTextInterface extends ConferenceUI {
 	public void showUI() {
 		do {
 			System.out.println(showMenu());
-			option = UIUtils.readString(UIUtils
-					.getText("message.choose.option"));
+			option = UIUtils.readString(UIUtils.getText("message.choose.option")).toUpperCase();
 			try {
 				if (option.contentEquals("A")) {
 					conferenceUIcommand = new PapersAllocationCommand(
