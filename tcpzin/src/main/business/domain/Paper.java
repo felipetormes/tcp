@@ -36,6 +36,18 @@ public class Paper implements Comparable<Paper>{
 		}
 	};
 	
+	public static Comparator<Paper> ascendingIdComparator = new Comparator<Paper>() {
+		public int compare(Paper p, Paper q) {
+			return q.getId() - p.getId();
+		}
+	};
+	
+	public static Comparator<Paper> descendingIdComparator = new Comparator<Paper>() {
+		public int compare(Paper p, Paper q) {
+			return p.getId() - q.getId();
+		}
+	};
+	
 	public Paper(int id, String title, Researcher author, Topic researchTopic, Conference conference, List<Review> reviews) {
 		this.title = title;
 		this.author = author;
