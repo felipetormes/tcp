@@ -65,6 +65,45 @@ public class Researcher implements Comparable<Researcher>{
 			return 0;
 		}
 	}
+	
+	public boolean isSuitedToReview(Paper paper) {
+		if (paper.getAuthor() == this) {
+			return false;
+		}
+		
+		if (paper.getAuthor().getAffiliation() == this.affiliation) {
+			return false;
+		}
+		
+		if (!this.researchTopics.contains(paper.getResearchTopic())) {
+			return false;
+		}
+		
+		if (this.reviews(paper)) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	private boolean reviews(Paper paper) {
+		Role role = roles.get(paper.getConference());
+		
+		if (role == null) {
+			return false;
+		}
+		
+		if (role instanceof ReviewerRole) {
+			List<Review> reviews = ((ReviewerRole) role).getReviews();
+			for (Review rev : reviews) {
+				if (rev.getPaper() == paper) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
 
 	public Map<Conference, Role> getRoles() {
 		return roles;
