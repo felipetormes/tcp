@@ -19,25 +19,32 @@ public class PapersAllocationCommand implements ConferenceUICommand {
 
 	public void execute() {
 		Map<Integer, Integer> paper2reviewer = new HashMap<Integer, Integer>();
-		
-		Conference conference = readConference();
-		Integer numReviewers = UIUtils.readInteger("message.insertNumReviewers");
 
-		System.out.println(UIUtils.getText("message.startingAllocation"));
+		
 		try {
+			Conference conference = readConference();
+			Integer numReviewers = UIUtils.readInteger("message.insertNumReviewers");
+			System.out.println(UIUtils.getText("message.startingAllocation"));
 			paper2reviewer = papersManagementService.allocPapersToReviewers(conference, numReviewers);
 		} catch (BusinessDomainException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 
 		showAllocationLog(paper2reviewer);
 		System.out.println(UIUtils.getText("message.endOfAllocation"));
-		
+
 	}
 
-	private Conference readConference() {
+	private Conference readConference() throws BusinessDomainException {
+		Conference chosen = null;
+
 		List<Conference> allConferences = papersManagementService.getConferencesWithPendingAllocation();
-		Conference chosen = UIUtils.chooseFromList(allConferences);
+		if (allConferences != null) {
+			chosen = UIUtils.chooseFromList(allConferences);
+		} else {
+			throw new BusinessDomainException((UIUtils.getText("exception.business.domain.pendigConferences")));
+		}
+
 		return chosen;
 	}
 

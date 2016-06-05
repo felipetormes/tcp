@@ -8,6 +8,7 @@ import java.util.Map;
 import main.business.PapersManagementService;
 import main.business.domain.Conference;
 import main.business.domain.Paper;
+import main.exceptions.BusinessDomainException;
 import main.ui.text.UIUtils;
 
 public class PapersSelectionCommand implements ConferenceUICommand {
@@ -22,12 +23,18 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 	 * in ascending/descending order.
 	 */
 	public void execute() {
-		Conference conference = readConference();
-		Map<Paper, Boolean> papersMap = papersManagementService.selectPapersByAverage(conference);
-		if (papersMap.isEmpty()) {
-			showGradeMissingAlert();
-		} else {
-			showAccRejLists(papersMap);
+		Conference conference = null;
+		try {
+			conference = readConference();
+
+			Map<Paper, Boolean> papersMap = papersManagementService.selectPapersByAverage(conference);
+			if (papersMap.isEmpty()) {
+				showGradeMissingAlert();
+			} else {
+				showAccRejLists(papersMap);
+			}
+		} catch (BusinessDomainException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -35,12 +42,17 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 	 * shows all conferences so user can pick one.
 	 * 
 	 * @return the conference picked.
+	 * @throws BusinessDomainException
 	 */
-	private Conference readConference() {
+	private Conference readConference() throws BusinessDomainException {
+		Conference conference = null;
 		List<Conference> allConferences = papersManagementService.getAllConferences();
-	
-		Conference conference = UIUtils.chooseFromList(allConferences);
-		
+		if (allConferences != null) {
+			conference = UIUtils.chooseFromList(allConferences);
+		} else {
+			throw new BusinessDomainException((UIUtils.getText("exception.business.domain.noConference")));
+		}
+
 		return conference;
 	}
 
@@ -52,11 +64,12 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 	}
 
 	/**
-	 * shows a list of rejected and accepted papers in descending and
-	 * ascending order respectively.
+	 * shows a list of rejected and accepted papers in descending and ascending
+	 * order respectively.
 	 * 
-	 * @param listsMap mapping that goes from a paper to true/false depending
-	 * on if it was accepted/rejected.
+	 * @param listsMap
+	 *            mapping that goes from a paper to true/false depending on if
+	 *            it was accepted/rejected.
 	 */
 	private void showAccRejLists(Map<Paper, Boolean> listsMap) {
 		List<Paper> rejectedList = new ArrayList<Paper>();
@@ -76,12 +89,12 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 		Collections.sort(rejectedList, Paper.descendingGradeComparator);
 		Collections.sort(acceptedList, Paper.ascendingGradeComparator);
 
-		System.out.println(UIUtils.getText("message.artigosRejeitados"));
+		System.out.println(UIUtils.getText("message.rejectedPapers"));
 		for (Paper rejPaper : rejectedList) {
 			System.out.println(rejPaper);
 
 		}
-		System.out.println(UIUtils.getText("message.artigosAceitos"));
+		System.out.println(UIUtils.getText("message.acceptedPapers"));
 		for (Paper accPaper : acceptedList) {
 			System.out.println(accPaper);
 

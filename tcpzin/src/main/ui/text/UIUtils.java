@@ -41,7 +41,7 @@ public class UIUtils {
 				value = new Double(reader.readLine());
 			} catch (NumberFormatException nfe) {
 				System.out.println(UIUtils
-						.getText("exception.formato.double"));
+						.getText("exception.format.double"));
 
 			} catch (Exception e) {
 
@@ -59,7 +59,7 @@ public class UIUtils {
 				value = new Integer(reader.readLine());
 			} catch (NumberFormatException nfe) {
 				System.out.println(UIUtils
-						.getText("exception.formato.int"));
+						.getText("exception.format.int"));
 
 			} catch (Exception e) {
 

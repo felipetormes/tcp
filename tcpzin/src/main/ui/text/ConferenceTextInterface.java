@@ -23,9 +23,9 @@ public class ConferenceTextInterface extends ConferenceUI {
 	public String showMenu() {
 		StringBuffer sb = new StringBuffer();
 		sb.append(UIUtils.getText("message.options")).append(":\n");
-		sb.append(UIUtils.getText("message.options.alocacao")).append("\n");
-		sb.append(UIUtils.getText("message.options.atribuicao")).append("\n");
-		sb.append(UIUtils.getText("message.options.selecao")).append("\n");
+		sb.append(UIUtils.getText("message.options.allocation")).append("\n");
+		sb.append(UIUtils.getText("message.options.attribution")).append("\n");
+		sb.append(UIUtils.getText("message.options.selection")).append("\n");
 
 		return sb.toString();
 
@@ -58,7 +58,7 @@ public class ConferenceTextInterface extends ConferenceUI {
 							conferenceUIcommand.execute();
 						} else {
 							throw new InvalidInputException(
-									UIUtils.getText("exception.formato.string"));
+									UIUtils.getText("exception.format.string"));
 						}
 					}
 

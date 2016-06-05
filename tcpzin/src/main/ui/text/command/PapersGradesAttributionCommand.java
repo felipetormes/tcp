@@ -19,8 +19,8 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 	}
 
 	/**
-	 * requests a paper, a reviewer and a grade from the user. then it creates
-	 * a review with those data.
+	 * requests a paper, a reviewer and a grade from the user. then it creates a
+	 * review with those data.
 	 */
 	public void execute() {
 		try {
@@ -34,28 +34,34 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 	}
 
 	private Paper readPaper() throws BusinessDomainException {
+		Paper paper = null;
 		List<Paper> allPapers = papersManagementService.getAllPapers();
-
-		Paper paper = UIUtils.chooseFromList(allPapers);
-
+		if (allPapers != null) {
+			paper = UIUtils.chooseFromList(allPapers);
+		} else {
+			throw new BusinessDomainException((UIUtils.getText("exception.business.domain.noPapers")));
+		}
 		return paper;
 	}
 
 	private Researcher readReviewer(Paper paper) throws BusinessDomainException {
+		Researcher reviewer = null;
 		List<Review> reviews = paper.getReviews();
-
+		
 		List<Researcher> possibleReviewers = new ArrayList<Researcher>();
 		for (Review review : reviews) {
 			possibleReviewers.add(review.getReviewer());
 		}
-
-		Researcher reviewer = UIUtils.chooseFromList(possibleReviewers);
-
+		if(!possibleReviewers.isEmpty()){
+		 reviewer = UIUtils.chooseFromList(possibleReviewers);
+		} else {
+			throw new BusinessDomainException((UIUtils.getText("exception.business.domain.noPossibleReviewers")));
+		}
 		return reviewer;
 	}
 
 	private double readGrade() {
-		return UIUtils.readDouble("message.insiraNota");
+		return UIUtils.readDouble("message.insertGrade");
 	}
 
 }
