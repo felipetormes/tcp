@@ -44,7 +44,7 @@ public class Conference {
 		return papers;
 	}
 	
-	public Boolean allocationDone() {
+	public Boolean isAllocationDone() {
 		return allocationDone;
 	}
 	
