@@ -1,5 +1,7 @@
 package main.business.domain;
 
+import main.ui.text.DomainPrints;
+
 public class Review {
 	private Paper paper;
 	private boolean isPending;
@@ -51,11 +53,7 @@ public class Review {
 	
 	@Override
 	public String toString() {
-		String output =
-				"artigo: " + getPaper().getId() +
-				", revisor: " + getReviewer().getId() +
-				", nota: " + getGrade();
-				
-	return output;
+		return DomainPrints.printReview(this);
 	}
+	
 }

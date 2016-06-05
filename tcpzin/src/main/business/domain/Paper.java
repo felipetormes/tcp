@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import main.ui.text.DomainPrints;
+
 public class Paper implements Comparable<Paper>{
 	private int id;
 	private String title;
@@ -135,14 +137,7 @@ public class Paper implements Comparable<Paper>{
 	
 	@Override
 	public String toString() {
-		String output =
-				"id: " + String.valueOf(getId()) +
-				", titulo: " + getTitle() +
-				", autor: " + getAuthor().getName() +
-				", conferencia: " + getConference().getInitials() + 
-				", topicos de pesquisa: " + getResearchTopic();
-				
-		return output;
+		return DomainPrints.printPaper(this);
 	}
 	
 	public boolean equals(Object obj) {

@@ -1,6 +1,9 @@
 package main.business.domain;
 
 import java.util.List;
+
+import main.ui.text.DomainPrints;
+
 import java.util.ArrayList;
 
 public class Conference {
@@ -51,22 +54,9 @@ public class Conference {
 	public List<Researcher> getCommitteeMembers() {
 		return committeeMembers;
 	}
-	
+	@Override
 	public String toString() {
-		String output =
-				"initials: " + getInitials() +
-				", committee members ids: ";
-		
-		for (Researcher researcher : getCommitteeMembers()) {
-			output += researcher.getId() + "/";
-		}
-		
-		output += ", papers: ";
-		for (Paper paper : papers) {
-			output += paper.getTitle() + "/";
-		}
-		
-		return output;
+		return DomainPrints.printConference(this);
 	}
 	
 	public int hashCode() {
