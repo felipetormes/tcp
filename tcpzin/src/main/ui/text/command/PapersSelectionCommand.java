@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import main.business.PapersManagementService;
-import main.exceptions.BusinessDomainException;
+import main.exceptions.BusinessServiceException;
 import main.ui.text.UIUtils;
 
 public class PapersSelectionCommand implements ConferenceUICommand {
@@ -18,12 +18,11 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 	/**
 	 * reads conference from user, get approved/rejected papers and prints them
 	 * in ascending/descending order.
-	 * @throws BusinessDomainException 
+	 * @throws BusinessServiceException 
 	 */
-	public void execute() throws BusinessDomainException {
+	public void execute() throws BusinessServiceException {
 		String conference = readConference();
 
-		if (conference != null) {
 			Map<Integer, Boolean> papersMap = papersManagementService.selectPapersByAverage(conference);
 
 			if (papersMap.isEmpty()) {
@@ -31,26 +30,19 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 			} else {
 				showAccRejLists(papersMap);
 			}
-		} else {
-			throw new BusinessDomainException(UIUtils.getText("exception.business.domain.noConference"));
-		}
+	
 	}
 
 	/**
 	 * shows all conferences so user can pick one.
 	 * 
 	 * @return the conference picked.
-	 * @throws BusinessDomainException
+	 * @throws BusinessServiceException
 	 */
-	private String readConference() {
+	private String readConference() throws BusinessServiceException {
 		List<String> allConferences = papersManagementService.getConferencesInitials();
-
-		if (!allConferences.isEmpty()) {
 			String chosen = UIUtils.chooseFromList(allConferences);
 			return chosen;
-		} else {
-			return null;
-		}
 	}
 
 	/**

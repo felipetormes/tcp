@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import main.business.PapersManagementService;
-import main.exceptions.BusinessDomainException;
+import main.exceptions.BusinessServiceException;
 import main.ui.text.UIUtils;
 
 public class PapersAllocationCommand implements ConferenceUICommand {
@@ -16,20 +16,16 @@ public class PapersAllocationCommand implements ConferenceUICommand {
 		this.papersManagementService = papersManagementService;
 	}
 
-	public void execute() throws BusinessDomainException {
+	public void execute() throws BusinessServiceException {
 	
 			String conference = readConference();
-			Integer numReviewers = UIUtils.readInteger("message.insertNumReviewers");
+			Integer numReviewers = UIUtils.readInteger("message.insertNumReviewers");			
+			allocate(conference, numReviewers);
 			
-			if (conference != null) {				
-				allocate(conference, numReviewers);
-			} else {
-				throw new BusinessDomainException(UIUtils.getText("exception.business.domain.noConference"));
-			}
 		} 
 	
 	
-	private void allocate(String conference, int numReviewers) throws BusinessDomainException {
+	private void allocate(String conference, int numReviewers) throws BusinessServiceException {
 		Map<Integer, Integer> paper2reviewer = new HashMap<Integer, Integer>();
 
 		System.out.println(UIUtils.getText("message.startingAllocation"));
@@ -38,20 +34,16 @@ public class PapersAllocationCommand implements ConferenceUICommand {
 		System.out.println(UIUtils.getText("message.endOfAllocation"));
 	}
 
-	private String readConference() throws BusinessDomainException {
+	private String readConference() throws BusinessServiceException {
 		List<String> allConferences = papersManagementService.getConferencesInitials();
-
-		if (!allConferences.isEmpty()) {
 			String chosen = UIUtils.chooseFromList(allConferences);
 			return chosen;
-		} else {
-			return null;
-		}
+		
 	}
 
 	private void showAllocationLog(Map<Integer, Integer> paper2reviewer) {
 		for (Map.Entry<Integer, Integer> entry : paper2reviewer.entrySet()) {
-			System.out.print(UIUtils.getText("message.thisPaper") + " " + entry.getKey());
+			System.out.print(UIUtils.getText("message.thisPaper") + " " + entry.getKey() + " ");
 			System.out.println(UIUtils.getText("message.wasAllocedTo") + " " + entry.getValue());
 		}
 	}

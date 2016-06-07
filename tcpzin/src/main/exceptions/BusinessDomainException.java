@@ -1,7 +1,6 @@
 package main.exceptions;
 
-public class BusinessDomainException extends Exception {
-
+public class BusinessDomainException extends BusinessException{
 	/**
 	 * 
 	 */

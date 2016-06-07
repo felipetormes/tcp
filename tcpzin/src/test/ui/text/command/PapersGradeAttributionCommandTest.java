@@ -7,7 +7,7 @@ import main.ui.text.command.PapersGradesAttributionCommand;
 import main.business.PapersManagementService;
 import main.business.impl.PapersManagementServiceImpl;
 import main.data.Database;
-import main.exceptions.BusinessDomainException;
+import main.exceptions.BusinessServiceException;
 import main.exceptions.InvalidNameException;
 
 public class PapersGradeAttributionCommandTest {
@@ -28,7 +28,7 @@ public class PapersGradeAttributionCommandTest {
 	}
 
 	@Test
-	public void TestGradeAttribuiton() throws InvalidNameException, BusinessDomainException {
+	public void TestGradeAttribuiton() throws InvalidNameException, BusinessServiceException {
 		paperGrade.execute();
 
 	}

@@ -3,7 +3,7 @@ package main.business;
 import java.util.List;
 import java.util.Map;
 
-import main.exceptions.BusinessDomainException;
+import main.exceptions.BusinessServiceException;
 
 public interface PapersManagementService {
 
@@ -13,7 +13,7 @@ public interface PapersManagementService {
 	
 	/* allocate papers for people to review. return a map from paper id to
  	   reviewer id. */
-	public abstract Map<Integer, Integer> allocPapersToReviewers(String conferenceInitials,	int numReviewers) throws BusinessDomainException;
+	public abstract Map<Integer, Integer> allocPapersToReviewers(String conferenceInitials,	int numReviewers) throws BusinessServiceException;
 	
 	/* create a review from reviewer to paper with grade. */ 
 	public abstract void setGradeToPaper(int paperId, int reviewerId, Double grade);
@@ -24,16 +24,17 @@ public interface PapersManagementService {
 
 	/**
 	 * GET DATA
+	 * @throws BusinessServiceException 
 	 */
 	
-	public abstract List<String> getConferencesInitials();
+	public abstract List<String> getConferencesInitials() throws BusinessServiceException;
 	public abstract List<String> getConferencesInitialsWithPendingAllocation();
 
-	public abstract Map<String, Integer> getPapersTitlesAndIds();
+	public abstract Map<String, Integer> getPapersTitlesAndIds() throws BusinessServiceException;
 	public abstract List<Integer> getPapersIds();
 	public abstract List<String> getPapersTitles();
 	
-	public abstract List<String> getReviewers(int paperId);
+	public abstract List<String> getReviewers(int paperId) throws BusinessServiceException;
 	public abstract List<Integer> sortPapersByGrade(List<Integer> papersIds, boolean ascending);
 	
 	public abstract Map<String, Integer> getResearchersNamesAndIds();
