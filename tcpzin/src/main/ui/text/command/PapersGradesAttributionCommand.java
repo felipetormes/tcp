@@ -46,7 +46,7 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 				.getReviewers(paper);
 		String chosen = UIUtils.chooseFromList(possibleReviewers);
 		Map<String, Integer> name2id = papersManagementService
-				.getPapersTitlesAndIds();
+				.getResearchersNamesAndIds();
 		return name2id.get(chosen);
 
 	}

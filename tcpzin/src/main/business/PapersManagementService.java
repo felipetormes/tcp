@@ -37,7 +37,7 @@ public interface PapersManagementService {
 	public abstract List<String> getReviewers(int paperId) throws BusinessServiceException;
 	public abstract List<Integer> sortPapersByGrade(List<Integer> papersIds, boolean ascending);
 	
-	public abstract Map<String, Integer> getResearchersNamesAndIds();
+	public abstract Map<String, Integer> getResearchersNamesAndIds() throws BusinessServiceException;
 	public abstract List<Integer> getResearchersIds();
 	public abstract List<String> getResearchersNames();
 

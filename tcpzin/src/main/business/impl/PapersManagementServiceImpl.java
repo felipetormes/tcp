@@ -173,7 +173,7 @@ public class PapersManagementServiceImpl implements PapersManagementService {
 	}
 
 	private void setGradeToPaper(Paper paper, Researcher reviewer, Double grade) {
-		new Review(paper, reviewer, grade);
+		paper.addReview(new Review(paper, reviewer, grade));
 	}
 
 	/**
@@ -321,16 +321,22 @@ public class PapersManagementServiceImpl implements PapersManagementService {
 
 	/**
 	 * get researchers
+	 * @throws BusinessServiceException 
 	 */
 
-	public Map<String, Integer> getResearchersNamesAndIds() {
+	public Map<String, Integer> getResearchersNamesAndIds() throws BusinessServiceException {
 		Map<String, Integer> ids2names = new HashMap<String, Integer>();
-
+		if (!database.getResearchers().isEmpty()){
 		for (Map.Entry<Integer, Researcher> entry : database.getResearchers()
 				.entrySet()) {
 			int id = entry.getKey();
 			String name = entry.getValue().getName();
 			ids2names.put(name, id);
+		}
+		}
+		else {
+			throw new BusinessServiceException(
+					(UIUtils.getText("exception.business.service.noResearchers")));
 		}
 
 		return ids2names;
