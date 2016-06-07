@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import main.business.PapersManagementService;
-import main.business.domain.Conference;
 import main.exceptions.BusinessDomainException;
 import main.ui.text.UIUtils;
 
@@ -18,34 +17,38 @@ public class PapersAllocationCommand implements ConferenceUICommand {
 	}
 
 	public void execute() {
+		try {
+			String conference = readConference();
+			Integer numReviewers = UIUtils.readInteger("message.insertNumReviewers");
+			
+			if (conference != null) {				
+				allocate(conference, numReviewers);
+			} else {
+				System.out.println(UIUtils.getText("message.noConferencesInDatabase"));
+			}
+		} catch (BusinessDomainException e) {
+			System.out.println(UIUtils.getText("alert.impossibleAllocation"));
+		}
+	}
+	
+	private void allocate(String conference, int numReviewers) throws BusinessDomainException {
 		Map<Integer, Integer> paper2reviewer = new HashMap<Integer, Integer>();
 
-		
-		try {
-			Conference conference = readConference();
-			Integer numReviewers = UIUtils.readInteger("message.insertNumReviewers");
-			System.out.println(UIUtils.getText("message.startingAllocation"));
-			paper2reviewer = papersManagementService.allocPapersToReviewers(conference, numReviewers);
-		} catch (BusinessDomainException e) {
-			System.out.println(e.getMessage());
-		}
-
+		System.out.println(UIUtils.getText("message.startingAllocation"));
+		paper2reviewer = papersManagementService.allocPapersToReviewers(conference, numReviewers);
 		showAllocationLog(paper2reviewer);
 		System.out.println(UIUtils.getText("message.endOfAllocation"));
-
 	}
 
-	private Conference readConference() throws BusinessDomainException {
-		Conference chosen = null;
+	private String readConference() throws BusinessDomainException {
+		List<String> allConferences = papersManagementService.getConferencesInitials();
 
-		List<Conference> allConferences = papersManagementService.getConferencesWithPendingAllocation();
-		if (allConferences != null) {
-			chosen = UIUtils.chooseFromList(allConferences);
+		if (!allConferences.isEmpty()) {
+			String chosen = UIUtils.chooseFromList(allConferences);
+			return chosen;
 		} else {
-			throw new BusinessDomainException((UIUtils.getText("exception.business.domain.pendigConferences")));
+			return null;
 		}
-
-		return chosen;
 	}
 
 	private void showAllocationLog(Map<Integer, Integer> paper2reviewer) {
