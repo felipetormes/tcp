@@ -12,6 +12,7 @@ import main.business.domain.Paper;
 import main.business.domain.Researcher;
 import main.business.domain.Review;
 import main.data.Database;
+import main.exceptions.BusinessDomainException;
 import main.exceptions.BusinessServiceException;
 import main.ui.text.UIUtils;
 
@@ -163,16 +164,13 @@ public class PapersManagementServiceImpl implements PapersManagementService {
 
 	/**
 	 * SETTING GRADES
+	 * @throws BusinessDomainException 
 	 */
 
-	public void setGradeToPaper(int paperId, int reviewerId, Double grade) {
+	public void setGradeToPaper(int paperId, int reviewerId, double grade) throws BusinessDomainException {
 		Paper paper = database.getPaperById(paperId);
 		Researcher reviewer = database.getResearcherById(reviewerId);
-		setGradeToPaper(paper, reviewer, grade);
-	}
-
-	private void setGradeToPaper(Paper paper, Researcher reviewer, Double grade) {
-		paper.addReview(new Review(paper, reviewer, grade));
+		paper.setGrade(reviewer, grade);
 	}
 
 	/**

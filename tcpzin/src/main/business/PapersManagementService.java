@@ -3,6 +3,7 @@ package main.business;
 import java.util.List;
 import java.util.Map;
 
+import main.exceptions.BusinessDomainException;
 import main.exceptions.BusinessServiceException;
 
 public interface PapersManagementService {
@@ -16,7 +17,7 @@ public interface PapersManagementService {
 	public abstract Map<Integer, Integer> allocPapersToReviewers(String conferenceInitials,	int numReviewers) throws BusinessServiceException;
 	
 	/* create a review from reviewer to paper with grade. */ 
-	public abstract void setGradeToPaper(int paperId, int reviewerId, Double grade);
+	public abstract void setGradeToPaper(int paperId, int reviewerId, double grade) throws BusinessDomainException;
 	
 	/* return is a map from paper id to the answer of "was it accepted in this
 	   conference?" */

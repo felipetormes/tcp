@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import main.business.PapersManagementService;
+import main.exceptions.BusinessDomainException;
 import main.exceptions.BusinessServiceException;
 import main.ui.text.UIUtils;
 
@@ -21,8 +22,9 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 	 * review with those data.
 	 * 
 	 * @throws BusinessServiceException
+	 * @throws BusinessDomainException 
 	 */
-	public void execute() throws BusinessServiceException {
+	public void execute() throws BusinessServiceException, BusinessDomainException {
 
 		Integer paperId = readPaper();
 		Integer reviewerId = readReviewer(paperId);
