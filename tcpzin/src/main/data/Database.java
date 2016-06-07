@@ -75,15 +75,27 @@ public class Database {
 		return papers.get(id);
 	}
 
-	public List<Researcher> getResearchers() {
+	public Map<Integer, Researcher> getResearchers() {
+		return researchers;
+	}
+	
+	public List<Researcher> getResearchersList() {
 		return new ArrayList<Researcher>(researchers.values());
 	}
 
-	public List<Conference> getConferences() {
+	public Map<String, Conference> getConferences() {
+		return conferences;
+	}
+	
+	public List<Conference> getConferencesList() {
 		return new ArrayList<Conference>(conferences.values());
 	}
+	
+	public Map<Integer, Paper> getPapers() {
+		return papers;
+	}
 
-	public List<Paper> getPapers() {
+	public List<Paper> getPapersList() {
 		return new ArrayList<Paper>(papers.values());
 	}
 
