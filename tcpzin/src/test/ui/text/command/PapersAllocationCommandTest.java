@@ -3,8 +3,6 @@ package test.ui.text.command;
 import main.business.PapersManagementService;
 import main.business.impl.PapersManagementServiceImpl;
 import main.data.Database;
-import main.exceptions.BusinessServiceException;
-import main.exceptions.InvalidNameException;
 import main.ui.text.UIUtils;
 import main.ui.text.command.PapersAllocationCommand;
 import org.junit.Test;
@@ -15,11 +13,10 @@ public class PapersAllocationCommandTest {
 	private PapersManagementService paperManagement;
 	
 	@Test
-	public void TestGradeAttribuiton() throws InvalidNameException, BusinessServiceException {
-		paperAllocation.execute();
+	public void runTests() {
+		test1();
 	}
 	
-	@Test
 	public void test1() {
 		String root = "allocTestCases/case1/";
 		paperAllocation = buildCommand(root);
@@ -31,7 +28,6 @@ public class PapersAllocationCommandTest {
 		}
 	}
 	
-	@Test
 	public void test2() {
 		String root = "allocTestCases/case2/";
 		paperAllocation = buildCommand(root);
@@ -43,9 +39,19 @@ public class PapersAllocationCommandTest {
 		}
 	}
 	
-	@Test
 	public void test3() {
 		String root = "allocTestCases/case3/";
+		paperAllocation = buildCommand(root);
+		
+		try {
+			paperAllocation.execute();
+		} catch (Exception e) {
+			System.out.println(UIUtils.getText(e.getMessage()));
+		}
+	}
+	
+	public void test4() {
+		String root = "allocTestCases/case4/";
 		paperAllocation = buildCommand(root);
 		
 		try {

@@ -81,15 +81,11 @@ public class Researcher implements Comparable<Researcher>{
 			return false;
 		}
 		
-		boolean hasTopic = false;
-		for (Topic topic : this.researchTopics) {
-			if (topic.getName().contentEquals(paper.getResearchTopic().getName())) {
-				hasTopic = true;
-				break;
-			}
+		if (!this.researchTopics.contains(paper.getResearchTopic())) {
+			return false;
 		}
 		
-		return hasTopic;
+		return true;
 	}
 	
 	private boolean reviews(Paper paper) {
