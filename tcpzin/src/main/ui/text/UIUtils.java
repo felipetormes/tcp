@@ -16,7 +16,7 @@ public class UIUtils {
 	private static ResourceBundle bundle;
 
 
-	public UIUtils() {
+	private UIUtils() {
 		UIUtils.bundle = ResourceBundle.getBundle(PROPERTY_RESOURCE_BUNDLE);
 
 	}
