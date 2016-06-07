@@ -24,7 +24,10 @@ public class Database {
 	private Map<Integer, Researcher> researchers;
 	private Map<String, Conference> conferences;
 	private Map<Integer, Paper> papers;
-
+	private final static String RESEARCHERS_INIT_FILE = "pesquisadores.csv";
+	private final static String CONFERENCES_INIT_FILE = "conferencias.csv";
+	private final static String ARTICLES_INIT_FILE = "artigos.csv";
+	private final static String ATTRIBUTIONS_INIT_FILE = "atribuicoes.csv";
 	public Database(boolean initData,
 			        String researchersFile,
 			        String conferencesFile,
@@ -42,7 +45,7 @@ public class Database {
 	}
 	
 	public Database(boolean initData) {
-		this(initData, "pesquisadores.csv", "conferencias.csv", "artigos.csv", "atribuicoes.csv");
+		this(initData, RESEARCHERS_INIT_FILE , CONFERENCES_INIT_FILE, ARTICLES_INIT_FILE, ATTRIBUTIONS_INIT_FILE );
 	}
 
 	public Database() {
@@ -138,7 +141,7 @@ public class Database {
 				topics.add(new Topic(fields[i++]));
 			}
 
-			researchers.put(id, new Researcher(name, affiliation, topics));
+			researchers.put(id, new Researcher(name, affiliation, topics, id));
 		}
 
 		return researchers;
