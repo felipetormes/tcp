@@ -1,14 +1,10 @@
 package main.ui.text.command;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import main.business.PapersManagementService;
-import main.business.domain.Conference;
-import main.business.domain.Paper;
-import main.exceptions.BusinessDomainException;
 import main.ui.text.UIUtils;
 
 public class PapersSelectionCommand implements ConferenceUICommand {
@@ -23,18 +19,18 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 	 * in ascending/descending order.
 	 */
 	public void execute() {
-		Conference conference = null;
-		try {
-			conference = readConference();
+		String conference = readConference();
 
-			Map<Paper, Boolean> papersMap = papersManagementService.selectPapersByAverage(conference);
+		if (conference != null) {
+			Map<Integer, Boolean> papersMap = papersManagementService.selectPapersByAverage(conference);
+	
 			if (papersMap.isEmpty()) {
 				showGradeMissingAlert();
 			} else {
 				showAccRejLists(papersMap);
 			}
-		} catch (BusinessDomainException e) {
-			System.out.println(e.getMessage());
+		} else {
+			System.out.println(UIUtils.getText("message.noConferencesInDatabase"));
 		}
 	}
 
@@ -44,16 +40,15 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 	 * @return the conference picked.
 	 * @throws BusinessDomainException
 	 */
-	private Conference readConference() throws BusinessDomainException {
-		Conference conference = null;
-		List<Conference> allConferences = papersManagementService.getAllConferences();
-		if (allConferences != null) {
-			conference = UIUtils.chooseFromList(allConferences);
-		} else {
-			throw new BusinessDomainException((UIUtils.getText("exception.business.domain.noConference")));
-		}
+	private String readConference() {
+		List<String> allConferences = papersManagementService.getConferencesInitials();
 
-		return conference;
+		if (!allConferences.isEmpty()) {
+			String chosen = UIUtils.chooseFromList(allConferences);
+			return chosen;
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -71,31 +66,31 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 	 *            mapping that goes from a paper to true/false depending on if
 	 *            it was accepted/rejected.
 	 */
-	private void showAccRejLists(Map<Paper, Boolean> listsMap) {
-		List<Paper> rejectedList = new ArrayList<Paper>();
-		List<Paper> acceptedList = new ArrayList<Paper>();
+	private void showAccRejLists(Map<Integer, Boolean> listsMap) {
+		List<Integer> rejectedList = new ArrayList<Integer>();
+		List<Integer> acceptedList = new ArrayList<Integer>();
 
-		for (Map.Entry<Paper, Boolean> entry : listsMap.entrySet()) {
-			Paper paper = entry.getKey();
+		for (Map.Entry<Integer, Boolean> entry : listsMap.entrySet()) {
+			Integer id = entry.getKey();
 			Boolean accepted = entry.getValue();
 
 			if (accepted) {
-				acceptedList.add(paper);
+				acceptedList.add(id);
 			} else {
-				rejectedList.add(paper);
+				rejectedList.add(id);
 			}
 		}
 
-		Collections.sort(rejectedList, Paper.descendingGradeComparator);
-		Collections.sort(acceptedList, Paper.ascendingGradeComparator);
+		acceptedList = papersManagementService.sortPapersByGrade(acceptedList, false);
+		rejectedList = papersManagementService.sortPapersByGrade(rejectedList, true);
 
 		System.out.println(UIUtils.getText("message.rejectedPapers"));
-		for (Paper rejPaper : rejectedList) {
+		for (Integer rejPaper : rejectedList) {
 			System.out.println(rejPaper);
 
 		}
 		System.out.println(UIUtils.getText("message.acceptedPapers"));
-		for (Paper accPaper : acceptedList) {
+		for (Integer accPaper : acceptedList) {
 			System.out.println(accPaper);
 
 		}

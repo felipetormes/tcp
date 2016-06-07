@@ -1,12 +1,9 @@
 package main.ui.text.command;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import main.business.PapersManagementService;
-import main.business.domain.Paper;
-import main.business.domain.Researcher;
-import main.business.domain.Review;
 import main.exceptions.BusinessDomainException;
 import main.ui.text.UIUtils;
 
@@ -24,40 +21,37 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 	 */
 	public void execute() {
 		try {
-			Paper paper = readPaper();
-			Researcher reviewer = readReviewer(paper);
+			Integer paperId = readPaper();
+			Integer reviewerId = readReviewer(paperId);
 			double grade = readGrade();
-			papersManagementService.setGradeToPaper(paper, reviewer, grade);
+			papersManagementService.setGradeToPaper(paperId, reviewerId, grade);
 		} catch (BusinessDomainException e) {
 			System.out.println(e.getMessage());
 		}
 	}
 
-	private Paper readPaper() throws BusinessDomainException {
-		Paper paper = null;
-		List<Paper> allPapers = papersManagementService.getAllPapers();
-		if (allPapers != null) {
-			paper = UIUtils.chooseFromList(allPapers);
+	private Integer readPaper() throws BusinessDomainException {
+		List<String> titles = papersManagementService.getPapersTitles();
+
+		if (!titles.isEmpty()) {
+			String chosen = UIUtils.chooseFromList(titles);
+			Map<String, Integer> title2id = papersManagementService.getPapersTitlesAndIds();
+			return title2id.get(chosen);
 		} else {
-			throw new BusinessDomainException((UIUtils.getText("exception.business.domain.noPapers")));
+			return null;
 		}
-		return paper;
 	}
 
-	private Researcher readReviewer(Paper paper) throws BusinessDomainException {
-		Researcher reviewer = null;
-		List<Review> reviews = paper.getReviews();
-		
-		List<Researcher> possibleReviewers = new ArrayList<Researcher>();
-		for (Review review : reviews) {
-			possibleReviewers.add(review.getReviewer());
-		}
+	private Integer readReviewer(int paper) throws BusinessDomainException {
+		List<String> possibleReviewers = papersManagementService.getReviewers(paper);
+
 		if(!possibleReviewers.isEmpty()){
-		 reviewer = UIUtils.chooseFromList(possibleReviewers);
+			String chosen = UIUtils.chooseFromList(possibleReviewers);
+			Map<String, Integer> name2id = papersManagementService.getPapersTitlesAndIds();
+			return name2id.get(chosen);
 		} else {
 			throw new BusinessDomainException((UIUtils.getText("exception.business.domain.noPossibleReviewers")));
 		}
-		return reviewer;
 	}
 
 	private double readGrade() {

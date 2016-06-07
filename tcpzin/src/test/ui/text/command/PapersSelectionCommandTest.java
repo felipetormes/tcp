@@ -1,7 +1,5 @@
 package test.ui.text.command;
 
-import static org.junit.Assert.*;
-
 import main.business.PapersManagementService;
 import main.business.impl.PapersManagementServiceImpl;
 import main.data.Database;

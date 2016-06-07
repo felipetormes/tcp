@@ -18,7 +18,7 @@ public class PapersAllocationCommandTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		database = new Database(true,"emptyResearches.csv","conferencias.csv","artigos.csv","atribuicoes.csv");
+		database = new Database(true,"emptyResearchers.csv","conferencias.csv","artigos.csv","atribuicoes.csv");
 		paperManagement = new PapersManagementServiceImpl(database);
 		paperAllocation = new PapersAllocationCommand(paperManagement);
 	}
