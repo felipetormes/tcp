@@ -69,11 +69,11 @@ public class Researcher implements Comparable<Researcher>{
 	}
 	
 	public boolean isSuitedToReview(Paper paper) {
-		if (paper.getAuthor() == this) {
+		if (paper.getAuthor().equals(this)) {
 			return false;
 		}
 		
-		if (paper.getAuthor().getAffiliation() == this.affiliation) {
+		if (paper.getAuthor().getAffiliation().equals(this.affiliation)) {
 			return false;
 		}
 		

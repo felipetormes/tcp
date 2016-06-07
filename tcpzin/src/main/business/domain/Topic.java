@@ -20,4 +20,19 @@ public class Topic {
 	public String toString() {
 		return name;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Topic) {
+			Topic other = (Topic) obj;
+			return this.getName().equals(other.getName());
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.name.hashCode();
+	}
 }

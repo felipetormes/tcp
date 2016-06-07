@@ -20,6 +20,21 @@ public class University {
 	public String toString() {
 		return name;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof University) {
+			University other = (University) obj;
+			return this.getName().equals(other.getName());
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.name.hashCode();
+	}
 }
 
 
