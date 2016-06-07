@@ -14,6 +14,7 @@ import main.business.domain.Researcher;
 import main.business.domain.Review;
 import main.data.Database;
 import main.exceptions.BusinessDomainException;
+import main.ui.text.UIUtils;
 
 public class PapersManagementServiceImpl  implements PapersManagementService {
 	private Database database;
@@ -98,7 +99,7 @@ public class PapersManagementServiceImpl  implements PapersManagementService {
 		}
 		
 		if (candidates.isEmpty()) {
-			throw new BusinessDomainException();
+			throw new BusinessDomainException(UIUtils.getText("exception.business.domain.noCandidates"));
 		}
 		
 		Researcher leastStressed; /* the one with least allocations */

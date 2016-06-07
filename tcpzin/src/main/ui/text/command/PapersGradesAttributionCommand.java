@@ -18,16 +18,15 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 	/**
 	 * requests a paper, a reviewer and a grade from the user. then it creates a
 	 * review with those data.
+	 * @throws BusinessDomainException 
 	 */
-	public void execute() {
-		try {
+	public void execute() throws BusinessDomainException {
+		
 			Integer paperId = readPaper();
 			Integer reviewerId = readReviewer(paperId);
 			double grade = readGrade();
 			papersManagementService.setGradeToPaper(paperId, reviewerId, grade);
-		} catch (BusinessDomainException e) {
-			System.out.println(e.getMessage());
-		}
+		
 	}
 
 	private Integer readPaper() throws BusinessDomainException {

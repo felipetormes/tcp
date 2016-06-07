@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import main.business.PapersManagementService;
+import main.exceptions.BusinessDomainException;
 import main.ui.text.UIUtils;
 
 public class PapersSelectionCommand implements ConferenceUICommand {
@@ -17,20 +18,21 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 	/**
 	 * reads conference from user, get approved/rejected papers and prints them
 	 * in ascending/descending order.
+	 * @throws BusinessDomainException 
 	 */
-	public void execute() {
+	public void execute() throws BusinessDomainException {
 		String conference = readConference();
 
 		if (conference != null) {
 			Map<Integer, Boolean> papersMap = papersManagementService.selectPapersByAverage(conference);
-	
+
 			if (papersMap.isEmpty()) {
 				showGradeMissingAlert();
 			} else {
 				showAccRejLists(papersMap);
 			}
 		} else {
-			System.out.println(UIUtils.getText("message.noConferencesInDatabase"));
+			throw new BusinessDomainException(UIUtils.getText("exception.business.domain.noConference"));
 		}
 	}
 

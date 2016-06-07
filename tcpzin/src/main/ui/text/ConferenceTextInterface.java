@@ -1,6 +1,7 @@
 package main.ui.text;
 
 import main.business.PapersManagementService;
+import main.exceptions.BusinessDomainException;
 import main.exceptions.InvalidInputException;
 import main.ui.ConferenceUI;
 import main.ui.text.command.ConferenceUICommand;
@@ -64,6 +65,9 @@ public class ConferenceTextInterface extends ConferenceUI {
 
 				}
 			} catch (InvalidInputException e) {
+				System.out.println(e.getMessage());
+			} catch (BusinessDomainException e) {
+				// TODO Auto-generated catch block
 				System.out.println(e.getMessage());
 			}
 

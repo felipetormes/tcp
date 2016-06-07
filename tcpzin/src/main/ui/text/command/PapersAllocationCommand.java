@@ -16,20 +16,18 @@ public class PapersAllocationCommand implements ConferenceUICommand {
 		this.papersManagementService = papersManagementService;
 	}
 
-	public void execute() {
-		try {
+	public void execute() throws BusinessDomainException {
+	
 			String conference = readConference();
 			Integer numReviewers = UIUtils.readInteger("message.insertNumReviewers");
 			
 			if (conference != null) {				
 				allocate(conference, numReviewers);
 			} else {
-				System.out.println(UIUtils.getText("message.noConferencesInDatabase"));
+				throw new BusinessDomainException(UIUtils.getText("exception.business.domain.noConference"));
 			}
-		} catch (BusinessDomainException e) {
-			System.out.println(UIUtils.getText("alert.impossibleAllocation"));
-		}
-	}
+		} 
+	
 	
 	private void allocate(String conference, int numReviewers) throws BusinessDomainException {
 		Map<Integer, Integer> paper2reviewer = new HashMap<Integer, Integer>();

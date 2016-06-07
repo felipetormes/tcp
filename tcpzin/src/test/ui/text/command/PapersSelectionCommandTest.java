@@ -3,6 +3,7 @@ package test.ui.text.command;
 import main.business.PapersManagementService;
 import main.business.impl.PapersManagementServiceImpl;
 import main.data.Database;
+import main.exceptions.BusinessDomainException;
 import main.exceptions.InvalidNameException;
 import main.ui.text.command.PapersSelectionCommand;
 
@@ -27,7 +28,7 @@ public class PapersSelectionCommandTest {
 	}
 
 	@Test
-	public void TestGradeAttribuiton() throws InvalidNameException {
+	public void TestGradeAttribuiton() throws InvalidNameException, BusinessDomainException {
 		paperSelection.execute();
 
 	}
