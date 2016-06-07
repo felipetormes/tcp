@@ -103,14 +103,17 @@ public class Paper implements Comparable<Paper>{
 	}
 	
 	public double getAverageGrade() {
-  
-        int allGrade = 0;
-        
-		for(Review review : reviews){
-        	allGrade += review.getGrade();
-        }
-        return allGrade / reviews.size();
-        
+		if (!reviews.isEmpty()) {
+	        int total = 0;
+	        
+			for(Review review : reviews){
+	        	total += review.getGrade();
+	        }
+			
+	        return total / reviews.size();
+		} else {
+			return 0;
+		}
 	}
 
 	public boolean hasPendingReviews() {
