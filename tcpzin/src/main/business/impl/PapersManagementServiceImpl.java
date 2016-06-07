@@ -2,7 +2,6 @@ package main.business.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -302,14 +301,7 @@ public class PapersManagementServiceImpl implements PapersManagementService {
 			papers.add(paper);
 		}
 
-		Comparator<Paper> comparator;
-		if (ascending) {
-			comparator = Paper.ascendingGradeComparator;
-		} else {
-			comparator = Paper.descendingGradeComparator;
-		}
-
-		Collections.sort(papers, comparator);
+		papers = Paper.sortPaperByGrade(papers, ascending);
 
 		List<Integer> sorted = new ArrayList<Integer>();
 		for (Paper paper : papers) {
