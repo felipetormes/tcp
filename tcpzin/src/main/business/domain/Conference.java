@@ -13,8 +13,8 @@ public class Conference {
 	private List<Paper> papers;
 	private List<Researcher> committeeMembers;
 	private Boolean allocationDone;
-	private int lowerLimitReviewers = 2;
-	private int upperLimitReviewers = 5;
+	private final static int LOWER_LIMIT_REVIEWERS = 2;
+	private final static int UPPER_LIMIT_REVIEWERS = 5;
 
 	public Conference(String initials) {
 		this.initials = initials;
@@ -72,7 +72,7 @@ public class Conference {
 	 * @throws BusinessServiceException
 	 */
 	public Map<Integer, Integer> allocPapersToReviewers(int numReviewers) throws BusinessDomainException {
-		if (numReviewers <= lowerLimitReviewers || numReviewers >= upperLimitReviewers) {
+		if (numReviewers < LOWER_LIMIT_REVIEWERS || numReviewers > UPPER_LIMIT_REVIEWERS) {
 			throw new BusinessDomainException("exception.business.domain.invalidReviewersGrade");
 		}
 
