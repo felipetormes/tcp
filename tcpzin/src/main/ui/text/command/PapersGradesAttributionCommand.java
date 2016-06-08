@@ -11,7 +11,8 @@ import main.ui.text.UIUtils;
 public class PapersGradesAttributionCommand implements ConferenceUICommand {
 
 	private PapersManagementService papersManagementService;
-
+	private double paperGrade;
+	
 	public PapersGradesAttributionCommand(
 			PapersManagementService papersManagementService) {
 		this.papersManagementService = papersManagementService;
