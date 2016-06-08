@@ -154,6 +154,10 @@ public class Paper implements Comparable<Paper> {
 	}
 
 	public boolean hasPendingReviews() {
+		if (reviews.isEmpty()) {
+			return true;
+		}
+		
 		for (Review review : reviews) {
 			if (review.isPendingGrade())
 				return true;
