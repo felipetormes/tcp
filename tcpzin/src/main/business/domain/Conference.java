@@ -72,7 +72,7 @@ public class Conference {
 	 * @throws BusinessServiceException
 	 */
 	public Map<Integer, Integer> allocPapersToReviewers(int numReviewers) throws BusinessDomainException {
-		if (numReviewers <= lowerLimitReviewers || numReviewers >= lowerLimitReviewers) {
+		if (numReviewers <= lowerLimitReviewers || numReviewers >= upperLimitReviewers) {
 			throw new BusinessDomainException("exception.business.domain.invalidReviewersGrade");
 		}
 		
