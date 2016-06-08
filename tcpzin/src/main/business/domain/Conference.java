@@ -75,13 +75,13 @@ public class Conference {
 		if (numReviewers <= lowerLimitReviewers || numReviewers >= upperLimitReviewers) {
 			throw new BusinessDomainException("exception.business.domain.invalidReviewersGrade");
 		}
-		
+
 		if (allocationDone) {
 			throw new BusinessDomainException("message.business.domain.alreadyAllocated");
 		}
-		
+
 		Map<Integer, Integer> paper2reviewer = new HashMap<Integer, Integer>();
-		
+
 		/*
 		 * every researcher maps to 0 in the beginning. that is, no one was
 		 * assigned a paper yet.
@@ -101,8 +101,7 @@ public class Conference {
 				Collections.sort(allocSet, Paper.ascendingIdComparator);
 				Paper paper = allocSet.get(0);
 
-				Researcher bestCandidate = chooseBestCandidate(paper,
-						allocSoFar);
+				Researcher bestCandidate = chooseBestCandidate(paper, allocSoFar);
 
 				/*
 				 * create the review and add one to the reviews alloc'ed so far
@@ -138,20 +137,17 @@ public class Conference {
 	 * @return the best candidate to review the paper
 	 * @throws BusinessServiceException
 	 */
-	private Researcher chooseBestCandidate(Paper paper,
-			Map<Researcher, Integer> allocSoFar)
+	private Researcher chooseBestCandidate(Paper paper, Map<Researcher, Integer> allocSoFar)
 			throws BusinessDomainException {
 
-		List<Researcher> candidates = new ArrayList<Researcher>(
-				committeeMembers);
+		List<Researcher> candidates = new ArrayList<Researcher>(committeeMembers);
 		for (Researcher cand : committeeMembers) {
 			if (!cand.isSuitedToReview(paper))
 				candidates.remove(cand);
 		}
 
 		if (candidates.isEmpty()) {
-			throw new BusinessDomainException(
-					"exception.business.service.noCandidates");
+			throw new BusinessDomainException("exception.business.service.noCandidates");
 		}
 
 		Researcher leastStressed; /* the one with least allocations */
@@ -180,7 +176,6 @@ public class Conference {
 				return false;
 			}
 		}
-
 		return true;
 	}
 
@@ -195,7 +190,6 @@ public class Conference {
 		} else {
 			throw new BusinessDomainException("exception.business.domain.pendingRevisions");
 		}
-
 		return accepted;
 	}
 
