@@ -13,6 +13,8 @@ public class Conference {
 	private List<Paper> papers;
 	private List<Researcher> committeeMembers;
 	private Boolean allocationDone;
+	private int lowerLimitReviewers = 2;
+	private int upperLimitReviewers = 5;
 
 	public Conference(String initials) {
 		this.initials = initials;
@@ -69,8 +71,11 @@ public class Conference {
 	 * @return a map from article to reviewer
 	 * @throws BusinessServiceException
 	 */
-	public Map<Integer, Integer> allocPapersToReviewers(int numReviewers)
-			throws BusinessDomainException {
+	public Map<Integer, Integer> allocPapersToReviewers(int numReviewers) throws BusinessDomainException {
+		if (numReviewers <= lowerLimitReviewers || numReviewers >= lowerLimitReviewers) {
+			throw new BusinessDomainException("exception.business.domain.invalidReviewersGrade");
+		}
+		
 		if (allocationDone) {
 			throw new BusinessDomainException("message.business.domain.alreadyAllocated");
 		}

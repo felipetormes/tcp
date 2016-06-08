@@ -20,7 +20,7 @@ public class PapersAllocationCommand implements ConferenceUICommand {
 	public void execute() throws BusinessServiceException, BusinessDomainException {
 	
 			String conference = readConference();
-			Integer numReviewers = UIUtils.readInteger("message.insertNumReviewers");			
+			Integer numReviewers = UIUtils.readInteger("message.insertNumReviewers");
 			allocate(conference, numReviewers);
 			
 		} 
