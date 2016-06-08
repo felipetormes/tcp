@@ -1,12 +1,12 @@
 package main.business.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import java.util.ArrayList;
-
+import main.exceptions.BusinessDomainException;
 import main.exceptions.BusinessServiceException;
 
 public class Conference {
@@ -177,6 +177,21 @@ public class Conference {
 		}
 
 		return true;
+	}
+
+	public Map<Integer, Boolean> selectPapersByAverage() throws BusinessDomainException {
+		Map<Integer, Boolean> accepted = new HashMap<Integer, Boolean>();
+
+		if (!this.hasEmptyGrade()) {
+			for (Paper paper : papers) {
+				double grade = paper.getAverageGrade();
+				accepted.put(paper.getId(), grade >= 0);
+			}
+		} else {
+			throw new BusinessDomainException("exception.business.domain.pendingRevisions");
+		}
+
+		return accepted;
 	}
 
 	@Override

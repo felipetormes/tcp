@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import main.business.PapersManagementService;
+import main.exceptions.BusinessDomainException;
 import main.exceptions.BusinessServiceException;
 import main.ui.text.UIUtils;
 
@@ -19,8 +20,9 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 	 * reads conference from user, get approved/rejected papers and prints them
 	 * in ascending/descending order.
 	 * @throws BusinessServiceException 
+	 * @throws BusinessDomainException 
 	 */
-	public void execute() throws BusinessServiceException {
+	public void execute() throws BusinessServiceException, BusinessDomainException {
 		String conference = readConference();
 
 			Map<Integer, Boolean> papersMap = papersManagementService.selectPapersByAverage(conference);
