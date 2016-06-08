@@ -9,6 +9,7 @@ import main.ui.text.ConferenceTextInterface;
 import main.business.PapersManagementService;
 import main.business.impl.PapersManagementServiceImpl;
 import main.data.Database;
+import main.exceptions.CommandTextException;
 
 
 public class ConferenceUITest {
@@ -28,7 +29,7 @@ public class ConferenceUITest {
 	}
 
 	@Test
-	public void TestUI()  {
+	public void TestUI() throws CommandTextException  {
 		conferenceUI.showUI();
 
 	}

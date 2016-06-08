@@ -2,6 +2,7 @@ package main.ui.text;
 
 import main.business.PapersManagementService;
 import main.exceptions.BusinessException;
+import main.exceptions.CommandTextException;
 import main.exceptions.InvalidInputException;
 import main.ui.ConferenceUI;
 import main.ui.text.command.ConferenceUICommand;
@@ -38,7 +39,7 @@ public class ConferenceTextInterface extends ConferenceUI {
 	}
 
 	@Override
-	public void showUI() {
+	public void showUI() throws CommandTextException {
 		do {
 			System.out.println(showMenu());
 			option = UIUtils.readString(UIUtils.getText("message.choose.option")).toUpperCase();
