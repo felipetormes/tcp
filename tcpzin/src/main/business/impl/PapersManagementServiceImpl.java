@@ -76,25 +76,10 @@ public class PapersManagementServiceImpl implements PapersManagementService {
 	 * GETTING SELECTED PAPERS
 	 */
 
-	public Map<Integer, Boolean> selectPapersByAverage(String conferenceInitials) {
-		Conference conference = database
-				.getConferenceByInitials(conferenceInitials);
-		return selectPapersByAverage(conference);
-	}
-
-	private Map<Integer, Boolean> selectPapersByAverage(Conference conference) {
-		Map<Integer, Boolean> accepted = new HashMap<Integer, Boolean>();
-
-		if (!conference.hasEmptyGrade()) {
-			List<Paper> papers = conference.getPapers();
-
-			for (Paper paper : papers) {
-				double grade = paper.getAverageGrade();
-				accepted.put(paper.getId(), grade >= 0);
-			}
-		}
-
-		return accepted;
+	public Map<Integer, Boolean> selectPapersByAverage(String conferenceInitials) throws BusinessDomainException {
+		Conference conference = database.
+				getConferenceByInitials(conferenceInitials);
+		return conference.selectPapersByAverage();
 	}
 
 	/**

@@ -21,7 +21,7 @@ public interface PapersManagementService {
 	
 	/* return is a map from paper id to the answer of "was it accepted in this
 	   conference?" */
-	public abstract Map<Integer, Boolean> selectPapersByAverage(String conferenceInitials);
+	public abstract Map<Integer, Boolean> selectPapersByAverage(String conferenceInitials) throws BusinessDomainException;
 
 	/**
 	 * GET DATA
