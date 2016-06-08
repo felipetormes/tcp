@@ -123,7 +123,7 @@ public class Paper implements Comparable<Paper> {
 
 	public void setGrade(Researcher reviewer, double grade) throws BusinessDomainException {
 		for (Review review : reviews) {
-			if (review.getReviewer() == reviewer) {
+			if (review.getReviewer().equals(reviewer)) {
 				review.setGrade(grade);
 			}
 		}
