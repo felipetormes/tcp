@@ -121,7 +121,7 @@ public class Researcher implements Comparable<Researcher>{
 	public String toString() {
 		String output = "==> researcher:\n";
 		output += "id: " + id + "\n";
-		output += "name: " + name;
+		output += "name: " + name + "\n";
 		output += "affiliation: " + affiliation + "\n";
 		output += "roles:\n";
 		
