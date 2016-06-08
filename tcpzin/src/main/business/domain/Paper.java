@@ -121,15 +121,19 @@ public class Paper implements Comparable<Paper> {
 		this.reviews.add(review);
 	}
 
-	public void setGrade(Researcher reviewer, double grade) throws BusinessDomainException {
-		for (Review review : reviews) {
-			if (review.getReviewer().equals(reviewer)) {
-				review.setGrade(grade);
+	public void setGrade(Researcher reviewer, double grade)
+			throws BusinessDomainException {
+		if (!reviews.isEmpty()) {
+			for (Review review : reviews) {
+				if (review.getReviewer().equals(reviewer)) {
+					review.setGrade(grade);
+				}
 			}
+		} else {
+			/* if no review is found with that reviewer */
+			throw new BusinessDomainException(
+					"exception.business.domain.noSuchReviewer");
 		}
-
-		/* if no review is found with that reviewer */
-		throw new BusinessDomainException("exception.business.domain.noSuchReviewer");
 	}
 
 	public List<Review> getReviews() {
