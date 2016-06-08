@@ -6,6 +6,7 @@ import java.util.Map;
 import main.business.PapersManagementService;
 import main.exceptions.BusinessDomainException;
 import main.exceptions.BusinessServiceException;
+import main.exceptions.CommandTextException;
 import main.ui.text.UIUtils;
 
 public class PapersGradesAttributionCommand implements ConferenceUICommand {
@@ -25,7 +26,7 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 	 * @throws BusinessServiceException
 	 * @throws BusinessDomainException 
 	 */
-	public void execute() throws BusinessServiceException, BusinessDomainException {
+	public void execute() throws BusinessServiceException, BusinessDomainException, CommandTextException {
 
 		Integer paperId = readPaper();
 		Integer reviewerId = readReviewer(paperId);
@@ -54,8 +55,14 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 
 	}
 
-	private double readGrade() {
-		return UIUtils.readDouble("message.insertGrade");
+	private double readGrade() throws CommandTextException {
+		paperGrade = UIUtils.readDouble("message.insertGrade");
+		if (paperGrade >= -3 && paperGrade <= 3) {
+			return paperGrade;
+		}
+		else {
+			
+			throw new CommandTextException((UIUtils.getText("exception.main.ui.text.invalidGradeRange")));
+		}
 	}
-
 }
