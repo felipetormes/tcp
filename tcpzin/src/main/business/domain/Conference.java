@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import main.exceptions.BusinessDomainException;
-import main.exceptions.BusinessServiceException;
 
 public class Conference {
 	private String initials;
@@ -31,10 +30,6 @@ public class Conference {
 		return false;
 	}
 
-	public void allocationDone(boolean done) {
-		allocationDone = done;
-	}
-
 	public void addCommitteeMember(Researcher member) {
 		committeeMembers.add(member);
 		Role role = new CommitteeMemberRole();
@@ -45,6 +40,7 @@ public class Conference {
 		papers.add(paper);
 		Role role = new ResearcherRole();
 		paper.getAuthor().addRole(this, role);
+		allocationDone = false;
 	}
 
 	public String getInitials() {
@@ -74,9 +70,13 @@ public class Conference {
 	 * @throws BusinessServiceException
 	 */
 	public Map<Integer, Integer> allocPapersToReviewers(int numReviewers)
-			throws BusinessServiceException {
+			throws BusinessDomainException {
+		if (allocationDone) {
+			throw new BusinessDomainException("message.business.domain.alreadyAllocated");
+		}
+		
 		Map<Integer, Integer> paper2reviewer = new HashMap<Integer, Integer>();
-
+		
 		/*
 		 * every researcher maps to 0 in the beginning. that is, no one was
 		 * assigned a paper yet.
@@ -135,7 +135,7 @@ public class Conference {
 	 */
 	private Researcher chooseBestCandidate(Paper paper,
 			Map<Researcher, Integer> allocSoFar)
-			throws BusinessServiceException {
+			throws BusinessDomainException {
 
 		List<Researcher> candidates = new ArrayList<Researcher>(
 				committeeMembers);
@@ -145,7 +145,7 @@ public class Conference {
 		}
 
 		if (candidates.isEmpty()) {
-			throw new BusinessServiceException(
+			throw new BusinessDomainException(
 					"exception.business.service.noCandidates");
 		}
 
