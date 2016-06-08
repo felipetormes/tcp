@@ -1,5 +1,6 @@
 package test.ui.text.command;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,5 +35,10 @@ public class PapersGradeAttributionCommandTest {
 		} catch (Exception e) {
 			System.out.println(UIUtils.getText(e.getMessage()));			
 		}
+	}
+	
+	@After
+	public void setdown() {
+		System.out.println(database);
 	}
 }
