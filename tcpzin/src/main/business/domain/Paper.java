@@ -18,10 +18,10 @@ public class Paper implements Comparable<Paper> {
 	/**
 	 * STATICS
 	 */
-	
+
 	private static int lastId = 0;
 
-	public static Comparator<Paper> ascendingGradeComparator = new Comparator<Paper>() {
+	public static Comparator<Paper> ascendingGradeComparator  = new Comparator<Paper>() {
 		public int compare(Paper p, Paper q) {
 			Double diff = p.getAverageGrade() - q.getAverageGrade();
 			if (diff > 0) {
@@ -55,13 +55,12 @@ public class Paper implements Comparable<Paper> {
 		}
 	};
 
-	public static List<Paper> sortPaper(List<Paper> papers,
-			Comparator<Paper> comparator) {
+	public static List<Paper> sortPaper(List<Paper> papers, Comparator<Paper> comparator) {
 		List<Paper> sorted = new ArrayList<Paper>(papers);
-		Collections.sort(sorted,	comparator);
+		Collections.sort(sorted, comparator);
 		return sorted;
 	}
-	
+
 	public static List<Paper> sortPaperByGrade(List<Paper> papers, boolean ascending) {
 		if (ascending) {
 			return sortPaper(papers, ascendingGradeComparator);
@@ -73,9 +72,9 @@ public class Paper implements Comparable<Paper> {
 	/**
 	 * NON-STATIC
 	 */
-	
-	public Paper(int id, String title, Researcher author, Topic researchTopic,
-			Conference conference, List<Review> reviews) {
+
+	public Paper(int id, String title, Researcher author, Topic researchTopic, Conference conference,
+			List<Review> reviews) {
 		this.title = title;
 		this.author = author;
 		this.researchTopic = researchTopic;
@@ -88,8 +87,7 @@ public class Paper implements Comparable<Paper> {
 	}
 
 	public Paper(String title, Researcher author, Topic researchTopic) {
-		this(lastId++, title, author, researchTopic, null,
-				new ArrayList<Review>());
+		this(lastId++, title, author, researchTopic, null, new ArrayList<Review>());
 	}
 
 	public int getId() {
@@ -122,14 +120,14 @@ public class Paper implements Comparable<Paper> {
 	public void addReview(Review review) {
 		this.reviews.add(review);
 	}
-	
-	public void setGrade(Researcher reviewer, double grade) throws BusinessDomainException {		
+
+	public void setGrade(Researcher reviewer, double grade) throws BusinessDomainException {
 		for (Review review : reviews) {
 			if (review.getReviewer() == reviewer) {
 				review.setGrade(grade);
 			}
 		}
-		
+
 		/* if no review is found with that reviewer */
 		throw new BusinessDomainException("exception.business.domain.noSuchReviewer");
 	}
@@ -138,17 +136,16 @@ public class Paper implements Comparable<Paper> {
 		return reviews;
 	}
 
-	public double getAverageGrade() {
+	public Double getAverageGrade() {
 		if (!reviews.isEmpty()) {
-			int total = 0;
+			double total = 0.0;
 
 			for (Review review : reviews) {
 				total += review.getGrade();
 			}
-
-			return total / reviews.size();
+			return (total / reviews.size());
 		} else {
-			return 0;
+			return null;
 		}
 	}
 
@@ -160,7 +157,6 @@ public class Paper implements Comparable<Paper> {
 
 		return false;
 	}
-
 
 	@Override
 	public int compareTo(Paper other) {
@@ -183,13 +179,13 @@ public class Paper implements Comparable<Paper> {
 		output += "conference: " + conference.getInitials() + "\n";
 		output += "topic: " + researchTopic + "\n";
 		output += "reviews:\n";
-		
+
 		for (Review rev : reviews) {
 			int reviewer = rev.getReviewer().getId();
 			String grade = rev.isPendingGrade() ? "pending" : String.valueOf(rev.getGrade());
 			output += "- " + grade + " from " + reviewer + "\n";
 		}
-		
+
 		return output;
 	}
 

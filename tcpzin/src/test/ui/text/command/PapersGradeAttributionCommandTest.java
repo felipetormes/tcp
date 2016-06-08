@@ -26,7 +26,6 @@ public class PapersGradeAttributionCommandTest {
 		database = new Database();
 		paperManagement = new PapersManagementServiceImpl(database);
 		paperGrade = new PapersGradesAttributionCommand(paperManagement);
-
 	}
 
 	@Test
