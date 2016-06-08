@@ -167,7 +167,7 @@ public class Database {
 		return conferences;
 	}
 
-	private Map<Integer, Paper> initPapers(String articlesFile) throws InvalidNameException {
+	private Map<Integer, Paper> initPapers(String articlesFile) throws InvalidNameException, BusinessDomainException {
 		List<String[]> csv_lines = readResourceCSV(articlesFile);
 
 		Map<Integer, Paper> papers = new HashMap<Integer, Paper>();
