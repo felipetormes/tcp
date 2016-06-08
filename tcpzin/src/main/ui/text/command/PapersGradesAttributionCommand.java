@@ -13,6 +13,8 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 
 	private PapersManagementService papersManagementService;
 	private double paperGrade;
+	private int lowerLimit = -3;
+	private int upperLimit = 3;
 	
 	public PapersGradesAttributionCommand(
 			PapersManagementService papersManagementService) {
@@ -24,7 +26,7 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 	 * review with those data.
 	 * 
 	 * @throws BusinessServiceException
-	 * @throws BusinessDomainException 
+	 * @throws BusinessDomainException
 	 */
 	public void execute() throws BusinessServiceException, BusinessDomainException, CommandTextException {
 
@@ -32,7 +34,6 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 		Integer reviewerId = readReviewer(paperId);
 		double grade = readGrade();
 		papersManagementService.setGradeToPaper(paperId, reviewerId, grade);
-
 	}
 
 	private Integer readPaper() throws BusinessServiceException {
@@ -42,7 +43,6 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 		Map<String, Integer> title2id = papersManagementService
 				.getPapersTitlesAndIds();
 		return title2id.get(chosen);
-
 	}
 
 	private Integer readReviewer(int paper) throws BusinessServiceException {
@@ -52,16 +52,14 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 		Map<String, Integer> name2id = papersManagementService
 				.getResearchersNamesAndIds();
 		return name2id.get(chosen);
-
 	}
 
 	private double readGrade() throws CommandTextException {
 		paperGrade = UIUtils.readDouble("message.insertGrade");
-		if (paperGrade >= -3 && paperGrade <= 3) {
+		if (paperGrade >= lowerLimit && paperGrade <= upperLimit) {
 			return paperGrade;
 		}
 		else {
-			
 			throw new CommandTextException((UIUtils.getText("exception.main.ui.text.invalidGradeRange")));
 		}
 	}
