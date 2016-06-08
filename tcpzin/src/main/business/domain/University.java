@@ -1,7 +1,6 @@
 package main.business.domain;
 
 import main.exceptions.BusinessDomainException;
-import main.exceptions.InvalidNameException;
 
 public class University {
 	private String name;

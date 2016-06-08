@@ -17,6 +17,7 @@ import main.business.domain.Researcher;
 import main.business.domain.Review;
 import main.business.domain.Topic;
 import main.business.domain.University;
+import main.exceptions.BusinessDomainException;
 import main.exceptions.InvalidNameException;
 /* to build researchers: */
 
@@ -32,7 +33,7 @@ public class Database {
 			        String researchersFile,
 			        String conferencesFile,
 			        String articlesFile,
-			        String attributionsFile) {
+			        String attributionsFile) throws BusinessDomainException {
 		researchers = new HashMap<Integer, Researcher>();
 		conferences = new HashMap<String, Conference>();
 		papers = new HashMap<Integer, Paper>();
@@ -44,18 +45,18 @@ public class Database {
 		}
 	}
 	
-	public Database(boolean initData) {
+	public Database(boolean initData) throws BusinessDomainException {
 		this(initData, RESEARCHERS_INIT_FILE , CONFERENCES_INIT_FILE, ARTICLES_INIT_FILE, ATTRIBUTIONS_INIT_FILE );
 	}
 
-	public Database() {
+	public Database() throws BusinessDomainException {
 		this(true);
 	}
 
 	private void initData(String researchersFile,
 	                             String conferencesFile,
 	                             String articlesFile,
-	                             String attributionsFile) {
+	                             String attributionsFile) throws BusinessDomainException {
 		try {
 			researchers = initResearchers(researchersFile);
 			conferences = initConferences(conferencesFile);
@@ -127,7 +128,7 @@ public class Database {
 		return lines;
 	}
 
-	private Map<Integer, Researcher> initResearchers(String researchersFile) throws InvalidNameException {
+	private Map<Integer, Researcher> initResearchers(String researchersFile) throws InvalidNameException, BusinessDomainException {
 		List<String[]> csv_lines = readResourceCSV(researchersFile);
 
 		Map<Integer, Researcher> researchers = new HashMap<Integer, Researcher>();

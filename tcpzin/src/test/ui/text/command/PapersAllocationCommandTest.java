@@ -3,6 +3,7 @@ package test.ui.text.command;
 import main.business.PapersManagementService;
 import main.business.impl.PapersManagementServiceImpl;
 import main.data.Database;
+import main.exceptions.BusinessDomainException;
 import main.ui.text.UIUtils;
 import main.ui.text.command.PapersAllocationCommand;
 
@@ -21,9 +22,9 @@ public class PapersAllocationCommandTest {
 	
 	public void test1() {
 		String root = "allocTestCases/case1/";
-		paperAllocation = buildCommand(root);
 		
 		try {
+			paperAllocation = buildCommand(root);
 			paperAllocation.execute();
 		} catch (Exception e) {
 			System.out.println(UIUtils.getText(e.getMessage()));
@@ -32,9 +33,9 @@ public class PapersAllocationCommandTest {
 	
 	public void test2() {
 		String root = "allocTestCases/case2/";
-		paperAllocation = buildCommand(root);
 		
 		try {
+			paperAllocation = buildCommand(root);
 			paperAllocation.execute();
 		} catch (Exception e) {
 			System.out.println(UIUtils.getText(e.getMessage()));
@@ -43,9 +44,9 @@ public class PapersAllocationCommandTest {
 	
 	public void test3() {
 		String root = "allocTestCases/case3/";
-		paperAllocation = buildCommand(root);
 		
 		try {
+			paperAllocation = buildCommand(root);
 			paperAllocation.execute();
 		} catch (Exception e) {
 			System.out.println(UIUtils.getText(e.getMessage()));
@@ -54,16 +55,16 @@ public class PapersAllocationCommandTest {
 	
 	public void test4() {
 		String root = "allocTestCases/case4/";
-		paperAllocation = buildCommand(root);
 		
 		try {
+			paperAllocation = buildCommand(root);
 			paperAllocation.execute();
 		} catch (Exception e) {
 			System.out.println(UIUtils.getText(e.getMessage()));
 		}
 	}
 	
-	private PapersAllocationCommand buildCommand(String root) {
+	private PapersAllocationCommand buildCommand(String root) throws BusinessDomainException {
 		System.out.println(">> " + root);
 		String researchers = root + "pesquisadores.csv";
 		String conferences = root + "conferencias.csv";
