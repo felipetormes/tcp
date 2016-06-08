@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import main.business.PapersManagementService;
+import main.exceptions.BusinessDomainException;
 import main.exceptions.BusinessServiceException;
 import main.ui.text.UIUtils;
 
@@ -16,7 +17,7 @@ public class PapersAllocationCommand implements ConferenceUICommand {
 		this.papersManagementService = papersManagementService;
 	}
 
-	public void execute() throws BusinessServiceException {
+	public void execute() throws BusinessServiceException, BusinessDomainException {
 	
 			String conference = readConference();
 			Integer numReviewers = UIUtils.readInteger("message.insertNumReviewers");			
@@ -25,7 +26,7 @@ public class PapersAllocationCommand implements ConferenceUICommand {
 		} 
 	
 	
-	private void allocate(String conference, int numReviewers) throws BusinessServiceException {
+	private void allocate(String conference, int numReviewers) throws BusinessServiceException, BusinessDomainException {
 		Map<Integer, Integer> paper2reviewer = new HashMap<Integer, Integer>();
 
 		System.out.println(UIUtils.getText("message.startingAllocation"));

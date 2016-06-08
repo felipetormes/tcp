@@ -24,7 +24,7 @@ public class PapersManagementServiceImpl implements PapersManagementService {
 
 	public Map<Integer, Integer> allocPapersToReviewers(
 			String conferenceInitials, int numReviewers)
-			throws BusinessServiceException {
+			throws BusinessServiceException, BusinessDomainException {
 		Conference conference = database
 				.getConferenceByInitials(conferenceInitials);
 		return allocPapersToReviewers(conference, numReviewers);
@@ -39,9 +39,10 @@ public class PapersManagementServiceImpl implements PapersManagementService {
 	 *            number of reviews per paper
 	 * @return a map from article to reviewer
 	 * @throws BusinessServiceException
+	 * @throws BusinessDomainException 
 	 */
 	private Map<Integer, Integer> allocPapersToReviewers(Conference conference,
-			int numReviewers) throws BusinessServiceException {
+			int numReviewers) throws BusinessServiceException, BusinessDomainException {
 		return conference.allocPapersToReviewers(numReviewers);
 	}
 

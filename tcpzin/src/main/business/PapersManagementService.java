@@ -10,11 +10,12 @@ public interface PapersManagementService {
 
 	/**
 	 * OPERATIONS
+	 * @throws BusinessDomainException 
 	 */
 	
 	/* allocate papers for people to review. return a map from paper id to
  	   reviewer id. */
-	public abstract Map<Integer, Integer> allocPapersToReviewers(String conferenceInitials,	int numReviewers) throws BusinessServiceException;
+	public abstract Map<Integer, Integer> allocPapersToReviewers(String conferenceInitials,	int numReviewers) throws BusinessServiceException, BusinessDomainException;
 	
 	/* create a review from reviewer to paper with grade. */ 
 	public abstract void setGradeToPaper(int paperId, int reviewerId, double grade) throws BusinessDomainException;
