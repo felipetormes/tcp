@@ -5,11 +5,11 @@ import main.exceptions.*;
 public class Topic {
 	private String name;
 	
-	public Topic(String name) throws InvalidNameException {
+	public Topic(String name) throws BusinessDomainException {
 		if (name != null) {
 			this.name = name;
 		} else {
-			throw new InvalidNameException("Invalid topic name.");
+			throw new BusinessDomainException("exception.business.domain.invalidTopic");
 		}
 	}
 	
