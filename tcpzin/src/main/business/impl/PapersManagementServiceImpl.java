@@ -84,6 +84,8 @@ public class PapersManagementServiceImpl implements PapersManagementService {
 			done = allAllocated(conference, numReviewers);
 		}
 
+		conference.allocationDone(true);
+		
 		return paper2reviewer;
 	}
 

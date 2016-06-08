@@ -5,6 +5,8 @@ import main.business.impl.PapersManagementServiceImpl;
 import main.data.Database;
 import main.ui.text.UIUtils;
 import main.ui.text.command.PapersAllocationCommand;
+
+import org.junit.After;
 import org.junit.Test;
 
 public class PapersAllocationCommandTest {
@@ -69,8 +71,13 @@ public class PapersAllocationCommandTest {
 		String attributions = root + "atribuicoes.csv";
 		
 		database = new Database(true, researchers, conferences, articles, attributions);
-		//System.out.println(database);
+		System.out.println(database);
 		paperManagement = new PapersManagementServiceImpl(database);
 		return new PapersAllocationCommand(paperManagement);
+	}
+	
+	@After
+	public void setdown() {
+		System.out.println(database);
 	}
 }
