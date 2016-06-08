@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import main.ui.text.DomainPrints;
-
 public class Researcher implements Comparable<Researcher>{
 	private int id;
 	private String name;
@@ -121,7 +119,25 @@ public class Researcher implements Comparable<Researcher>{
 	
 	@Override
 	public String toString() {
-		return DomainPrints.printResearcher(this);
+		String output = "==> researcher:\n";
+		output += "id: " + id + "\n";
+		output += "name: " + name;
+		output += "affiliation: " + affiliation + "\n";
+		output += "roles:\n";
+		
+		for (Map.Entry<Conference, Role> entry : roles.entrySet()) {
+			String conf = entry.getKey().getInitials();
+			Role role = entry.getValue();
+			output += "- " + role + " at " + conf + "\n";
+		}
+
+		output += "topics:\n";
+		
+		for (Topic topic : researchTopics) {
+			output += "- " + topic + "\n";
+		}
+
+		return output;
 	}
 	
 	public boolean equals(Object obj) {

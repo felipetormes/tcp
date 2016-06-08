@@ -5,4 +5,9 @@ public class CommitteeMemberRole extends Role {
 	public boolean isCandidate() {
 		return false;
 	}
+	
+	@Override
+	public String toString() {
+		return "committee member role";
+	}
 }

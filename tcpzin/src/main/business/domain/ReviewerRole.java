@@ -24,4 +24,9 @@ public class ReviewerRole extends Role {
 	public List<Review> getReviews() {
 		return reviews;
 	}
+	
+	@Override
+	public String toString() {
+		return "reviewer role";
+	}
 }

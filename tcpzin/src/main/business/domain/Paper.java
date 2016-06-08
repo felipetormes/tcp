@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import main.exceptions.BusinessDomainException;
-import main.ui.text.DomainPrints;
 
 public class Paper implements Comparable<Paper> {
 	private int id;
@@ -177,7 +176,21 @@ public class Paper implements Comparable<Paper> {
 
 	@Override
 	public String toString() {
-		return DomainPrints.printPaper(this);
+		String output = "==> paper:\n";
+		output += "id: " + id + "\n";
+		output += "title: " + title + "\n";
+		output += "author id: " + author.getId() + "\n";
+		output += "conference: " + conference.getInitials() + "\n";
+		output += "topic: " + researchTopic + "\n";
+		output += "reviews:\n";
+		
+		for (Review rev : reviews) {
+			int reviewer = rev.getReviewer().getId();
+			String grade = rev.isPendingGrade() ? "pending" : String.valueOf(rev.getGrade());
+			output += "- " + grade + " from " + reviewer + "\n";
+		}
+		
+		return output;
 	}
 
 	public boolean equals(Object obj) {

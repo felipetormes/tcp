@@ -2,8 +2,6 @@ package main.business.domain;
 
 import java.util.List;
 
-import main.ui.text.DomainPrints;
-
 import java.util.ArrayList;
 
 public class Conference {
@@ -25,6 +23,10 @@ public class Conference {
 		}
 		
 		return false;
+	}
+	
+	public void allocationDone(boolean done) {
+		allocationDone = done;
 	}
 	
 	public void addCommitteeMember(Researcher member) {
@@ -56,7 +58,21 @@ public class Conference {
 	}
 	@Override
 	public String toString() {
-		return DomainPrints.printConference(this);
+		String output = "==> conference:\n";
+		output += "initials: " + initials + "\n";
+		output += "allocation: ";
+		output += allocationDone ? "done\n" : "pending\n";
+		output += "papers:\n";
+		for (Paper paper : papers) {
+			output += "- " + paper.getId() + ". " + paper.getTitle() + "\n";
+		}
+		
+		output += "committee:\n";
+		for (Researcher res : committeeMembers) {
+			output += "- " + res.getId() + ". " + res.getName() + "\n"; 
+		}
+		
+		return output;
 	}
 	
 	public int hashCode() {
