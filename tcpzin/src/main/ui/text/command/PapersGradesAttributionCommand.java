@@ -13,8 +13,8 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 
 	private PapersManagementService papersManagementService;
 	private double paperGrade;
-	private int lowerLimit = -3;
-	private int upperLimit = 3;
+	private final static int LOWER_LIMIT = -3;
+	private final static int UPPER_LIMIT = 3;
 	
 	public PapersGradesAttributionCommand(
 			PapersManagementService papersManagementService) {
@@ -56,7 +56,7 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 
 	private double readGrade() throws CommandTextException {
 		paperGrade = UIUtils.readDouble("message.insertGrade");
-		if (paperGrade >= lowerLimit && paperGrade <= upperLimit) {
+		if (paperGrade >= LOWER_LIMIT && paperGrade <= UPPER_LIMIT) {
 			return paperGrade;
 		}
 		else {
