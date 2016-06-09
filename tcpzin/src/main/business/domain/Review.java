@@ -48,7 +48,7 @@ public class Review {
 			this.grade = grade;
 		}
 		else {
-			throw new BusinessDomainException((UIUtils.getText("exception.business.domain.invalidGradeRange ")));
+			throw new BusinessDomainException((UIUtils.getText("exception.business.domain.invalidGradeRange")));
 		}
 		
 	}
