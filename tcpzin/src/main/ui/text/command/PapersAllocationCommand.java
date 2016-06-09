@@ -27,11 +27,11 @@ public class PapersAllocationCommand implements ConferenceUICommand {
 	
 	
 	private void allocate(String conference, int numReviewers) throws BusinessServiceException, BusinessDomainException {
-		Map<Integer, Integer> paper2reviewer = new HashMap<Integer, Integer>();
+		Map<Integer, List<Integer>> reviewer2papers = new HashMap<Integer, List<Integer>>();
 
 		System.out.println(UIUtils.getText("message.startingAllocation"));
-		paper2reviewer = papersManagementService.allocPapersToReviewers(conference, numReviewers);
-		showAllocationLog(paper2reviewer);
+		reviewer2papers = papersManagementService.allocPapersToReviewers(conference, numReviewers);
+		showAllocationLog(reviewer2papers);
 		System.out.println(UIUtils.getText("message.endOfAllocation"));
 	}
 
@@ -42,10 +42,12 @@ public class PapersAllocationCommand implements ConferenceUICommand {
 		
 	}
 
-	private void showAllocationLog(Map<Integer, Integer> paper2reviewer) {
-		for (Map.Entry<Integer, Integer> entry : paper2reviewer.entrySet()) {
-			System.out.print(UIUtils.getText("message.thisPaper") + " " + entry.getKey() + " ");
-			System.out.println(UIUtils.getText("message.wasAllocedTo") + " " + entry.getValue());
+	private void showAllocationLog(Map<Integer, List<Integer>> reviewer2papers) {
+		for (Map.Entry<Integer, List<Integer>> entry : reviewer2papers.entrySet()) {
+			for (Integer paper : entry.getValue()) {
+				System.out.print(UIUtils.getText("message.thisPaper") + " " + paper + " ");
+				System.out.println(UIUtils.getText("message.wasAllocedTo") + " " + entry.getValue());
+			}
 		}
 	}
 
