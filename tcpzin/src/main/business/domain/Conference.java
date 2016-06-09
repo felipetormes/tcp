@@ -70,18 +70,22 @@ public class Conference {
 	 * @return a map from article to reviewer
 	 * @throws BusinessServiceException
 	 */
-	public Map<Integer, List<Integer>> allocPapersToReviewers(int numReviewers) throws BusinessDomainException {
-		if (numReviewers < LOWER_LIMIT_REVIEWERS || numReviewers > UPPER_LIMIT_REVIEWERS) {
-			throw new BusinessDomainException("exception.business.domain.invalidReviewersGrade");
+	public Map<Integer, List<Integer>> allocPapersToReviewers(int numReviewers)
+			throws BusinessDomainException {
+		if (numReviewers < LOWER_LIMIT_REVIEWERS
+				|| numReviewers > UPPER_LIMIT_REVIEWERS) {
+			throw new BusinessDomainException(
+					"exception.business.domain.invalidReviewersGrade");
 		}
 
 		if (allocationDone) {
-			throw new BusinessDomainException("message.business.domain.alreadyAllocated");
+			throw new BusinessDomainException(
+					"message.business.domain.alreadyAllocated");
 		}
 
 		Map<Researcher, List<Paper>> reviewer2papers = new HashMap<Researcher, List<Paper>>();
 		Map<Paper, List<Researcher>> paper2reviewers = new HashMap<Paper, List<Researcher>>();
-		
+
 		/*
 		 * every researcher maps to 0 in the beginning. that is, no one was
 		 * assigned a paper yet.
@@ -102,8 +106,9 @@ public class Conference {
 				/* select paper with lowest id */
 				allocSet = Paper.sortPaperById(allocSet, true);
 				Paper paper = allocSet.get(0);
-				
-				Researcher bestCandidate = chooseBestCandidate(paper, reviewer2papers);
+
+				Researcher bestCandidate = chooseBestCandidate(paper,
+						reviewer2papers);
 
 				/*
 				 * create the review and add one to the reviews alloc'ed so far
@@ -116,14 +121,15 @@ public class Conference {
 
 			done = allAllocated(paper2reviewers, numReviewers);
 		}
-		
+
 		Map<Integer, List<Integer>> rid2pid = new HashMap<Integer, List<Integer>>();
-		
+
 		for (Researcher r : committeeMembers) {
 			rid2pid.put(r.getId(), new ArrayList<Integer>());
 		}
-		
-		for (Map.Entry<Researcher, List<Paper>> entry : reviewer2papers.entrySet()) {
+
+		for (Map.Entry<Researcher, List<Paper>> entry : reviewer2papers
+				.entrySet()) {
 			Researcher reviewer = entry.getKey();
 			Integer reviewerId = reviewer.getId();
 			for (Paper paper : entry.getValue()) {
@@ -132,7 +138,7 @@ public class Conference {
 				new Review(paper, reviewer);
 			}
 		}
-		
+
 		allocationDone = true;
 
 		return rid2pid;
@@ -152,17 +158,21 @@ public class Conference {
 	 * @return the best candidate to review the paper
 	 * @throws BusinessServiceException
 	 */
-	private Researcher chooseBestCandidate(Paper paper, Map<Researcher, List<Paper>> reviewer2papers)
+	private Researcher chooseBestCandidate(Paper paper,
+			Map<Researcher, List<Paper>> reviewer2papers)
 			throws BusinessDomainException {
 
-		List<Researcher> candidates = new ArrayList<Researcher>(committeeMembers);
+		List<Researcher> candidates = new ArrayList<Researcher>(
+				committeeMembers);
 		for (Researcher cand : committeeMembers) {
-			if (!cand.isSuitedToReview(paper) || reviewer2papers.get(cand).contains(paper))
+			if (!cand.isSuitedToReview(paper)
+					|| reviewer2papers.get(cand).contains(paper))
 				candidates.remove(cand);
 		}
 
 		if (candidates.isEmpty()) {
-			throw new BusinessDomainException("exception.business.service.noCandidates");
+			throw new BusinessDomainException(
+					"exception.business.service.noCandidates");
 		}
 
 		Researcher leastStressed; /* the one with least allocations */
@@ -191,8 +201,10 @@ public class Conference {
 	 *            number of reviewers.
 	 * @return true if the answer is yes, false if it's no.
 	 */
-	private boolean allAllocated(Map<Paper, List<Researcher>> paper2reviewers, Integer minimum) {
-		for (Map.Entry<Paper, List<Researcher>> entry : paper2reviewers.entrySet()) {
+	private boolean allAllocated(Map<Paper, List<Researcher>> paper2reviewers,
+			Integer minimum) {
+		for (Map.Entry<Paper, List<Researcher>> entry : paper2reviewers
+				.entrySet()) {
 			Paper paper = entry.getKey();
 			if (paper2reviewers.get(paper).size() < minimum) {
 				return false;
@@ -201,7 +213,8 @@ public class Conference {
 		return true;
 	}
 
-	public Map<Integer, Boolean> selectPapersByAverage() throws BusinessDomainException {
+	public Map<Integer, Boolean> selectPapersByAverage()
+			throws BusinessDomainException {
 		Map<Integer, Boolean> accepted = new HashMap<Integer, Boolean>();
 
 		if (!this.hasEmptyGrade()) {
@@ -210,7 +223,8 @@ public class Conference {
 				accepted.put(paper.getId(), grade >= 0);
 			}
 		} else {
-			throw new BusinessDomainException("exception.business.domain.pendingRevisions");
+			throw new BusinessDomainException(
+					"exception.business.domain.pendingRevisions");
 		}
 		return accepted;
 	}

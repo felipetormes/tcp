@@ -13,7 +13,6 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 
 	private PapersManagementService papersManagementService;
 
-	
 	public PapersGradesAttributionCommand(
 			PapersManagementService papersManagementService) {
 		this.papersManagementService = papersManagementService;
@@ -26,7 +25,8 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 	 * @throws BusinessServiceException
 	 * @throws BusinessDomainException
 	 */
-	public void execute() throws BusinessServiceException, BusinessDomainException, CommandTextException {
+	public void execute() throws BusinessServiceException,
+			BusinessDomainException, CommandTextException {
 
 		Integer paperId = readPaper();
 		Integer reviewerId = readReviewer(paperId);
@@ -52,8 +52,8 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 		return name2id.get(chosen);
 	}
 
-	private double readGrade()  {
+	private double readGrade() {
 		return UIUtils.readDouble("message.insertGrade");
-		
+
 	}
 }

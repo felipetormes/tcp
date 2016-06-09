@@ -1,6 +1,5 @@
 package test.ui.text.command;
 
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,7 +9,6 @@ import main.business.PapersManagementService;
 import main.business.impl.PapersManagementServiceImpl;
 import main.data.Database;
 import main.exceptions.CommandTextException;
-
 
 public class ConferenceUITest {
 
@@ -25,11 +23,11 @@ public class ConferenceUITest {
 	public void setUp() throws Exception {
 		database = new Database();
 		paperManagement = new PapersManagementServiceImpl(database);
-		conferenceUI = new ConferenceTextInterface(paperManagement); 
+		conferenceUI = new ConferenceTextInterface(paperManagement);
 	}
 
 	@Test
-	public void TestUI() throws CommandTextException  {
+	public void TestUI() throws CommandTextException {
 		conferenceUI.showUI();
 
 	}

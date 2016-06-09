@@ -10,37 +10,58 @@ public interface PapersManagementService {
 
 	/**
 	 * OPERATIONS
-	 * @throws BusinessDomainException 
+	 * 
+	 * @throws BusinessDomainException
 	 */
-	
-	/* allocate papers for people to review. return a map from paper id to
- 	   reviewer id. */
-	public abstract Map<Integer, List<Integer>> allocPapersToReviewers(String conferenceInitials,	int numReviewers) throws BusinessServiceException, BusinessDomainException;
-	
-	/* create a review from reviewer to paper with grade. */ 
-	public abstract void setGradeToPaper(int paperId, int reviewerId, double grade) throws BusinessDomainException;
-	
-	/* return is a map from paper id to the answer of "was it accepted in this
-	   conference?" */
-	public abstract Map<Integer, Boolean> selectPapersByAverage(String conferenceInitials) throws BusinessDomainException;
+
+	/*
+	 * allocate papers for people to review. return a map from paper id to
+	 * reviewer id.
+	 */
+	public abstract Map<Integer, List<Integer>> allocPapersToReviewers(
+			String conferenceInitials, int numReviewers)
+			throws BusinessServiceException, BusinessDomainException;
+
+	/* create a review from reviewer to paper with grade. */
+	public abstract void setGradeToPaper(int paperId, int reviewerId,
+			double grade) throws BusinessDomainException;
+
+	/*
+	 * return is a map from paper id to the answer of "was it accepted in this
+	 * conference?"
+	 */
+	public abstract Map<Integer, Boolean> selectPapersByAverage(
+			String conferenceInitials) throws BusinessDomainException;
 
 	/**
 	 * GET DATA
-	 * @throws BusinessServiceException 
+	 * 
+	 * @throws BusinessServiceException
 	 */
-	
-	public abstract List<String> getConferencesInitials() throws BusinessServiceException;
+
+	public abstract List<String> getConferencesInitials()
+			throws BusinessServiceException;
+
 	public abstract List<String> getConferencesInitialsWithPendingAllocation();
 
-	public abstract Map<String, Integer> getPapersTitlesAndIds() throws BusinessServiceException;
+	public abstract Map<String, Integer> getPapersTitlesAndIds()
+			throws BusinessServiceException;
+
 	public abstract List<Integer> getPapersIds();
+
 	public abstract List<String> getPapersTitles();
-	
-	public abstract List<String> getReviewers(int paperId) throws BusinessServiceException;
-	public abstract List<Integer> sortPapersByGrade(List<Integer> papersIds, boolean ascending);
-	
-	public abstract Map<String, Integer> getResearchersNamesAndIds() throws BusinessServiceException;
+
+	public abstract List<String> getReviewers(int paperId)
+			throws BusinessServiceException;
+
+	public abstract List<Integer> sortPapersByGrade(List<Integer> papersIds,
+			boolean ascending);
+
+	public abstract Map<String, Integer> getResearchersNamesAndIds()
+			throws BusinessServiceException;
+
 	public abstract List<Integer> getResearchersIds();
+
 	public abstract List<String> getResearchersNames();
 
 }

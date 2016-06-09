@@ -9,11 +9,13 @@ import main.ui.ConferenceUI;
 import main.ui.text.ConferenceTextInterface;
 
 public class ConferenceManagement {
-	public static void main(String[] args) throws CommandTextException, BusinessDomainException {
+	public static void main(String[] args) throws CommandTextException,
+			BusinessDomainException {
 		Database database = new Database();
-		PapersManagementService paperManagement = new PapersManagementServiceImpl(database);
+		PapersManagementService paperManagement = new PapersManagementServiceImpl(
+				database);
 		ConferenceUI conferenceUI = new ConferenceTextInterface(paperManagement);
 		conferenceUI.showUI();
-		
+
 	}
 }

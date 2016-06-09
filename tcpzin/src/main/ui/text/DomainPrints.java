@@ -9,7 +9,8 @@ import main.business.domain.Topic;
 public class DomainPrints {
 
 	public static String printConference(Conference conference) {
-		String output = UIUtils.getText("message.initials") + ": " + conference.getInitials() + ", "
+		String output = UIUtils.getText("message.initials") + ": "
+				+ conference.getInitials() + ", "
 				+ UIUtils.getText("message.commiteeIDs") + ": ";
 
 		for (Researcher researcher : conference.getCommitteeMembers()) {
@@ -24,19 +25,26 @@ public class DomainPrints {
 	}
 
 	public static String printPaper(Paper paper) {
-		String output = UIUtils.getText("message.paperId") + ": " + String.valueOf(paper.getId()) + ", "
-				+ UIUtils.getText("message.paperTitle") + ": " + paper.getTitle() + ", "
-				+ UIUtils.getText("message.paperAuthor") + ": " + paper.getAuthor().getName() + ", "
-				+ UIUtils.getText("message.conference") + ": " + paper.getConference().getInitials() + ", "
-				+ UIUtils.getText("message.topics") + ": " + paper.getResearchTopic();
+		String output = UIUtils.getText("message.paperId") + ": "
+				+ String.valueOf(paper.getId()) + ", "
+				+ UIUtils.getText("message.paperTitle") + ": "
+				+ paper.getTitle() + ", "
+				+ UIUtils.getText("message.paperAuthor") + ": "
+				+ paper.getAuthor().getName() + ", "
+				+ UIUtils.getText("message.conference") + ": "
+				+ paper.getConference().getInitials() + ", "
+				+ UIUtils.getText("message.topics") + ": "
+				+ paper.getResearchTopic();
 		return output;
 
 	}
 
 	public static String printResearcher(Researcher researcher) {
-		String output = UIUtils.getText("message.name") + ": " + researcher.getName() + ", "
-				+ UIUtils.getText("message.ID") + ": " + String.valueOf(researcher.getId()) + ", "
-				+ UIUtils.getText("message.affiliation") + ": " + researcher.getAffiliation() + ", "
+		String output = UIUtils.getText("message.name") + ": "
+				+ researcher.getName() + ", " + UIUtils.getText("message.ID")
+				+ ": " + String.valueOf(researcher.getId()) + ", "
+				+ UIUtils.getText("message.affiliation") + ": "
+				+ researcher.getAffiliation() + ", "
 				+ UIUtils.getText("message.topics") + ": ";
 
 		for (Topic topic : researcher.getResearchTopics()) {
@@ -48,8 +56,10 @@ public class DomainPrints {
 	}
 
 	public static String printReview(Review review) {
-		String output = UIUtils.getText("message.paper") + ": " + review.getPaper().getId() + ", "
-				+ UIUtils.getText("message.reviewerId") + ": " + review.getReviewer().getId() + ", "
+		String output = UIUtils.getText("message.paper") + ": "
+				+ review.getPaper().getId() + ", "
+				+ UIUtils.getText("message.reviewerId") + ": "
+				+ review.getReviewer().getId() + ", "
 				+ UIUtils.getText("message.grade") + ": " + review.getGrade();
 
 		return output;

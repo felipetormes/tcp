@@ -12,27 +12,31 @@ import main.ui.text.UIUtils;
 public class PapersSelectionCommand implements ConferenceUICommand {
 	private PapersManagementService papersManagementService;
 
-	public PapersSelectionCommand(PapersManagementService papersManagementService) {
+	public PapersSelectionCommand(
+			PapersManagementService papersManagementService) {
 		this.papersManagementService = papersManagementService;
 	}
 
 	/**
 	 * reads conference from user, get approved/rejected papers and prints them
 	 * in ascending/descending order.
-	 * @throws BusinessServiceException 
-	 * @throws BusinessDomainException 
+	 * 
+	 * @throws BusinessServiceException
+	 * @throws BusinessDomainException
 	 */
-	public void execute() throws BusinessServiceException, BusinessDomainException {
+	public void execute() throws BusinessServiceException,
+			BusinessDomainException {
 		String conference = readConference();
 
-			Map<Integer, Boolean> papersMap = papersManagementService.selectPapersByAverage(conference);
+		Map<Integer, Boolean> papersMap = papersManagementService
+				.selectPapersByAverage(conference);
 
-			if (papersMap.isEmpty()) {
-				showGradeMissingAlert();
-			} else {
-				showAccRejLists(papersMap);
-			}
-	
+		if (papersMap.isEmpty()) {
+			showGradeMissingAlert();
+		} else {
+			showAccRejLists(papersMap);
+		}
+
 	}
 
 	/**
@@ -42,9 +46,10 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 	 * @throws BusinessServiceException
 	 */
 	private String readConference() throws BusinessServiceException {
-		List<String> allConferences = papersManagementService.getConferencesInitials();
-			String chosen = UIUtils.chooseFromList(allConferences);
-			return chosen;
+		List<String> allConferences = papersManagementService
+				.getConferencesInitials();
+		String chosen = UIUtils.chooseFromList(allConferences);
+		return chosen;
 	}
 
 	/**
@@ -77,8 +82,10 @@ public class PapersSelectionCommand implements ConferenceUICommand {
 			}
 		}
 
-		acceptedList = papersManagementService.sortPapersByGrade(acceptedList, false);
-		rejectedList = papersManagementService.sortPapersByGrade(rejectedList, true);
+		acceptedList = papersManagementService.sortPapersByGrade(acceptedList,
+				false);
+		rejectedList = papersManagementService.sortPapersByGrade(rejectedList,
+				true);
 
 		System.out.println(UIUtils.getText("message.rejectedPapers"));
 		for (Integer rejPaper : rejectedList) {

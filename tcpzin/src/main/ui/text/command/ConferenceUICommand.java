@@ -6,6 +6,7 @@ import main.exceptions.CommandTextException;
 
 public interface ConferenceUICommand {
 
-	public abstract void execute() throws BusinessServiceException, BusinessDomainException, CommandTextException;
+	public abstract void execute() throws BusinessServiceException,
+			BusinessDomainException, CommandTextException;
 
 }

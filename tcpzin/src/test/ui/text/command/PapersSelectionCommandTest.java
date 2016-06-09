@@ -30,7 +30,8 @@ public class PapersSelectionCommandTest {
 	}
 
 	@Test
-	public void TestGradeAttribuiton() throws InvalidNameException, BusinessServiceException {
+	public void TestGradeAttribuiton() throws InvalidNameException,
+			BusinessServiceException {
 		try {
 			paperSelection.execute();
 		} catch (BusinessDomainException e) {

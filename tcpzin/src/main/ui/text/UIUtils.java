@@ -1,6 +1,5 @@
 package main.ui.text;
 
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -9,17 +8,17 @@ import java.util.ResourceBundle;
 
 public class UIUtils {
 
-
 	public static final UIUtils INSTANCE = new UIUtils();
 	public static final String PROPERTY_RESOURCE_BUNDLE = "main.resources.globalMessages";
-	private final static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));;
+	private final static BufferedReader reader = new BufferedReader(
+			new InputStreamReader(System.in));;
 	private static ResourceBundle bundle;
-
 
 	private UIUtils() {
 		UIUtils.bundle = ResourceBundle.getBundle(PROPERTY_RESOURCE_BUNDLE);
 
 	}
+
 	public static String getText(String key) {
 
 		String text = null;
@@ -40,8 +39,7 @@ public class UIUtils {
 				System.out.print(UIUtils.getText(field) + ": ");
 				value = new Double(reader.readLine());
 			} catch (NumberFormatException nfe) {
-				System.out.println(UIUtils
-						.getText("exception.format.double"));
+				System.out.println(UIUtils.getText("exception.format.double"));
 
 			} catch (Exception e) {
 
@@ -58,8 +56,7 @@ public class UIUtils {
 					System.out.print(UIUtils.getText(field) + ": ");
 				value = new Integer(reader.readLine());
 			} catch (NumberFormatException nfe) {
-				System.out.println(UIUtils
-						.getText("exception.format.int"));
+				System.out.println(UIUtils.getText("exception.format.int"));
 
 			} catch (Exception e) {
 
@@ -67,7 +64,6 @@ public class UIUtils {
 		}
 		return value;
 	}
-
 
 	public static String readString(String field) {
 		String value = null;

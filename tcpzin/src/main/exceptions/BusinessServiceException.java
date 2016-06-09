@@ -9,7 +9,7 @@ public class BusinessServiceException extends BusinessException {
 
 	public BusinessServiceException() {
 	}
-	
+
 	public BusinessServiceException(String message) {
 		super(message);
 	}

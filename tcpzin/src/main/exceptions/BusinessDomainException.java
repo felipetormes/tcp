@@ -1,6 +1,6 @@
 package main.exceptions;
 
-public class BusinessDomainException extends BusinessException{
+public class BusinessDomainException extends BusinessException {
 	/**
 	 * 
 	 */
@@ -8,7 +8,7 @@ public class BusinessDomainException extends BusinessException{
 
 	public BusinessDomainException() {
 	}
-	
+
 	public BusinessDomainException(String message) {
 		super(message);
 	}

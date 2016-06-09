@@ -39,10 +39,11 @@ public class PapersManagementServiceImpl implements PapersManagementService {
 	 *            number of reviews per paper
 	 * @return a map from article to reviewer
 	 * @throws BusinessServiceException
-	 * @throws BusinessDomainException 
+	 * @throws BusinessDomainException
 	 */
-	private Map<Integer, List<Integer>> allocPapersToReviewers(Conference conference,
-			int numReviewers) throws BusinessServiceException, BusinessDomainException {
+	private Map<Integer, List<Integer>> allocPapersToReviewers(
+			Conference conference, int numReviewers)
+			throws BusinessServiceException, BusinessDomainException {
 		return conference.allocPapersToReviewers(numReviewers);
 	}
 
@@ -64,10 +65,12 @@ public class PapersManagementServiceImpl implements PapersManagementService {
 
 	/**
 	 * SETTING GRADES
-	 * @throws BusinessDomainException 
+	 * 
+	 * @throws BusinessDomainException
 	 */
 
-	public void setGradeToPaper(int paperId, int reviewerId, double grade) throws BusinessDomainException {
+	public void setGradeToPaper(int paperId, int reviewerId, double grade)
+			throws BusinessDomainException {
 		Paper paper = database.getPaperById(paperId);
 		Researcher reviewer = database.getResearcherById(reviewerId);
 		paper.setGrade(reviewer, grade);
@@ -77,9 +80,10 @@ public class PapersManagementServiceImpl implements PapersManagementService {
 	 * GETTING SELECTED PAPERS
 	 */
 
-	public Map<Integer, Boolean> selectPapersByAverage(String conferenceInitials) throws BusinessDomainException {
-		Conference conference = database.
-				getConferenceByInitials(conferenceInitials);
+	public Map<Integer, Boolean> selectPapersByAverage(String conferenceInitials)
+			throws BusinessDomainException {
+		Conference conference = database
+				.getConferenceByInitials(conferenceInitials);
 		return conference.selectPapersByAverage();
 	}
 
@@ -196,20 +200,21 @@ public class PapersManagementServiceImpl implements PapersManagementService {
 
 	/**
 	 * get researchers
-	 * @throws BusinessServiceException 
+	 * 
+	 * @throws BusinessServiceException
 	 */
 
-	public Map<String, Integer> getResearchersNamesAndIds() throws BusinessServiceException {
+	public Map<String, Integer> getResearchersNamesAndIds()
+			throws BusinessServiceException {
 		Map<String, Integer> ids2names = new HashMap<String, Integer>();
-		if (!database.getResearchers().isEmpty()){
-		for (Map.Entry<Integer, Researcher> entry : database.getResearchers()
-				.entrySet()) {
-			int id = entry.getKey();
-			String name = entry.getValue().getName();
-			ids2names.put(name, id);
-		}
-		}
-		else {
+		if (!database.getResearchers().isEmpty()) {
+			for (Map.Entry<Integer, Researcher> entry : database
+					.getResearchers().entrySet()) {
+				int id = entry.getKey();
+				String name = entry.getValue().getName();
+				ids2names.put(name, id);
+			}
+		} else {
 			throw new BusinessServiceException(
 					(UIUtils.getText("exception.business.service.noResearchers")));
 		}

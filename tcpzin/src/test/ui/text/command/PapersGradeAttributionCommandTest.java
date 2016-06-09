@@ -29,14 +29,15 @@ public class PapersGradeAttributionCommandTest {
 	}
 
 	@Test
-	public void TestGradeAttribuiton() throws InvalidNameException, BusinessServiceException {
+	public void TestGradeAttribuiton() throws InvalidNameException,
+			BusinessServiceException {
 		try {
 			paperGrade.execute();
 		} catch (Exception e) {
-			System.out.println(UIUtils.getText(e.getMessage()));			
+			System.out.println(UIUtils.getText(e.getMessage()));
 		}
 	}
-	
+
 	@After
 	public void setdown() {
 		System.out.println(database);

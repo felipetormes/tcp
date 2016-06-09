@@ -21,7 +21,7 @@ public class Paper implements Comparable<Paper> {
 
 	private static int lastId = 0;
 
-	public static Comparator<Paper> ascendingGradeComparator  = new Comparator<Paper>() {
+	public static Comparator<Paper> ascendingGradeComparator = new Comparator<Paper>() {
 		public int compare(Paper p, Paper q) {
 			Double diff = p.getAverageGrade() - q.getAverageGrade();
 			if (diff > 0) {
@@ -55,21 +55,24 @@ public class Paper implements Comparable<Paper> {
 		}
 	};
 
-	public static List<Paper> sortPaper(List<Paper> papers, Comparator<Paper> comparator) {
+	public static List<Paper> sortPaper(List<Paper> papers,
+			Comparator<Paper> comparator) {
 		List<Paper> sorted = new ArrayList<Paper>(papers);
 		Collections.sort(sorted, comparator);
 		return sorted;
 	}
 
-	public static List<Paper> sortPaperByGrade(List<Paper> papers, boolean ascending) {
+	public static List<Paper> sortPaperByGrade(List<Paper> papers,
+			boolean ascending) {
 		if (ascending) {
 			return sortPaper(papers, ascendingGradeComparator);
 		} else {
 			return sortPaper(papers, descendingGradeComparator);
 		}
 	}
-	
-	public static List<Paper> sortPaperById(List<Paper> papers, boolean ascending) {
+
+	public static List<Paper> sortPaperById(List<Paper> papers,
+			boolean ascending) {
 		if (ascending) {
 			return sortPaper(papers, ascendingIdComparator);
 		} else {
@@ -81,8 +84,8 @@ public class Paper implements Comparable<Paper> {
 	 * NON-STATIC
 	 */
 
-	public Paper(int id, String title, Researcher author, Topic researchTopic, Conference conference,
-			List<Review> reviews) {
+	public Paper(int id, String title, Researcher author, Topic researchTopic,
+			Conference conference, List<Review> reviews) {
 		this.title = title;
 		this.author = author;
 		this.researchTopic = researchTopic;
@@ -95,7 +98,8 @@ public class Paper implements Comparable<Paper> {
 	}
 
 	public Paper(String title, Researcher author, Topic researchTopic) {
-		this(lastId++, title, author, researchTopic, null, new ArrayList<Review>());
+		this(lastId++, title, author, researchTopic, null,
+				new ArrayList<Review>());
 	}
 
 	public int getId() {
@@ -165,7 +169,7 @@ public class Paper implements Comparable<Paper> {
 		if (reviews.isEmpty()) {
 			return true;
 		}
-		
+
 		for (Review review : reviews) {
 			if (review.isPendingGrade())
 				return true;
@@ -198,7 +202,8 @@ public class Paper implements Comparable<Paper> {
 
 		for (Review rev : reviews) {
 			int reviewer = rev.getReviewer().getId();
-			String grade = rev.isPendingGrade() ? "pending" : String.valueOf(rev.getGrade());
+			String grade = rev.isPendingGrade() ? "pending" : String
+					.valueOf(rev.getGrade());
 			output += "- " + grade + " from " + reviewer + "\n";
 		}
 

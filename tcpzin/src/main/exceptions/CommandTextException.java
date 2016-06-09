@@ -5,7 +5,7 @@ public class CommandTextException extends Exception {
 
 	public CommandTextException() {
 	}
-	
+
 	public CommandTextException(String message) {
 		super(message);
 	}

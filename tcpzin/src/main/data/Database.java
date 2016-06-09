@@ -19,6 +19,7 @@ import main.business.domain.Topic;
 import main.business.domain.University;
 import main.exceptions.BusinessDomainException;
 import main.exceptions.InvalidNameException;
+
 /* to build researchers: */
 
 public class Database {
@@ -29,34 +30,31 @@ public class Database {
 	private final static String CONFERENCES_INIT_FILE = "conferencias.csv";
 	private final static String ARTICLES_INIT_FILE = "artigos.csv";
 	private final static String ATTRIBUTIONS_INIT_FILE = "atribuicoes.csv";
-	public Database(boolean initData,
-			        String researchersFile,
-			        String conferencesFile,
-			        String articlesFile,
-			        String attributionsFile) throws BusinessDomainException {
+
+	public Database(boolean initData, String researchersFile,
+			String conferencesFile, String articlesFile, String attributionsFile)
+			throws BusinessDomainException {
 		researchers = new HashMap<Integer, Researcher>();
 		conferences = new HashMap<String, Conference>();
 		papers = new HashMap<Integer, Paper>();
 		if (initData) {
-			initData(researchersFile,
-			         conferencesFile,
-			         articlesFile,
-			         attributionsFile);
+			initData(researchersFile, conferencesFile, articlesFile,
+					attributionsFile);
 		}
 	}
-	
+
 	public Database(boolean initData) throws BusinessDomainException {
-		this(initData, RESEARCHERS_INIT_FILE , CONFERENCES_INIT_FILE, ARTICLES_INIT_FILE, ATTRIBUTIONS_INIT_FILE );
+		this(initData, RESEARCHERS_INIT_FILE, CONFERENCES_INIT_FILE,
+				ARTICLES_INIT_FILE, ATTRIBUTIONS_INIT_FILE);
 	}
 
 	public Database() throws BusinessDomainException {
 		this(true);
 	}
 
-	private void initData(String researchersFile,
-	                             String conferencesFile,
-	                             String articlesFile,
-	                             String attributionsFile) throws BusinessDomainException {
+	private void initData(String researchersFile, String conferencesFile,
+			String articlesFile, String attributionsFile)
+			throws BusinessDomainException {
 		try {
 			researchers = initResearchers(researchersFile);
 			conferences = initConferences(conferencesFile);
@@ -82,7 +80,7 @@ public class Database {
 	public Map<Integer, Researcher> getResearchers() {
 		return researchers;
 	}
-	
+
 	public List<Researcher> getResearchersList() {
 		return new ArrayList<Researcher>(researchers.values());
 	}
@@ -90,11 +88,11 @@ public class Database {
 	public Map<String, Conference> getConferences() {
 		return conferences;
 	}
-	
+
 	public List<Conference> getConferencesList() {
 		return new ArrayList<Conference>(conferences.values());
 	}
-	
+
 	public Map<Integer, Paper> getPapers() {
 		return papers;
 	}
@@ -107,14 +105,18 @@ public class Database {
 		List<String[]> lines = new ArrayList<String[]>();
 
 		try {
-			File fin = new File(System.getProperty("user.dir") + "/src/main/resources/" + filename);
+			File fin = new File(System.getProperty("user.dir")
+					+ "/src/main/resources/" + filename);
 			FileInputStream fis;
 			fis = new FileInputStream(fin);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fis));
 
 			String line = null;
 			while ((line = br.readLine()) != null) {
-				String[] fields = line.split(",", -1); /* -1 to not ignore empty fields */
+				String[] fields = line.split(",", -1); /*
+														 * -1 to not ignore
+														 * empty fields
+														 */
 				lines.add(fields);
 			}
 
@@ -128,7 +130,8 @@ public class Database {
 		return lines;
 	}
 
-	private Map<Integer, Researcher> initResearchers(String researchersFile) throws InvalidNameException, BusinessDomainException {
+	private Map<Integer, Researcher> initResearchers(String researchersFile)
+			throws InvalidNameException, BusinessDomainException {
 		List<String[]> csv_lines = readResourceCSV(researchersFile);
 
 		Map<Integer, Researcher> researchers = new HashMap<Integer, Researcher>();
@@ -167,7 +170,8 @@ public class Database {
 		return conferences;
 	}
 
-	private Map<Integer, Paper> initPapers(String articlesFile) throws InvalidNameException, BusinessDomainException {
+	private Map<Integer, Paper> initPapers(String articlesFile)
+			throws InvalidNameException, BusinessDomainException {
 		List<String[]> csv_lines = readResourceCSV(articlesFile);
 
 		Map<Integer, Paper> papers = new HashMap<Integer, Paper>();
@@ -181,14 +185,16 @@ public class Database {
 			Conference conference = getConferenceByInitials(conferenceInitials);
 			Researcher author = getResearcherById(authorId);
 
-			Paper paper = new Paper(id, title, author, new Topic(topicName), conference, new ArrayList<Review>());
+			Paper paper = new Paper(id, title, author, new Topic(topicName),
+					conference, new ArrayList<Review>());
 			papers.put(paper.getId(), paper);
 		}
 
 		return papers;
 	}
 
-	private void initAttributions(String attributionsFile) throws NumberFormatException, BusinessDomainException {
+	private void initAttributions(String attributionsFile)
+			throws NumberFormatException, BusinessDomainException {
 		List<String[]> csv_lines = readResourceCSV(attributionsFile);
 		for (String[] fields : csv_lines) {
 			Integer paperId = Integer.parseInt(fields[0]);
@@ -198,7 +204,10 @@ public class Database {
 			Researcher reviewer = getResearcherById(reviewerId);
 
 			if (fields[2].equals("")) {
-				new Review(paper, reviewer); /* automatically associated to paper in constructor */
+				new Review(paper, reviewer); /*
+											 * automatically associated to paper
+											 * in constructor
+											 */
 			} else {
 				new Review(paper, reviewer, Double.parseDouble(fields[2]));
 			}

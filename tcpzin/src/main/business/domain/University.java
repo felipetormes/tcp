@@ -4,23 +4,24 @@ import main.exceptions.BusinessDomainException;
 
 public class University {
 	private String name;
-	
+
 	public University(String name) throws BusinessDomainException {
 		if (name != null) {
 			this.name = name;
 		} else {
-			throw new BusinessDomainException("exception.business.domain.invalidUniversity");
+			throw new BusinessDomainException(
+					"exception.business.domain.invalidUniversity");
 		}
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return name;
 	}
-	
+
 	public String toString() {
 		return name;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof University) {
@@ -30,13 +31,9 @@ public class University {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return this.name.hashCode();
 	}
 }
-
-
-
-

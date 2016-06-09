@@ -42,12 +42,14 @@ public class ConferenceTextInterface extends ConferenceUI {
 	@Override
 	public void showUI() throws CommandTextException {
 		addCommand("A", new PapersAllocationCommand(papersManagementService));
-		addCommand("T", new PapersGradesAttributionCommand(papersManagementService));
+		addCommand("T", new PapersGradesAttributionCommand(
+				papersManagementService));
 		addCommand("S", new PapersSelectionCommand(papersManagementService));
-		
+
 		do {
 			System.out.println(showMenu());
-			option = UIUtils.readString(UIUtils.getText("message.choose.option")).toUpperCase();
+			option = UIUtils.readString(
+					UIUtils.getText("message.choose.option")).toUpperCase();
 			try {
 				ConferenceUICommand c = commandMap.get(option);
 				if (c != null) {
