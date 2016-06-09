@@ -34,7 +34,9 @@ public class Review {
 	}
 	
 	public void setReviewer (Researcher reviewer) {
-		Role role = new ReviewerRole();
+		ReviewerRole reviewerRole = new ReviewerRole();
+		reviewerRole.addReview(this);
+		Role role = reviewerRole;
 		reviewer.addRole(this.paper.getConference(), role);
 		this.reviewer = reviewer;
 	}
