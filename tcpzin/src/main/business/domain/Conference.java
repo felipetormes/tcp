@@ -71,7 +71,7 @@ public class Conference {
 	 * @return a map from article to reviewer
 	 * @throws BusinessServiceException
 	 */
-	public Map<Integer, Integer> allocPapersToReviewers(int numReviewers) throws BusinessDomainException {
+	public Map<Integer, List<Integer>> allocPapersToReviewers(int numReviewers) throws BusinessDomainException {
 		if (numReviewers < LOWER_LIMIT_REVIEWERS || numReviewers > UPPER_LIMIT_REVIEWERS) {
 			throw new BusinessDomainException("exception.business.domain.invalidReviewersGrade");
 		}
@@ -80,15 +80,14 @@ public class Conference {
 			throw new BusinessDomainException("message.business.domain.alreadyAllocated");
 		}
 
-		Map<Integer, Integer> paper2reviewer = new HashMap<Integer, Integer>();
+		Map<Integer, List<Integer>> reviewer2papers = new HashMap<Integer, List<Integer>>();
 
 		/*
 		 * every researcher maps to 0 in the beginning. that is, no one was
 		 * assigned a paper yet.
 		 */
-		Map<Researcher, Integer> allocSoFar = new HashMap<Researcher, Integer>();
-		for (Researcher res : committeeMembers) {
-			allocSoFar.put(res, 0);
+		for (Researcher researcher : committeeMembers) {
+			reviewer2papers.put(researcher.getId(), new ArrayList<Integer>());
 		}
 
 		Boolean done = false;
@@ -101,18 +100,15 @@ public class Conference {
 				Collections.sort(allocSet, Paper.ascendingIdComparator);
 				Paper paper = allocSet.get(0);
 
-				Researcher bestCandidate = chooseBestCandidate(paper, allocSoFar);
+				Researcher bestCandidate = chooseBestCandidate(paper, reviewer2papers);
 
 				/*
 				 * create the review and add one to the reviews alloc'ed so far
 				 * for the best candidate.
 				 */
-				int count = allocSoFar.get(bestCandidate);
 				new Review(paper, bestCandidate);
-				allocSoFar.put(bestCandidate, count + 1);
+				reviewer2papers.get(bestCandidate.getId()).add(paper.getId());
 				allocSet.remove(paper);
-
-				paper2reviewer.put(paper.getId(), bestCandidate.getId());
 			}
 
 			done = allAllocated(numReviewers);
@@ -120,7 +116,7 @@ public class Conference {
 
 		allocationDone = true;
 
-		return paper2reviewer;
+		return reviewer2papers;
 	}
 
 	/**
@@ -137,7 +133,7 @@ public class Conference {
 	 * @return the best candidate to review the paper
 	 * @throws BusinessServiceException
 	 */
-	public Researcher chooseBestCandidate(Paper paper, Map<Researcher, Integer> allocSoFar)
+	public Researcher chooseBestCandidate(Paper paper, Map<Integer, List<Integer>> reviewer2paper)
 			throws BusinessDomainException {
 
 		List<Researcher> candidates = new ArrayList<Researcher>(committeeMembers);
@@ -153,8 +149,14 @@ public class Conference {
 		Researcher leastStressed; /* the one with least allocations */
 		leastStressed = candidates.get(0);
 		for (Researcher cand : candidates) {
-			if (allocSoFar.get(cand) < allocSoFar.get(leastStressed)) {
-				leastStressed = cand;
+			int id1 = cand.getId();
+			int id2 = leastStressed.getId();
+			int numAllocated1 = reviewer2paper.get(id1).size();
+			int numAllocated2 = reviewer2paper.get(id2).size();
+			if (numAllocated1 < numAllocated2) {
+				leastStressed =  cand;
+			} else if (numAllocated1 == numAllocated2) {
+				leastStressed = id1 < id2 ? cand : leastStressed;
 			}
 		}
 
