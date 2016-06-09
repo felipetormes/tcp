@@ -1,7 +1,11 @@
-1,A1,1,C1,T1
-2,A2,1,C1,T1
-3,A3,3,C1,T1
-4,A4,4,C1,T1
-5,A5,4,C1,T1
-6,A6,6,C1,T1
-7,A7,6,C1,T1
+1,Coupling and Cohesion,1,SBES,Modularity
+2,Design Patterns,6,FSE,Software Reuse
+3,AspectJ,7,FSE,Aspect-oriented Programming
+4,Feature Model,8,FSE,Software Product Lines
+5,Architecture Recovery,9,FSE,Software Architecture
+6,Funcional Testing,10,FSE,Software Testing
+7,COTs,6,ICSE,Software Reuse
+8,Pointcut,7,ICSE,Aspect-oriented Programming
+9,Product Derivation,8,ICSE,Software Product Lines
+10,Architecture Comformance,9,ICSE,Software Architecture
+11,Structural Testing,10,ICSE,Software Testing

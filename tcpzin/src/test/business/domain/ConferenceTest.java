@@ -2,59 +2,40 @@ package test.business.domain;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import main.business.domain.Conference;
-import main.business.domain.Paper;
-import main.business.domain.Researcher;
+import main.business.PapersManagementService;
+import main.business.impl.PapersManagementServiceImpl;
 import main.data.Database;
 import main.exceptions.BusinessDomainException;
+import main.exceptions.BusinessServiceException;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class ConferenceTest {
 	Database database;
-	Map<Researcher, List<Paper>> reviewer2papers;
+	PapersManagementService management;
 	
 	@Before
 	public void setup() throws BusinessDomainException {
 		database = buildDatabase("issue26/case1/");
-		reviewer2papers = buildReviewer2papers();
+		management = new PapersManagementServiceImpl(database);
 	}
 	
 	@Test
-	public void testChooseBestCandidate() throws BusinessDomainException {
-		assertTrue(chooseBestCandidate(1) == 4);
-		assertTrue(chooseBestCandidate(4) == 1);
+	public void testAlloc1() throws BusinessServiceException, BusinessDomainException {
+		Map<Integer, List<Integer>> rid2pids = management.allocPapersToReviewers("ICSE", 2);
+		Integer[] pairs = {7, 1, 8, 4, 9, 3, 10, 5, 11, 6, 7, 2, 8, 6, 9, 1, 10, 4, 11, 3};
+		
+		assertAttributions(rid2pids, pairs);
 	}
 	
-	public int chooseBestCandidate(int Aid) throws BusinessDomainException {
-		Paper paper = database.getPaperById(Aid);
-		
-		Conference c = database.getConferenceByInitials("C1");
-		int bestCandidateId = c.chooseBestCandidate(paper, reviewer2papers).getId();
-		
-		return bestCandidateId;
-	}
-	
-	private Map<Researcher, List<Paper>> buildReviewer2papers() {
-		Map<Researcher, List<Paper>> reviewer2papers = new HashMap<Researcher, List<Paper>>();
-		for (int id = 1; id <= 6; id++) {
-			reviewer2papers.put(database.getResearcherById(id), new ArrayList<Paper>());
+	private void assertAttributions(Map<Integer, List<Integer>> rid2pids, Integer[] pairs) {
+		for (int i = 0; i < pairs.length - 1; i += 2) {
+			assertTrue(rid2pids.get(pairs[i + 1]).contains(pairs[i]));
 		}
-		reviewer2papers.get(database.getResearcherById(2)).add(database.getPaperById(1));
-		reviewer2papers.get(database.getResearcherById(3)).add(database.getPaperById(1));
-		reviewer2papers.get(database.getResearcherById(4)).add(database.getPaperById(2));
-		reviewer2papers.get(database.getResearcherById(3)).add(database.getPaperById(2));
-		reviewer2papers.get(database.getResearcherById(1)).add(database.getPaperById(3));
-		reviewer2papers.get(database.getResearcherById(6)).add(database.getPaperById(4));
-		reviewer2papers.get(database.getResearcherById(6)).add(database.getPaperById(5));
-		
-		return reviewer2papers;
 	}
 	
 	private Database buildDatabase(String root) throws BusinessDomainException {

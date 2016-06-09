@@ -103,7 +103,6 @@ public class Conference {
 				allocSet = Paper.sortPaperById(allocSet, true);
 				Paper paper = allocSet.get(0);
 				
-				System.out.println(paper.getId());
 				Researcher bestCandidate = chooseBestCandidate(paper, reviewer2papers);
 
 				/*
@@ -112,7 +111,6 @@ public class Conference {
 				 */
 				paper2reviewers.get(paper).add(bestCandidate);
 				reviewer2papers.get(bestCandidate).add(paper);
-				System.out.print(paper.getId() + "," + bestCandidate.getId());
 				allocSet.remove(paper);
 			}
 
@@ -154,7 +152,7 @@ public class Conference {
 	 * @return the best candidate to review the paper
 	 * @throws BusinessServiceException
 	 */
-	public Researcher chooseBestCandidate(Paper paper, Map<Researcher, List<Paper>> reviewer2papers)
+	private Researcher chooseBestCandidate(Paper paper, Map<Researcher, List<Paper>> reviewer2papers)
 			throws BusinessDomainException {
 
 		List<Researcher> candidates = new ArrayList<Researcher>(committeeMembers);
