@@ -23,6 +23,21 @@ public class PaperTest {
 		papers = database.getPapersList();
 	}
 	
+	public void testSetGrade() {
+		assertFalse(setGrade(-5, 2, 1));
+		assertFalse(setGrade(5, 2, 1));
+		assertFalse(setGrade(-5, 4, 4));
+	}
+	
+	private boolean setGrade(int grade, int Rid, int Aid) {
+		try {
+			database.getPaperById(Aid).setGrade(database.getResearcherById(Rid), grade);
+			return true;
+		} catch (BusinessDomainException e) {
+			return false;
+		}
+	}
+	
 	@Test
 	public void testGetAverageGrade() {
 		assertTrue(closeEnough(database.getPaperById(1).getAverageGrade(),1.));
@@ -42,11 +57,6 @@ public class PaperTest {
 		assertTrue(database.getPaperById(7).hasPendingReviews());
 		assertTrue(database.getPaperById(6).hasPendingReviews());
 		assertFalse(database.getPaperById(1).hasPendingReviews());
-	}
-	
-	@Test
-	public void testSetGrade() {
-//		System.out.println(database);
 	}
 	
 	@Test

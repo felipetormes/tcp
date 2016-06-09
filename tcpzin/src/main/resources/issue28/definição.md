@@ -49,7 +49,6 @@ Mesmos de antes
 
 ## Testes
 
-- atribuir 3 do R1 para o A7 e ver se a ordem é 7,4,3,2,1,5
 - atribuir -5 do R2 para A1 e ver se falha (não entre [-3,3])
 - atribuir 5 do R2 para A1 e ver se falha (não entre [-3,3])
 - atribuir 2 do R4 para A4 e ver se falha (R4 não é revisor de A4)
