@@ -126,10 +126,12 @@ public class Conference {
 		}
 		
 		for (Map.Entry<Researcher, List<Paper>> entry : reviewer2papers.entrySet()) {
-			Integer reviewerId = entry.getKey().getId();
+			Researcher reviewer = entry.getKey();
+			Integer reviewerId = reviewer.getId();
 			for (Paper paper : entry.getValue()) {
 				Integer paperId = paper.getId();
 				rid2pid.get(reviewerId).add(paperId);
+				new Review(paper, reviewer);
 			}
 		}
 		
