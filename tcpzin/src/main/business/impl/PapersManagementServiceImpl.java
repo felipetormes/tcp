@@ -22,7 +22,7 @@ public class PapersManagementServiceImpl implements PapersManagementService {
 		this.database = database;
 	}
 
-	public Map<Integer, Integer> allocPapersToReviewers(
+	public Map<Integer, List<Integer>> allocPapersToReviewers(
 			String conferenceInitials, int numReviewers)
 			throws BusinessServiceException, BusinessDomainException {
 		Conference conference = database
@@ -41,7 +41,7 @@ public class PapersManagementServiceImpl implements PapersManagementService {
 	 * @throws BusinessServiceException
 	 * @throws BusinessDomainException 
 	 */
-	private Map<Integer, Integer> allocPapersToReviewers(Conference conference,
+	private Map<Integer, List<Integer>> allocPapersToReviewers(Conference conference,
 			int numReviewers) throws BusinessServiceException, BusinessDomainException {
 		return conference.allocPapersToReviewers(numReviewers);
 	}
