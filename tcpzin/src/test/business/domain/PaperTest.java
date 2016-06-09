@@ -1,15 +1,13 @@
 package test.business.domain;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import main.business.domain.Paper;
-import main.business.domain.Review;
+import main.data.Database;
 import main.exceptions.BusinessDomainException;
 
 import org.junit.Before;
@@ -17,33 +15,44 @@ import org.junit.Test;
 
 public class PaperTest {
 	List<Paper> papers;
-	List<Review> reviews;
+	Database database;
 
 	@Before
 	public void setup() throws BusinessDomainException {
-		papers = new ArrayList<Paper>();
-		reviews = new ArrayList<Review>();
-
-		double grade = 0;
-		for (int i = 0; i < 20; i++) {
-			/* everything is null so I don't have to create a researcher,
-			 * topic, and conference for each paper and review. could/should
-			 * be added later for a complete test.
-			 */
-			grade += (i*10)%7; /* not so random grade */
-			papers.add(i, new Paper(null, null, null));
-			reviews.add(i, new Review(papers.get(i), null, grade));
-		}
-
-		for (Paper paper : papers) {
-			System.out.println(paper.getId());
-		}
+		database = buildDatabase("issue28/case1/");
+		papers = database.getPapersList();
+	}
+	
+	@Test
+	public void testGetAverageGrade() {
+		assertTrue(closeEnough(database.getPaperById(1).getAverageGrade(),1.));
+		assertTrue(closeEnough(database.getPaperById(2).getAverageGrade(),2.));
+		assertTrue(closeEnough(database.getPaperById(3).getAverageGrade(),3.));
+		assertTrue(closeEnough(database.getPaperById(4).getAverageGrade(),3.));
+	}
+	
+	private boolean closeEnough(Double a, Double b) {
+		double eps = 0.0001; /* floating point difference tolerance */
+		return Math.abs(a - b) < eps;
 	}
 
 	@Test
+	public void testHasPendingReviews() throws BusinessDomainException {
+		database = buildDatabase("issue28/case2/");
+		assertTrue(database.getPaperById(7).hasPendingReviews());
+		assertTrue(database.getPaperById(6).hasPendingReviews());
+		assertFalse(database.getPaperById(1).hasPendingReviews());
+	}
+	
+	@Test
+	public void testSetGrade() {
+//		System.out.println(database);
+	}
+	
+	@Test
 	public void testComparatorAsc() {
-		Collections.sort(papers, Paper.ascendingGradeComparator);
-
+		papers = Paper.sortPaperByGrade(papers, true);
+		
 		Double previousGrade = papers.get(0).getAverageGrade();
 		for (int i = 1; i < papers.size(); i++) {
 			Double currentGrade = papers.get(i).getAverageGrade();
@@ -54,7 +63,7 @@ public class PaperTest {
 
 	@Test
 	public void testComparatorDes() {
-		Collections.sort(papers, Paper.descendingGradeComparator);
+		papers = Paper.sortPaperByGrade(papers, false);
 
 		Double previousGrade = papers.get(0).getAverageGrade();
 		for (int i = 1; i < papers.size(); i++) {
@@ -87,5 +96,17 @@ public class PaperTest {
 			assertTrue(ordered);
 			prev = curr;
 		}
+	}
+	
+	private Database buildDatabase(String root) throws BusinessDomainException {
+		System.out.println(">> " + root);
+		String researchers = root + "pesquisadores.csv";
+		String conferences = root + "conferencias.csv";
+		String articles = root + "artigos.csv";
+		String attributions = root + "atribuicoes.csv";
+		
+		Database database = new Database(true, researchers, conferences, articles, attributions);
+		//System.out.println(database);
+		return database;
 	}
 }

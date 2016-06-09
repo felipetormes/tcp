@@ -86,7 +86,7 @@ public class Researcher implements Comparable<Researcher>{
 		return true;
 	}
 	
-	private boolean reviews(Paper paper) {
+	public boolean reviews(Paper paper) {
 		Role role = roles.get(paper.getConference());
 		
 		if (role == null) {
