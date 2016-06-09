@@ -25,10 +25,33 @@ public class ConferenceTest {
 	}
 	
 	@Test
-	public void testAlloc1() throws BusinessServiceException, BusinessDomainException {
-		Map<Integer, List<Integer>> rid2pids = management.allocPapersToReviewers("ICSE", 2);
+	public void test1() throws BusinessServiceException, BusinessDomainException {
 		Integer[] pairs = {7, 1, 8, 4, 9, 3, 10, 5, 11, 6, 7, 2, 8, 6, 9, 1, 10, 4, 11, 3};
-		
+		testAlloc("ICSE", 2, pairs);
+	}
+	
+	@Test
+	public void test2() throws BusinessServiceException, BusinessDomainException {
+		Integer[] pairs = {2, 1, 3, 4, 4, 3, 5, 5, 6, 6, 2, 2, 3, 6, 4, 1, 5, 4, 6, 3};
+		testAlloc("FSE", 2, pairs);
+	}
+	
+	@Test
+	public void test3() throws BusinessServiceException {
+		testAllocFails("FSE", 3);
+	}
+	
+	private void testAllocFails(String conf, int numReviewers) throws BusinessServiceException {
+		try {
+			testAlloc(conf, numReviewers, null);
+			assertTrue(false);
+		} catch (BusinessDomainException e) {
+			assertTrue(true);
+		}
+	}
+	
+	private void testAlloc(String conf, int numReviewers, Integer[] pairs) throws BusinessServiceException, BusinessDomainException {
+		Map<Integer, List<Integer>> rid2pids = management.allocPapersToReviewers(conf, numReviewers);
 		assertAttributions(rid2pids, pairs);
 	}
 	
