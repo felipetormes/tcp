@@ -18,10 +18,24 @@ public class ResearcherTest {
 			database = buildDatabase(root);
 			assertTrue(database.getResearcherById(2).reviews(database.getPaperById(1)));
 			assertFalse(database.getResearcherById(1).reviews(database.getPaperById(2)));
+			assertSuccAtrr(2, 4);
+			assertSuccAtrr(4, 2);
+			assertFailedAtrr(1, 1);
+			assertFailedAtrr(1, 4);
+			assertFailedAtrr(5, 1);
+			assertFailedAtrr(1, 2);
 		} catch (BusinessDomainException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private void assertFailedAtrr(int Aid, int Rid) {
+		assertFalse(Aid + "," + Rid, database.getResearcherById(Rid).isSuitedToReview(database.getPaperById(Aid)));
+	}
+	
+	private void assertSuccAtrr(int Aid, int Rid) {
+		assertTrue(Aid + "," + Rid, database.getResearcherById(Rid).isSuitedToReview(database.getPaperById(Aid)));
 	}
 	
 	private Database buildDatabase(String root) throws BusinessDomainException {
