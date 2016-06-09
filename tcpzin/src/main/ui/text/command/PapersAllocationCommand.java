@@ -46,7 +46,7 @@ public class PapersAllocationCommand implements ConferenceUICommand {
 		for (Map.Entry<Integer, List<Integer>> entry : reviewer2papers.entrySet()) {
 			for (Integer paper : entry.getValue()) {
 				System.out.print(UIUtils.getText("message.thisPaper") + " " + paper + " ");
-				System.out.println(UIUtils.getText("message.wasAllocedTo") + " " + entry.getValue());
+				System.out.println(UIUtils.getText("message.wasAllocedTo") + " " + entry.getKey());
 			}
 		}
 	}

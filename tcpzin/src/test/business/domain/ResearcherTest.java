@@ -16,8 +16,6 @@ public class ResearcherTest {
 		String root = "issue29/case1/";
 		try {
 			database = buildDatabase(root);
-			assertTrue(database.getResearcherById(2).reviews(database.getPaperById(1)));
-			assertFalse(database.getResearcherById(1).reviews(database.getPaperById(2)));
 			assertSuccAtrr(2, 4);
 			assertSuccAtrr(4, 2);
 			assertFailedAtrr(1, 1);

@@ -45,13 +45,13 @@ public class Paper implements Comparable<Paper> {
 
 	public static Comparator<Paper> ascendingIdComparator = new Comparator<Paper>() {
 		public int compare(Paper p, Paper q) {
-			return q.getId() - p.getId();
+			return p.getId() - q.getId();
 		}
 	};
 
 	public static Comparator<Paper> descendingIdComparator = new Comparator<Paper>() {
 		public int compare(Paper p, Paper q) {
-			return p.getId() - q.getId();
+			return q.getId() - p.getId();
 		}
 	};
 
@@ -66,6 +66,14 @@ public class Paper implements Comparable<Paper> {
 			return sortPaper(papers, ascendingGradeComparator);
 		} else {
 			return sortPaper(papers, descendingGradeComparator);
+		}
+	}
+	
+	public static List<Paper> sortPaperById(List<Paper> papers, boolean ascending) {
+		if (ascending) {
+			return sortPaper(papers, ascendingIdComparator);
+		} else {
+			return sortPaper(papers, descendingIdComparator);
 		}
 	}
 

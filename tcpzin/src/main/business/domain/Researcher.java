@@ -75,34 +75,11 @@ public class Researcher implements Comparable<Researcher>{
 			return false;
 		}
 		
-		if (this.reviews(paper)) {
-			return false;
-		}
-		
 		if (!this.researchTopics.contains(paper.getResearchTopic())) {
 			return false;
 		}
 		
 		return true;
-	}
-	
-	public boolean reviews(Paper paper) {
-		Role role = roles.get(paper.getConference());
-		
-		if (role == null) {
-			return false;
-		}
-		
-		if (role instanceof ReviewerRole) {
-			List<Review> reviews = ((ReviewerRole) role).getReviews();
-			for (Review rev : reviews) {
-				if (rev.getPaper() == paper) {
-					return true;
-				}
-			}
-		}
-		
-		return false;
 	}
 
 	public Map<Conference, Role> getRoles() {
