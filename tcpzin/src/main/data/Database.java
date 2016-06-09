@@ -188,7 +188,7 @@ public class Database {
 		return papers;
 	}
 
-	private void initAttributions(String attributionsFile) {
+	private void initAttributions(String attributionsFile) throws NumberFormatException, BusinessDomainException {
 		List<String[]> csv_lines = readResourceCSV(attributionsFile);
 		for (String[] fields : csv_lines) {
 			Integer paperId = Integer.parseInt(fields[0]);

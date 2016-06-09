@@ -1,19 +1,25 @@
 package main.business.domain;
 
+import main.exceptions.BusinessDomainException;
+import main.exceptions.CommandTextException;
+import main.ui.text.UIUtils;
+
 public class Review {
 	private Paper paper;
 	private boolean isPending;
 	private Researcher reviewer;
 	private double grade;
+	private final static int LOWER_LIMIT = -3;
+	private final static int UPPER_LIMIT = 3;
 	
-	public Review(Paper paper, Researcher reviewer, double grade){
+	public Review(Paper paper, Researcher reviewer, double grade) throws BusinessDomainException{
 		this.setPaper(paper);
 		this.setReviewer(reviewer);
 		this.setGrade(grade);
 		this.isPending = false;
 	}
 	
-	public Review(Paper paper, Researcher reviewer) {
+	public Review(Paper paper, Researcher reviewer) throws BusinessDomainException {
 		this(paper, reviewer, -1);
 		this.isPending = true;
 	}
@@ -37,8 +43,14 @@ public class Review {
 		return reviewer;
 	}
 	
-	public void setGrade(double grade) {
-		this.grade = grade;
+	public void setGrade(double grade) throws BusinessDomainException {
+		if (grade >= LOWER_LIMIT && grade <= UPPER_LIMIT) {
+			this.grade = grade;
+		}
+		else {
+			throw new BusinessDomainException((UIUtils.getText("exception.business.domain.invalidGradeRange ")));
+		}
+		
 	}
 	
 	public double getGrade() {

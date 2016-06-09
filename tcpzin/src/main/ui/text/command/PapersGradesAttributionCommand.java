@@ -12,9 +12,7 @@ import main.ui.text.UIUtils;
 public class PapersGradesAttributionCommand implements ConferenceUICommand {
 
 	private PapersManagementService papersManagementService;
-	private double paperGrade;
-	private final static int LOWER_LIMIT = -3;
-	private final static int UPPER_LIMIT = 3;
+
 	
 	public PapersGradesAttributionCommand(
 			PapersManagementService papersManagementService) {
@@ -54,13 +52,8 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 		return name2id.get(chosen);
 	}
 
-	private double readGrade() throws CommandTextException {
-		paperGrade = UIUtils.readDouble("message.insertGrade");
-		if (paperGrade >= LOWER_LIMIT && paperGrade <= UPPER_LIMIT) {
-			return paperGrade;
-		}
-		else {
-			throw new CommandTextException((UIUtils.getText("exception.main.ui.text.invalidGradeRange")));
-		}
+	private double readGrade()  {
+		return UIUtils.readDouble("message.insertGrade");
+		
 	}
 }

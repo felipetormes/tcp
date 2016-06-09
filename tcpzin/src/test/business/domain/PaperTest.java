@@ -10,6 +10,7 @@ import java.util.Map;
 
 import main.business.domain.Paper;
 import main.business.domain.Review;
+import main.exceptions.BusinessDomainException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class PaperTest {
 	List<Review> reviews;
 
 	@Before
-	public void setup() {
+	public void setup() throws BusinessDomainException {
 		papers = new ArrayList<Paper>();
 		reviews = new ArrayList<Review>();
 
