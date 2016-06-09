@@ -137,7 +137,7 @@ public class Conference {
 	 * @return the best candidate to review the paper
 	 * @throws BusinessServiceException
 	 */
-	private Researcher chooseBestCandidate(Paper paper, Map<Researcher, Integer> allocSoFar)
+	public Researcher chooseBestCandidate(Paper paper, Map<Researcher, Integer> allocSoFar)
 			throws BusinessDomainException {
 
 		List<Researcher> candidates = new ArrayList<Researcher>(committeeMembers);

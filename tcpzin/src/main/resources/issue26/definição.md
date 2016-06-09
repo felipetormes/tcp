@@ -26,7 +26,7 @@ Pesquisadores |
 
 Conferências |
 --- |
-C1,1,2,4,6 |
+C1,1,2,3,4,6 |
 
 Atribuições (revisão) |
 --- |
@@ -40,10 +40,7 @@ Atribuições (revisão) |
 
 ## Testes
 
-- chooseBestCandidate(3,6) == 3 (menos revisões)
-- chooseBestCandidate(2,4) == 2 (menor id)
-- chooseBestCandidate(3,6,1,2) == 3 (menor id)
-- chooseBestCandidate(2,4,1) == 1 (menor id)
+- chooseBestCandidate(1) == 4
 
 # selectPapersByAverage
 
