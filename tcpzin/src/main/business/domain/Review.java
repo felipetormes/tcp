@@ -8,8 +8,8 @@ public class Review {
 	private boolean isPending;
 	private Researcher reviewer;
 	private double grade;
-	private final static int LOWER_LIMIT = -3;
-	private final static int UPPER_LIMIT = 3;
+	private final static int LOWER_LIMIT_GRADE = -3;
+	private final static int UPPER_LIMIT_GRADE = 3;
 
 	public Review(Paper paper, Researcher reviewer, double grade)
 			throws BusinessDomainException {
@@ -47,7 +47,7 @@ public class Review {
 	}
 
 	public void setGrade(double grade) throws BusinessDomainException {
-		if (grade >= LOWER_LIMIT && grade <= UPPER_LIMIT) {
+		if (grade >= LOWER_LIMIT_GRADE && grade <= UPPER_LIMIT_GRADE) {
 			this.grade = grade;
 		} else {
 			throw new BusinessDomainException(
