@@ -13,8 +13,10 @@ public class Review {
 
 	public Review(Paper paper, Researcher reviewer, double grade)
 			throws BusinessDomainException {
-		this.setPaper(paper);
+		this.paper = paper;
+		this.reviewer = reviewer;
 		this.setReviewer(reviewer);
+		this.setPaper(paper);
 		this.setGrade(grade);
 		this.isPending = false;
 	}
@@ -27,7 +29,6 @@ public class Review {
 
 	public void setPaper(Paper paper) {
 		paper.addReview(this);
-		this.paper = paper;
 	}
 
 	public Paper getPaper() {
@@ -39,7 +40,6 @@ public class Review {
 		reviewerRole.addReview(this);
 		Role role = reviewerRole;
 		reviewer.addRole(this.paper.getConference(), role);
-		this.reviewer = reviewer;
 	}
 
 	public Researcher getReviewer() {
@@ -62,6 +62,24 @@ public class Review {
 
 	public boolean isPendingGrade() {
 		return isPending;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Review) {
+			Review other = (Review) obj;
+			System.out.println(reviewer);
+			System.out.println(paper);
+			return reviewer.equals(other.getReviewer())
+					&& paper.equals(other.getPaper());
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.paper.hashCode();
 	}
 
 	@Override

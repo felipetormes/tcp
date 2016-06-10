@@ -130,7 +130,8 @@ public class Paper implements Comparable<Paper> {
 	}
 
 	public void addReview(Review review) {
-		this.reviews.add(review);
+		if (!reviews.contains(review))
+			reviews.add(review);
 	}
 
 	public void setGrade(Researcher reviewer, double grade)
