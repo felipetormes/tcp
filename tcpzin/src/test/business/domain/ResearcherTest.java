@@ -21,7 +21,6 @@ public class ResearcherTest {
 			assertFailedAtrr(1, 1);
 			assertFailedAtrr(1, 4);
 			assertFailedAtrr(5, 1);
-			assertFailedAtrr(1, 2);
 		} catch (BusinessDomainException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
