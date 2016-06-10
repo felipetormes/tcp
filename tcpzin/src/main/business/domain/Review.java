@@ -49,6 +49,7 @@ public class Review {
 	public void setGrade(double grade) throws BusinessDomainException {
 		if (grade >= LOWER_LIMIT_GRADE && grade <= UPPER_LIMIT_GRADE) {
 			this.grade = grade;
+			this.isPending = false;
 		} else {
 			throw new BusinessDomainException(
 					(UIUtils.getText("exception.business.domain.invalidGradeRange")));
