@@ -6,7 +6,6 @@ import java.util.Map;
 import main.business.PapersManagementService;
 import main.exceptions.BusinessDomainException;
 import main.exceptions.BusinessServiceException;
-import main.exceptions.CommandTextException;
 import main.ui.text.UIUtils;
 
 public class PapersGradesAttributionCommand implements ConferenceUICommand {
@@ -26,7 +25,7 @@ public class PapersGradesAttributionCommand implements ConferenceUICommand {
 	 * @throws BusinessDomainException
 	 */
 	public void execute() throws BusinessServiceException,
-			BusinessDomainException, CommandTextException {
+			BusinessDomainException {
 
 		Integer paperId = readPaper();
 		Integer reviewerId = readReviewer(paperId);

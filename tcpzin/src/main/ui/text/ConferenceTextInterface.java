@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import main.business.PapersManagementService;
 import main.exceptions.BusinessException;
-import main.exceptions.CommandTextException;
 import main.ui.ConferenceUI;
 import main.ui.text.command.ConferenceUICommand;
 import main.ui.text.command.PapersAllocationCommand;
@@ -40,7 +39,7 @@ public class ConferenceTextInterface extends ConferenceUI {
 	}
 
 	@Override
-	public void showUI() throws CommandTextException {
+	public void showUI(){
 		addCommand("A", new PapersAllocationCommand(papersManagementService));
 		addCommand("T", new PapersGradesAttributionCommand(
 				papersManagementService));

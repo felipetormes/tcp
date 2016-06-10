@@ -4,12 +4,11 @@ import main.business.PapersManagementService;
 import main.business.impl.PapersManagementServiceImpl;
 import main.data.Database;
 import main.exceptions.BusinessDomainException;
-import main.exceptions.CommandTextException;
 import main.ui.ConferenceUI;
 import main.ui.text.ConferenceTextInterface;
 
 public class ConferenceManagement {
-	public static void main(String[] args) throws CommandTextException,
+	public static void main(String[] args) throws 
 			BusinessDomainException {
 		Database database = new Database();
 		PapersManagementService paperManagement = new PapersManagementServiceImpl(
