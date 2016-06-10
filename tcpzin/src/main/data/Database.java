@@ -1,10 +1,9 @@
 package main.data;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,11 +45,11 @@ public class Database {
 	public Database(boolean initData) throws BusinessDomainException {
 		this(initData, RESEARCHERS_INIT_FILE, CONFERENCES_INIT_FILE,
 				ARTICLES_INIT_FILE, ATTRIBUTIONS_INIT_FILE);
-		
+
 		if (conferences.get("SBES") != null) {
 			conferences.get("SBES").setAllocationDone(true);
 		}
-		
+
 		if (conferences.get("FSE") != null) {
 			conferences.get("FSE").setAllocationDone(true);
 		}
@@ -113,11 +112,8 @@ public class Database {
 		List<String[]> lines = new ArrayList<String[]>();
 
 		try {
-			File fin = new File(System.getProperty("user.dir")
-					+ "/src/main/resources/" + filename);
-			FileInputStream fis;
-			fis = new FileInputStream(fin);
-			BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+			InputStream in = this.getClass().getClassLoader().getResourceAsStream("main/resources/" + filename);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
 			String line = null;
 			while ((line = br.readLine()) != null) {
