@@ -43,6 +43,10 @@ public class Conference {
 		paper.getAuthor().addRole(this, role);
 		allocationDone = false;
 	}
+	
+	public void setAllocationDone(Boolean allocationDone) {
+		this.allocationDone = allocationDone;
+	}
 
 	public String getInitials() {
 		return initials;

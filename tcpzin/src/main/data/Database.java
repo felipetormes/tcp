@@ -46,6 +46,14 @@ public class Database {
 	public Database(boolean initData) throws BusinessDomainException {
 		this(initData, RESEARCHERS_INIT_FILE, CONFERENCES_INIT_FILE,
 				ARTICLES_INIT_FILE, ATTRIBUTIONS_INIT_FILE);
+		
+		if (conferences.get("SBES") != null) {
+			conferences.get("SBES").setAllocationDone(true);
+		}
+		
+		if (conferences.get("FSE") != null) {
+			conferences.get("FSE").setAllocationDone(true);
+		}
 	}
 
 	public Database() throws BusinessDomainException {
