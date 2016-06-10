@@ -68,8 +68,6 @@ public class Review {
 	public boolean equals(Object obj) {
 		if (obj instanceof Review) {
 			Review other = (Review) obj;
-			System.out.println(reviewer);
-			System.out.println(paper);
 			return reviewer.equals(other.getReviewer())
 					&& paper.equals(other.getPaper());
 		} else {
