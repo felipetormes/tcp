@@ -30,6 +30,7 @@ public class ReviewTest {
 		assertAttr(true, rev, -3);
 		assertAttr(false, rev, 4);
 		assertAttr(false, rev, -4);
+		assertFalse(rev.isPendingGrade());
 	}
 	
 	public void assertAttr(boolean succeeds, Review r, double grade) {
